@@ -61,6 +61,7 @@
         ],
         "test": [
             "@php artisan config:clear --ansi",
+            "bun run build",
             "@php artisan test"
         ],
         "format": [

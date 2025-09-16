@@ -40,9 +40,6 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
-      - name: Build Assets
-        run: bun run build
-
       - name: Run PHP Tests
         run: composer run-script test
 
