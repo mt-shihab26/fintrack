@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import type { TBreadcrumb } from '@/types';
+
 import AppContent from '@/components/AppContent.vue';
 import AppHeader from '@/components/AppHeader.vue';
 import AppShell from '@/components/AppShell.vue';
-import type { BreadcrumbItemType } from '@/types';
 
-interface Props {
-    breadcrumbs?: BreadcrumbItemType[];
-}
+type TProps = {
+    breadcrumbs?: TBreadcrumb[];
+};
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<TProps>(), {
     breadcrumbs: () => [],
 });
 </script>

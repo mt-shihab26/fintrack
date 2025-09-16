@@ -1,21 +1,30 @@
-import type { NavItem } from '@/types';
+import type { TNavItem } from '@/types';
 
-import { dashboard } from '@/routes';
+import { FolderOpen, LayoutDashboard, Receipt, Target } from 'lucide-vue-next';
 
-import { LayoutGrid, User } from 'lucide-vue-next';
-
-export const mainNavItems: NavItem[] = [
+export const mainNavLinks: TNavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
+        href: '/dashboard',
+        icon: LayoutDashboard,
+    },
+    {
+        title: 'Transactions',
+        href: '/transactions',
+        icon: Receipt,
+    },
+    {
+        title: 'Budgets',
+        href: '/budgets',
+        icon: Target,
+    },
+    {
+        title: 'Categories',
+        href: '/categories',
+        icon: FolderOpen,
     },
 ];
 
-export const footerNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: '/profile',
-        icon: User,
-    },
+export const rightNavLinks: TNavItem[] = [
+    //
 ];

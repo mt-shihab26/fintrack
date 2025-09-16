@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { footerNavItems, mainNavItems } from '@/layouts/app-layout/nav-links';
+import { mainNavLinks, rightNavLinks } from '@/layouts/app-layout/nav-links';
 import { dashboard } from '@/routes';
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
@@ -26,11 +26,11 @@ import AppLogo from './AppLogo.vue';
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain :items="mainNavLinks" />
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <NavFooter :items="rightNavLinks" />
             <NavUser />
         </SidebarFooter>
     </Sidebar>

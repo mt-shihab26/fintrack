@@ -11,9 +11,9 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { type BreadcrumbItem } from '@/types';
+import { type TBreadcrumb } from '@/types';
 
-const breadcrumbItems: BreadcrumbItem[] = [
+const breadcrumbItems: TBreadcrumb[] = [
     {
         title: 'Password settings',
         href: edit().url,
