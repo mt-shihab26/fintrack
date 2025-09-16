@@ -39,8 +39,13 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - Stick to existing directory structure - don't create new base folders without approval.
 - Do not change the application's dependencies without approval.
 
+## Package Manager
+
+- Always use `bun` as the package manager for this project instead of `npm` or `yarn`.
+- Use `bun install` to install packages, `bun add` to add new packages, and `bun remove` to remove packages.
+
 ## Frontend Bundling
-- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
+- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `bun run build`, `bun run dev`, or `composer run dev`. Ask them.
 
 ## Replies
 - Be concise in your explanations - focus on what's important rather than explaining obvious details.
