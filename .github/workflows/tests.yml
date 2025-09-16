@@ -1,13 +1,8 @@
 name: tests
 
 on:
-  push:
-    branches:
-      - develop
-      - main
   pull_request:
     branches:
-      - develop
       - main
 
 jobs:
@@ -21,8 +16,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
-          tools: composer:v2
+          php-version: '8.4'
           coverage: xdebug
 
       - name: Setup Node
@@ -31,11 +25,14 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install Node Dependencies
-        run: npm ci
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
-      - name: Install Dependencies
+      - name: Install PHP Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Install TypeScript Dependencies
+        run: bun install
 
       - name: Copy Environment File
         run: cp .env.example .env
@@ -44,7 +41,10 @@ jobs:
         run: php artisan key:generate
 
       - name: Build Assets
-        run: npm run build
+        run: bun run build
 
-      - name: Tests
-        run: ./vendor/bin/pest
+      - name: Run PHP Tests
+        run: composer run-script test
+
+      - name: Run TypeScript Tests
+        run: LARAVEL_BYPASS_ENV_CHECK=1 bun run test

@@ -1,13 +1,8 @@
 name: linter
 
 on:
-  push:
-    branches:
-      - develop
-      - main
   pull_request:
     branches:
-      - develop
       - main
 
 permissions:
@@ -24,22 +19,29 @@ jobs:
         with:
           php-version: '8.4'
 
-      - name: Install Dependencies
-        run: |
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          npm install
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
-      - name: Run Pint
-        run: vendor/bin/pint
+      - name: Install PHP Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Format Frontend
-        run: npm run format
+      - name: Install TypeScript Dependencies
+        run: bun install
 
-      - name: Lint Frontend
-        run: npm run lint
+      - name: Run PHP Formatter
+        run: composer run-script format
 
-      # - name: Commit Changes
-      #   uses: stefanzweifel/git-auto-commit-action@v5
-      #   with:
-      #     commit_message: fix code style
-      #     commit_options: '--no-verify'
+      - name: Run PHP Linter
+        run: composer run-script lint
+
+      - name: Run TypeScript Formatter
+        run: bun run format
+
+      - name: Run TypeScript Linter
+        run: bun run lint
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix code style
+          commit_options: '--no-verify'
