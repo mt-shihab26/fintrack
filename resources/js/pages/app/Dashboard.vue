@@ -1,22 +1,11 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
-import { type TBreadcrumb } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import { AppLayout } from '@/layouts/app-layout';
 
-const breadcrumbs: TBreadcrumb[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
-];
+import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 </script>
 
 <template>
-    <Head title="Dashboard" />
-
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <AppLayout :breadcrumbs="[{ title: 'Dashboard' }]">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">

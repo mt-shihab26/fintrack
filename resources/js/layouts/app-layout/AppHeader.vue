@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import AppLogo from '@/components/AppLogo.vue';
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import UserMenuContent from '@/components/UserMenuContent.vue';
+import type { TBreadcrumb } from '@/types';
+import type { InertiaLinkProps } from '@inertiajs/vue3';
+
+import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { getInitials } from '@/composables/useInitials';
 import { mainNavLinks, rightNavLinks } from '@/layouts/app-layout/nav-links';
 import { toUrl, urlIsActive } from '@/lib/utils';
 import { dashboard } from '@/routes';
-import type { TBreadcrumb } from '@/types';
-import { InertiaLinkProps, Link, usePage } from '@inertiajs/vue3';
-import { Menu, Search } from 'lucide-vue-next';
+import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Link } from '@inertiajs/vue3';
+import { Menu, Search } from 'lucide-vue-next';
+
+import AppLogo from './AppLogo.vue';
+import AppLogoIcon from './AppLogoIcon.vue';
+import Breadcrumbs from './Breadcrumbs.vue';
+import UserMenuContent from './UserMenuContent.vue';
 
 interface Props {
     breadcrumbs?: TBreadcrumb[];

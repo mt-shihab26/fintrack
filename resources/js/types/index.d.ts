@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-vue-next';
 
 export type TBreadcrumb = {
     title: string;
-    href: string;
+    href?: string;
 };
 
 export type TNavItem = {
