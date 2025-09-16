@@ -2,7 +2,7 @@ import type { NavItem } from '@/types';
 
 import { dashboard } from '@/routes';
 
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { LayoutGrid, User } from 'lucide-vue-next';
 
 export const mainNavItems: NavItem[] = [
     {
@@ -14,13 +14,8 @@ export const mainNavItems: NavItem[] = [
 
 export const footerNavItems: NavItem[] = [
     {
-        title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
+        title: 'Profile',
+        href: '/profile',
+        icon: User,
     },
 ];
