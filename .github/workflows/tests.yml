@@ -19,12 +19,6 @@ jobs:
           php-version: '8.4'
           coverage: xdebug
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
@@ -39,9 +33,6 @@ jobs:
 
       - name: Generate Application Key
         run: php artisan key:generate
-
-      - name: Build Assets
-        run: bun run build
 
       - name: Run PHP Tests
         run: composer run-script test

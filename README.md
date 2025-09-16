@@ -10,68 +10,68 @@ Fintrack empowers individuals and families to track their spending, manage budge
 
 ### \[ ] `/` – Dashboard
 
-* [ ] Summary cards: total income, total expenses, net balance
-* [ ] Recent transactions table with quick actions
-* [ ] Spending breakdown by category (pie chart)
-* [ ] Monthly trends visualization (bar/line chart)
-* [ ] Budget progress bars with alerts when limits are exceeded
+- [ ] Summary cards: total income, total expenses, net balance
+- [ ] Recent transactions table with quick actions
+- [ ] Spending breakdown by category (pie chart)
+- [ ] Monthly trends visualization (bar/line chart)
+- [ ] Budget progress bars with alerts when limits are exceeded
 
 ---
 
 ### \[ ] `/transactions` – Transactions Management
 
-* [ ] Transaction list with filters (date range, type, category, amount)
-* [ ] Create new transaction with fields: type (income/expense), amount, category, date, notes, tags, receipt upload
-* [ ] Edit and delete transactions with confirmation modals
-* [ ] Bulk delete or export transactions as CSV
-* [ ] Receipt preview in modal or sidebar
+- [ ] Transaction list with filters (date range, type, category, amount)
+- [ ] Create new transaction with fields: type (income/expense), amount, category, date, notes, tags, receipt upload
+- [ ] Edit and delete transactions with confirmation modals
+- [ ] Bulk delete or export transactions as CSV
+- [ ] Receipt preview in modal or sidebar
 
 ---
 
 ### \[ ] `/budgets` – Budgeting System
 
-* [ ] List budgets with progress indicators (e.g., “Food: \$320/\$500”)
-* [ ] Create and edit budgets (set amount, category, and duration: monthly/weekly)
-* [ ] Visual alerts when budget exceeds threshold
-* [ ] Budget history to track past performance
+- [ ] List budgets with progress indicators (e.g., “Food: \$320/\$500”)
+- [ ] Create and edit budgets (set amount, category, and duration: monthly/weekly)
+- [ ] Visual alerts when budget exceeds threshold
+- [ ] Budget history to track past performance
 
 ---
 
 ### \[ ] `/categories` – Categories Management
 
-* [ ] Default categories (Food, Rent, Transport, Salary, etc.) seeded automatically
-* [ ] User-defined categories (create, edit, delete)
-* [ ] Separate income and expense categories
-* [ ] Category usage stats (transactions count and total spent/earned)
+- [ ] Default categories (Food, Rent, Transport, Salary, etc.) seeded automatically
+- [ ] User-defined categories (create, edit, delete)
+- [ ] Separate income and expense categories
+- [ ] Category usage stats (transactions count and total spent/earned)
 
 ---
 
 ### \[ ] `/profile` – User Profile & Settings
 
-* [ ] Update name, email, password, and avatar
-* [ ] Currency preference (USD, EUR, etc.)
-* [ ] Dark/light mode toggle
-* [ ] Delete account option
+- [ ] Update name, email, password, and avatar
+- [ ] Currency preference (USD, EUR, etc.)
+- [ ] Dark/light mode toggle
+- [ ] Delete account option
 
 ---
 
 ### Future Enhancements (Optional)
 
-* Recurring transactions (e.g., monthly rent, salary)
-* Shared accounts / multi-user mode for family or group tracking
-* Notifications & reminders (email or in-app) for bills and budgets
-* Export reports as PDF/CSV
-* AI-powered insights for spending habits
-* PWA support for offline tracking
+- Recurring transactions (e.g., monthly rent, salary)
+- Shared accounts / multi-user mode for family or group tracking
+- Notifications & reminders (email or in-app) for bills and budgets
+- Export reports as PDF/CSV
+- AI-powered insights for spending habits
+- PWA support for offline tracking
 
 ---
 
 ## Tech Stack
 
-* **Language**: PHP, TypeScript 
-* **Framework**: Laravel, Vue.js, Inertia.js
-* **Database**: SQLite 
-* **Styling**: Tailwind CSS, shadcn/vue 
+- **Language**: PHP, TypeScript
+- **Framework**: Laravel, Vue.js, Inertia.js
+- **Database**: SQLite
+- **Styling**: Tailwind CSS, shadcn/vue
 
 ---
 
@@ -79,10 +79,10 @@ Fintrack empowers individuals and families to track their spending, manage budge
 
 ### Prerequisites
 
-* PHP 8.4+
-* Composer
-* SQLite 
-* [Bun](https://bun.sh/) (instead of npm/yarn)
+- PHP 8.4+
+- Composer
+- SQLite
+- [Bun](https://bun.sh/) (instead of npm/yarn)
 
 ### Installation
 
@@ -133,4 +133,3 @@ composer dev
 ## License
 
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
