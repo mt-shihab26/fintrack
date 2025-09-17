@@ -58,5 +58,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
     Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions');
-    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.transactions');
+    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.budgets');
+    Route::get('/categories', fn () => inertia('app/Categories'))->name('app.categories');
 });
