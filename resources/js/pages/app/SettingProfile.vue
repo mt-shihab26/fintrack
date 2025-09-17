@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { send } from '@/routes/verification';
 import { usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Form, Link } from '@inertiajs/vue3';
+import { Upload } from 'lucide-vue-next';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 import InputError from '@/components/elements/InputError.vue';
@@ -13,6 +16,8 @@ import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
+
+const fileInput = ref<HTMLInputElement | null>(null);
 
 defineProps<{
     mustVerifyEmail: boolean;
@@ -27,9 +32,34 @@ const user = page.props.auth.user;
     <AppLayout :breadcrumbs="[{ title: 'Profile settings' }]">
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
-                <HeadingSmall title="Profile information" description="Update your name and email address" />
+                <HeadingSmall title="Profile information" description="Update your profile picture, name and email address" />
 
-                <Form :action="route('profile.update')" method="patch" class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
+                <Form :action="route('profile.update')" method="patch" enctype="multipart/form-data" class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
+                    <div class="grid gap-4">
+                        <Label>Profile Avatar</Label>
+                        <div class="flex items-center gap-6">
+                            <Avatar class="h-20 w-20">
+                                <AvatarImage :src="user.avatar" :alt="user.name" />
+                                <AvatarFallback class="text-lg">{{ user.name?.charAt(0)?.toUpperCase() || 'U' }}</AvatarFallback>
+                            </Avatar>
+
+                            <div class="flex flex-col gap-2">
+                                <input ref="fileInput" type="file" name="avatar" accept="image/*" class="hidden" />
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    @click="fileInput?.click()"
+                                    class="flex items-center gap-2"
+                                    data-test="upload-avatar-button"
+                                >
+                                    <Upload class="h-4 w-4" />
+                                    Choose photo
+                                </Button>
+                                <p class="text-xs text-muted-foreground">JPG, PNG or GIF. Max 2MB.</p>
+                            </div>
+                        </div>
+                        <InputError :message="errors.avatar" />
+                    </div>
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
                         <Input
