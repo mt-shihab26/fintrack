@@ -82,4 +82,3 @@ const onTrackCount = computed(() => props.budgets.filter((b) => (b.spent / b.amo
         </Card>
     </div>
 </template>
-

@@ -106,4 +106,3 @@ const handleSubmit = (e: Event) => {
         </CardContent>
     </Card>
 </template>
-

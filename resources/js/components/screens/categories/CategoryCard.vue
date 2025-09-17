@@ -77,4 +77,3 @@ const averagePerTransaction = computed(() => {
         </CardContent>
     </Card>
 </template>
-
