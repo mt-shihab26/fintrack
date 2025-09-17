@@ -20,7 +20,6 @@ const title = computed(() => {
 
 <template>
     <Head :title="title" />
-    <slot />
     <AppShell class="flex-col">
         <AppHeader :breadcrumbs="breadcrumbs" />
         <AppContent>
