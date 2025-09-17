@@ -29,12 +29,31 @@ const user = page.props.auth.user;
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="[{ title: 'Profile settings' }]">
+    <AppLayout
+        :breadcrumbs="[
+            {
+                home: true,
+            },
+            {
+                title: 'Settings',
+                href: route('app.settings.index'),
+            },
+            {
+                title: 'Profile settings',
+            },
+        ]"
+    >
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your profile picture, name and email address" />
 
-                <Form :action="route('profile.update')" method="patch" enctype="multipart/form-data" class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
+                <Form
+                    :action="route('profile.update')"
+                    method="patch"
+                    enctype="multipart/form-data"
+                    class="space-y-6"
+                    v-slot="{ errors, processing, recentlySuccessful }"
+                >
                     <div class="grid gap-4">
                         <Label>Profile Avatar</Label>
                         <div class="flex items-center gap-6">

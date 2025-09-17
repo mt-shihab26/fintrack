@@ -55,7 +55,7 @@ const handleDeleteCategory = (id: string) => {
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="[{ title: 'Categories' }]">
+    <AppLayout :breadcrumbs="[{ home: true }, { title: 'Categories' }]">
         <div class="space-y-6">
             <div class="flex items-center justify-between">
                 <div>

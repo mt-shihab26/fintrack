@@ -3,31 +3,33 @@ import PasswordController from '@/actions/App/Http/Controllers/App/PasswordContr
 import InputError from '@/components/elements/InputError.vue';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
-import { edit } from '@/routes/password';
-import { Form, Head } from '@inertiajs/vue3';
+import { Form } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { type TBreadcrumb } from '@/types';
-
-const breadcrumbItems: TBreadcrumb[] = [
-    {
-        title: 'Password settings',
-        href: edit().url,
-    },
-];
 
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Password settings" />
-
+    <AppLayout
+        :breadcrumbs="[
+            {
+                home: true,
+            },
+            {
+                title: 'Settings',
+                href: route('app.settings.index'),
+            },
+            {
+                title: 'Password settings',
+            },
+        ]"
+    >
         <SettingsLayout>
             <div class="space-y-6">
                 <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />

@@ -41,7 +41,7 @@ const handleDeleteBudget = (id: string) => {
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="[{ title: 'Budgets' }]">
+    <AppLayout :breadcrumbs="[{ home: true }, { title: 'Budgets' }]">
         <div class="space-y-6">
             <div class="flex items-center justify-between">
                 <div>

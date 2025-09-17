@@ -48,7 +48,20 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="[{ title: 'Preferences' }]">
+    <AppLayout
+        :breadcrumbs="[
+            {
+                home: true,
+            },
+            {
+                title: 'Settings',
+                href: route('app.settings.index'),
+            },
+            {
+                title: 'Preferences settings',
+            },
+        ]"
+    >
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Preferences" description="Update your general and notification preferences" />

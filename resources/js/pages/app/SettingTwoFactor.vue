@@ -7,9 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
-import { disable, enable, show } from '@/routes/two-factor';
-import { TBreadcrumb } from '@/types';
-import { Form, Head } from '@inertiajs/vue3';
+import { disable, enable } from '@/routes/two-factor';
+import { Form } from '@inertiajs/vue3';
 import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
 import { onUnmounted, ref } from 'vue';
 
@@ -23,13 +22,6 @@ withDefaults(defineProps<Props>(), {
     twoFactorEnabled: false,
 });
 
-const breadcrumbs: TBreadcrumb[] = [
-    {
-        title: 'Two-Factor Authentication',
-        href: show.url(),
-    },
-];
-
 const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth();
 const showSetupModal = ref<boolean>(false);
 
@@ -39,8 +31,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Two-Factor Authentication" />
+    <AppLayout
+        :breadcrumbs="[
+            {
+                home: true,
+            },
+            {
+                title: 'Settings',
+                href: route('app.settings.index'),
+            },
+            {
+                title: 'Two-Factor settings',
+            },
+        ]"
+    >
         <SettingsLayout>
             <div class="space-y-6">
                 <HeadingSmall title="Two-Factor Authentication" description="Manage your two-factor authentication settings" />
