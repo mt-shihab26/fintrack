@@ -1,4 +1,4 @@
-export interface Transaction {
+export interface TTransaction {
     id: string;
     type: 'income' | 'expense';
     amount: number;
@@ -46,7 +46,7 @@ export interface UserPreferences {
     language: string;
 }
 
-export const mockTransactions: Transaction[] = [
+export const mockTransactions: TTransaction[] = [
     {
         id: '1',
         type: 'expense',
@@ -265,23 +265,23 @@ export const mockUserPreferences: UserPreferences = {
     language: 'en',
 };
 
-export const calculateTotalIncome = (transactions: Transaction[]): number => {
+export const calculateTotalIncome = (transactions: TTransaction[]): number => {
     return transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
 };
 
-export const calculateTotalExpenses = (transactions: Transaction[]): number => {
+export const calculateTotalExpenses = (transactions: TTransaction[]): number => {
     return transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
 };
 
-export const calculateNetBalance = (transactions: Transaction[]): number => {
+export const calculateNetBalance = (transactions: TTransaction[]): number => {
     return calculateTotalIncome(transactions) - calculateTotalExpenses(transactions);
 };
 
-export const getTransactionsByCategory = (transactions: Transaction[], category: string): Transaction[] => {
+export const getTransactionsByCategory = (transactions: TTransaction[], category: string): TTransaction[] => {
     return transactions.filter((t) => t.category === category);
 };
 
-export const getTransactionsByDateRange = (transactions: Transaction[], startDate: string, endDate: string): Transaction[] => {
+export const getTransactionsByDateRange = (transactions: TTransaction[], startDate: string, endDate: string): TTransaction[] => {
     return transactions.filter((t) => t.date >= startDate && t.date <= endDate);
 };
 
