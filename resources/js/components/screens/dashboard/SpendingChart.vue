@@ -21,6 +21,14 @@ const colors = expenseCategories.map((cat) => cat.color);
         </CardHeader>
         <CardContent>
             <DonutChart index="name" :category="'total'" :data="data" :colors="colors" :type="'pie'" />
+
+            <!-- Color Legend -->
+            <div class="mt-4 grid grid-cols-2 gap-2">
+                <div v-for="category in expenseCategories" :key="category.id" class="flex items-center gap-2">
+                    <div class="h-3 w-3 rounded-full" :style="{ backgroundColor: category.color }"></div>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ category.name }}</span>
+                </div>
+            </div>
         </CardContent>
     </Card>
 </template>
