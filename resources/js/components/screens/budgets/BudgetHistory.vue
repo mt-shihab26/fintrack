@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart } from '@/components/ui/chart-line';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-// Mock historical data
 const mockHistoryData = [
     { month: 'Jan', Food: 450, Transport: 180, Entertainment: 280, Utilities: 120 },
     { month: 'Feb', Food: 520, Transport: 160, Entertainment: 320, Utilities: 110 },
@@ -20,7 +19,7 @@ const selectedPeriod = ref('6months');
 const categories = ['Food', 'Transport', 'Entertainment', 'Utilities'] as any;
 const colors = ['#f59e0b', '#059669', '#7c3aed', '#4b5563'];
 
-const yFormatter = (tick: number | Date, i: number, ticks: number[] | Date[]) => `$${tick}`;
+const yFormatter = (tick: number | Date) => `$${tick}` as any;
 </script>
 
 <template>

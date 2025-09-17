@@ -22,7 +22,6 @@ const percentage = computed(() => (props.budget.spent / props.budget.amount) * 1
 const remaining = computed(() => props.budget.amount - props.budget.spent);
 const isOverBudget = computed(() => percentage.value > 100);
 const isNearLimit = computed(() => percentage.value > 80 && percentage.value <= 100);
-const isOnTrack = computed(() => percentage.value <= 80);
 
 const getStatusColor = computed(() => {
     if (isOverBudget.value) return 'text-destructive';
