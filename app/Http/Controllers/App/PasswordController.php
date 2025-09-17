@@ -14,7 +14,7 @@ class PasswordController extends Controller
      */
     public function edit()
     {
-        return inertia('/app/SettingPassword');
+        return inertia('app/SettingPassword');
     }
 
     /**

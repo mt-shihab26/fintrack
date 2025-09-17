@@ -3,9 +3,8 @@ import type { TBreadcrumb } from '@/types';
 import type { InertiaLinkProps } from '@inertiajs/vue3';
 
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { getInitials } from '@/composables/useInitials';
 import { mainNavLinks, rightNavLinks } from '@/layouts/app-layout/nav-links';
-import { toUrl, urlIsActive } from '@/lib/utils';
+import { getInitials, toUrl, urlIsActive } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
@@ -19,8 +18,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Link } from '@inertiajs/vue3';
 import { Menu, Search } from 'lucide-vue-next';
 
-import AppLogo from './AppLogo.vue';
 import AppLogoIcon from '@/components/elements/AppLogoIcon.vue';
+import AppLogo from './AppLogo.vue';
 import Breadcrumbs from './Breadcrumbs.vue';
 import UserMenuContent from './UserMenuContent.vue';
 
