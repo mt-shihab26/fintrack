@@ -21,7 +21,7 @@ const totalExpenses = computed(() => expenseCategories.value.reduce((sum, cat) =
 const totalTransactions = computed(() => props.categories.reduce((sum, cat) => sum + cat.transactionCount, 0));
 
 const chartData = computed(() =>
-    props.categories
+    [...props.categories]
         .sort((a, b) => b.totalAmount - a.totalAmount)
         .slice(0, 6)
         .map((cat) => ({
