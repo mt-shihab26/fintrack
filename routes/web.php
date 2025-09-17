@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/settings/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/settings/export', [ProfileController::class, 'update'])->name('profile.export');
     Route::delete('/settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/settings/password', [PasswordController::class, 'edit'])->name('password.edit');
@@ -58,4 +59,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
     Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions');
+    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.budgets');
+    Route::get('/categories', fn () => inertia('app/Categories'))->name('app.categories');
 });

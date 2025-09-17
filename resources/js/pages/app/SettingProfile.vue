@@ -1,46 +1,35 @@
 <script setup lang="ts">
-import ProfileController from '@/actions/App/Http/Controllers/App/ProfileController';
-import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import { Form, Head, Link, usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 
-import DeleteUser from '@/components/elements/DeleteUser.vue';
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputError from '@/components/elements/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Form, Link } from '@inertiajs/vue3';
+
+import HeadingSmall from '@/components/elements/HeadingSmall.vue';
+import InputError from '@/components/elements/InputError.vue';
+import DangerZone from '@/components/screens/settings/DangerZone.vue';
+import DataExport from '@/components/screens/settings/DataExport.vue';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
-import { type TBreadcrumb } from '@/types';
 
-interface Props {
+defineProps<{
     mustVerifyEmail: boolean;
     status?: string;
-}
-
-defineProps<Props>();
-
-const breadcrumbItems: TBreadcrumb[] = [
-    {
-        title: 'Profile settings',
-        href: edit().url,
-    },
-];
+}>();
 
 const page = usePage();
 const user = page.props.auth.user;
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Profile settings" />
-
+    <AppLayout :breadcrumbs="[{ title: 'Profile settings' }]">
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
-                <Form v-bind="ProfileController.update.form()" class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
+                <Form :action="route('profile.update')" method="patch" class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
                         <Input
@@ -102,7 +91,8 @@ const user = page.props.auth.user;
                 </Form>
             </div>
 
-            <DeleteUser />
+            <DataExport />
+            <DangerZone />
         </SettingsLayout>
     </AppLayout>
 </template>

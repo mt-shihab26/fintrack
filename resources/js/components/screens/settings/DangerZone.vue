@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import ProfileController from '@/actions/App/Http/Controllers/App/ProfileController';
-import { Form } from '@inertiajs/vue3';
-import { ref } from 'vue';
-
-// Components
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputError from '@/components/elements/InputError.vue';
-import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogClose,
@@ -17,8 +9,16 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+
+import { ref } from 'vue';
+
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Form } from '@inertiajs/vue3';
+
+import HeadingSmall from '@/components/elements/HeadingSmall.vue';
+import InputError from '@/components/elements/InputError.vue';
 
 const passwordInput = ref<InstanceType<typeof Input> | null>(null);
 </script>
@@ -37,7 +37,8 @@ const passwordInput = ref<InstanceType<typeof Input> | null>(null);
                 </DialogTrigger>
                 <DialogContent>
                     <Form
-                        v-bind="ProfileController.destroy.form()"
+                        :action="route('profile.destroy')"
+                        method="delete"
                         reset-on-success
                         @error="() => passwordInput?.$el?.focus()"
                         :options="{
