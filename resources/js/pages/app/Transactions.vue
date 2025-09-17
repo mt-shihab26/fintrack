@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TTransactionFilters } from '@/components/transactions/screens/TransactionFilters.vue';
+import type { TTransactionFilters } from '@/components/screens/transactions/TransactionFilters.vue';
 import type { TTransaction } from '@/lib/mock-data';
 
 import { mockTransactions } from '@/lib/mock-data';
