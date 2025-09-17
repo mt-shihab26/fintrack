@@ -84,10 +84,7 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="USD">USD ($)</SelectItem>
-                                            <SelectItem value="EUR">EUR (€)</SelectItem>
-                                            <SelectItem value="GBP">GBP (£)</SelectItem>
-                                            <SelectItem value="JPY">JPY (¥)</SelectItem>
-                                            <SelectItem value="CAD">CAD (C$)</SelectItem>
+                                            <SelectItem value="BTD">BTD (৳)</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <InputError class="mt-2" :message="errors.currency" />
