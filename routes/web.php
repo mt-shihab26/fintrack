@@ -57,4 +57,5 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
+    Route::get('/transactions', fn () => inertia('Welcome'))->name('app.transactions');
 });
