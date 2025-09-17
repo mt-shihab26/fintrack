@@ -7,7 +7,7 @@
         "dev": "vite",
         "test": "bun test",
         "format": "prettier --write .",
-        "lint": "bun run build && vue-tsc && eslint . --fix"
+        "lint": "vue-tsc && eslint . --fix"
     },
     "dependencies": {
         "@inertiajs/vue3": "^2.1.6",

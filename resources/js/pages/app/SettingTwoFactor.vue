@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import HeadingSmall from '@/components/HeadingSmall.vue';
-import TwoFactorRecoveryCodes from '@/components/TwoFactorRecoveryCodes.vue';
-import TwoFactorSetupModal from '@/components/TwoFactorSetupModal.vue';
+import HeadingSmall from '@/components/elements/HeadingSmall.vue';
+import TwoFactorRecoveryCodes from '@/components/elements/TwoFactorRecoveryCodes.vue';
+import TwoFactorSetupModal from '@/components/elements/TwoFactorSetupModal.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
+import AppLayout from '@/layouts/app-layout/Layout.vue';
+import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 import { disable, enable, show } from '@/routes/two-factor';
 import { TBreadcrumb } from '@/types';
 import { Form, Head } from '@inertiajs/vue3';

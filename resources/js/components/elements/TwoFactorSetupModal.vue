@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/InputError.vue';
+import InputError from '@/components/elements/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';

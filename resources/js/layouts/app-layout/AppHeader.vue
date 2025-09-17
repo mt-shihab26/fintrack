@@ -20,7 +20,7 @@ import { Link } from '@inertiajs/vue3';
 import { Menu, Search } from 'lucide-vue-next';
 
 import AppLogo from './AppLogo.vue';
-import AppLogoIcon from './AppLogoIcon.vue';
+import AppLogoIcon from '@/components/elements/AppLogoIcon.vue';
 import Breadcrumbs from './Breadcrumbs.vue';
 import UserMenuContent from './UserMenuContent.vue';
 

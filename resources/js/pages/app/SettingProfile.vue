@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import ProfileController from '@/actions/App/Http/Controllers/App/ProfileController';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
 import { Form, Head, Link, usePage } from '@inertiajs/vue3';
 
-import DeleteUser from '@/components/DeleteUser.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
-import InputError from '@/components/InputError.vue';
+import DeleteUser from '@/components/elements/DeleteUser.vue';
+import HeadingSmall from '@/components/elements/HeadingSmall.vue';
+import InputError from '@/components/elements/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
+import AppLayout from '@/layouts/app-layout/Layout.vue';
+import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 import { type TBreadcrumb } from '@/types';
 
 interface Props {

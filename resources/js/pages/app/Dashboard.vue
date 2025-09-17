@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AppLayout } from '@/layouts/app-layout';
 
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import PlaceholderPattern from '@/components/elements/PlaceholderPattern.vue';
 </script>
 
 <template>
