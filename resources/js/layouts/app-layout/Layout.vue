@@ -23,7 +23,9 @@ const title = computed(() => {
     <AppShell class="flex-col">
         <AppHeader :breadcrumbs="breadcrumbs" />
         <AppContent>
-            <slot />
+            <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl px-4 py-8">
+                <slot />
+            </div>
         </AppContent>
     </AppShell>
 </template>
