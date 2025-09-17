@@ -1,34 +1,32 @@
 <script setup lang="ts">
-import Heading from '@/components/elements/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { toUrl, urlIsActive } from '@/lib/utils';
-import { edit as editAppearance } from '@/routes/appearance';
-import { edit as editPassword } from '@/routes/password';
-import { edit as editProfile } from '@/routes/profile';
-import { show } from '@/routes/two-factor';
 import { Link } from '@inertiajs/vue3';
 
-const sidebarNavItems = [
+import Heading from '@/components/elements/Heading.vue';
+
+const sidebarNavItems: { title: string; route: string }[] = [
     {
         title: 'Profile',
-        href: editProfile(),
+        route: 'profile.edit',
+    },
+    {
+        title: 'Preferences',
+        route: 'app.settings.preferences.edit',
     },
     {
         title: 'Password',
-        href: editPassword(),
+        route: 'password.edit',
     },
     {
         title: 'Two-Factor',
-        href: show(),
+        route: 'two-factor.show',
     },
     {
         title: 'Appearance',
-        href: editAppearance(),
+        route: 'appearance.edit',
     },
 ];
-
-const currentPath = typeof window !== undefined ? window.location.pathname : '';
 </script>
 
 <template>
@@ -40,12 +38,12 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
                 <nav class="flex flex-col space-y-1 space-x-0">
                     <Button
                         v-for="item in sidebarNavItems"
-                        :key="toUrl(item.href)"
+                        :key="item.route"
                         variant="ghost"
-                        :class="['w-full justify-start', { 'bg-muted': urlIsActive(item.href, currentPath) }]"
+                        :class="['w-full justify-start', { 'bg-muted': route().current(item.route) }]"
                         as-child
                     >
-                        <Link :href="item.href">
+                        <Link :href="route(item.route)">
                             {{ item.title }}
                         </Link>
                     </Button>

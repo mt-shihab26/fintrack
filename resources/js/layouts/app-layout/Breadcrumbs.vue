@@ -1,14 +1,12 @@
 <script setup lang="ts">
+import type { TBreadcrumb } from '@/types';
+
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Link } from '@inertiajs/vue3';
-
-interface BreadcrumbItemType {
-    title: string;
-    href?: string;
-}
+import { Home } from 'lucide-vue-next';
 
 defineProps<{
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: TBreadcrumb[];
 }>();
 </script>
 
@@ -17,13 +15,21 @@ defineProps<{
         <BreadcrumbList>
             <template v-for="(item, index) in breadcrumbs" :key="index">
                 <BreadcrumbItem>
-                    <template v-if="index === breadcrumbs.length - 1">
-                        <BreadcrumbPage>{{ item.title }}</BreadcrumbPage>
+                    <template v-if="item.home">
+                        <BreadcrumbLink as-child>
+                            <Link :href="item.href ?? route('dashboard')">
+                                <Home v-if="item.home" class="h-4 w-4" />
+                                <span v-else>{{ item.title }}</span>
+                            </Link>
+                        </BreadcrumbLink>
                     </template>
                     <template v-else>
-                        <BreadcrumbLink as-child>
-                            <Link :href="item.href ?? '#'">{{ item.title }}</Link>
-                        </BreadcrumbLink>
+                        <BreadcrumbPage>
+                            <Link :href="item.href">
+                                <Home v-if="item.home" class="h-4 w-4" />
+                                <span v-else>{{ item.title }}</span>
+                            </Link>
+                        </BreadcrumbPage>
                     </template>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator v-if="index !== breadcrumbs.length - 1" />
