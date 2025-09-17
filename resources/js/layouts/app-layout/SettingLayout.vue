@@ -15,9 +15,14 @@ const sidebarNavItems = [
         href: editProfile(),
     },
     {
+        title: 'Preferences',
+        href: route('app.settings.preferences.edit'),
+    },
+    {
         title: 'Password',
         href: editPassword(),
     },
+
     {
         title: 'Two-Factor',
         href: show(),

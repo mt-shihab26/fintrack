@@ -48,12 +48,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/export', [ProfileController::class, 'update'])->name('profile.export');
     Route::delete('/settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/settings/preferences', fn () => inertia('app/SettingPreferences'))->name('app.settings.preferences.edit');
+    Route::patch('/settings/preferences', fn () => '')->name('app.settings.preferences.update');
+
     Route::get('/settings/password', [PasswordController::class, 'edit'])->name('password.edit');
     Route::put('/settings/password', [PasswordController::class, 'update'])->middleware('throttle:6,1')->name('password.update');
 
-    Route::get('settings/appearance', fn () => inertia('app/SettingAppearance'))->name('appearance.edit');
-
-    Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])->name('two-factor.show');
+    Route::get('/settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])->name('two-factor.show');
+    Route::get('/settings/appearance', fn () => inertia('app/SettingAppearance'))->name('appearance.edit');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
