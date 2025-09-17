@@ -7,24 +7,12 @@
         "jsxImportSource": "vue",
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
-        "lib": [
-            "ESNext",
-            "DOM",
-            "DOM.Iterable"
-        ],
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "paths": {
-            "@/*": [
-                "./resources/js/*"
-            ],
-            "ziggy-js": [
-                "./vendor/tightenco/ziggy"
-            ]
+            "@/*": ["./resources/js/*"],
+            "ziggy-js": ["./vendor/tightenco/ziggy"]
         },
-        "types": [
-            "vite/client",
-            "./resources/js/types",
-            "bun-types"
-        ],
+        "types": ["vite/client", "./resources/js/types", "bun-types"],
         "allowJs": true,
         "sourceMap": true,
         "noEmit": true,
@@ -34,10 +22,5 @@
         "strict": true,
         "skipLibCheck": true
     },
-    "include": [
-        "resources/js/**/*.ts",
-        "resources/js/**/*.d.ts",
-        "resources/js/**/*.tsx",
-        "resources/js/**/*.vue"
-    ]
+    "include": ["resources/js/**/*.ts", "resources/js/**/*.d.ts", "resources/js/**/*.tsx", "resources/js/**/*.vue"]
 }
