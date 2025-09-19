@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import type { Budget } from '@/lib/mock-data';
+import type { TBudget } from '@/types/models';
 
-import { mockBudgets } from '@/lib/mock-data';
+import { budgets as fakeBudgets } from '@/lib/mock-data';
 import { ref } from 'vue';
 
 import { Button } from '@/components/ui/button';
+import { AppLayout } from '@/layouts/app-layout';
 import { Plus } from 'lucide-vue-next';
 
 import BudgetCard from '@/components/screens/budgets/BudgetCard.vue';
 import BudgetForm from '@/components/screens/budgets/BudgetForm.vue';
 import BudgetHistory from '@/components/screens/budgets/BudgetHistory.vue';
 import BudgetOverview from '@/components/screens/budgets/BudgetOverview.vue';
-import { AppLayout } from '@/layouts/app-layout';
 
-const budgets = ref<Budget[]>(mockBudgets);
+const budgets = ref<TBudget[]>(fakeBudgets);
 const showForm = ref(false);
-const editingBudget = ref<Budget | null>(null);
+const editingBudget = ref<TBudget | null>(null);
 
-const handleAddBudget = (budgetData: Omit<Budget, 'id' | 'spent'>) => {
-    const newBudget: Budget = {
+const handleAddBudget = (budgetData: Omit<TBudget, 'id' | 'spent'>) => {
+    const newBudget: TBudget = {
         ...budgetData,
         id: Date.now().toString(),
         spent: 0,
@@ -27,7 +27,7 @@ const handleAddBudget = (budgetData: Omit<Budget, 'id' | 'spent'>) => {
     showForm.value = false;
 };
 
-const handleEditBudget = (budgetData: Omit<Budget, 'id' | 'spent'>) => {
+const handleEditBudget = (budgetData: Omit<TBudget, 'id' | 'spent'>) => {
     if (!editingBudget.value) return;
 
     budgets.value = budgets.value.map((b) => (b.id === editingBudget.value!.id ? { ...budgetData, id: b.id, spent: b.spent } : b));

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category } from '@/lib/mock-data';
+import type { TCategory } from '@/types/models';
 
 import { computed } from 'vue';
 
@@ -10,15 +10,15 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { DollarSign, Edit, MoreHorizontal, Receipt, Trash2 } from 'lucide-vue-next';
 
 interface Props {
-    category: Category;
-    onEdit: (category: Category) => void;
+    category: TCategory;
+    onEdit: (category: TCategory) => void;
     onDelete: (id: string) => void;
 }
 
 const props = defineProps<Props>();
 
 const averagePerTransaction = computed(() => {
-    return props.category.transactionCount > 0 ? (props.category.totalAmount / props.category.transactionCount).toFixed(2) : '0.00';
+    return props.category.transaction_count > 0 ? (props.category.total_amount / props.category.transaction_count).toFixed(2) : '0.00';
 });
 </script>
 
@@ -49,8 +49,8 @@ const averagePerTransaction = computed(() => {
         </CardHeader>
         <CardContent class="space-y-4">
             <div class="flex items-center justify-between">
-                <Badge :variant="category.type === 'income' ? 'default' : 'secondary'" class="capitalize">
-                    {{ category.type }}
+                <Badge :variant="category.kind === 'income' ? 'default' : 'secondary'" class="capitalize">
+                    {{ category.kind }}
                 </Badge>
             </div>
 
@@ -59,15 +59,15 @@ const averagePerTransaction = computed(() => {
                     <Receipt class="h-4 w-4 text-muted-foreground" />
                     <div>
                         <p class="text-sm text-muted-foreground">Transactions</p>
-                        <p class="font-semibold">{{ category.transactionCount }}</p>
+                        <p class="font-semibold">{{ category.transaction_count }}</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
                     <DollarSign class="h-4 w-4 text-muted-foreground" />
                     <div>
                         <p class="text-sm text-muted-foreground">Total Amount</p>
-                        <p :class="`font-semibold ${category.type === 'income' ? 'text-primary' : 'text-foreground'}`">
-                            ${{ category.totalAmount.toLocaleString() }}
+                        <p :class="`font-semibold ${category.kind === 'income' ? 'text-primary' : 'text-foreground'}`">
+                            ${{ category.total_amount.toLocaleString() }}
                         </p>
                     </div>
                 </div>

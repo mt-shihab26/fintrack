@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category } from '@/lib/mock-data';
+import type { TCategory } from '@/types/models';
 
 import { computed } from 'vue';
 
@@ -8,26 +8,26 @@ import { BarChart } from '@/components/ui/chart-bar';
 import { Activity, FolderOpen, TrendingDown, TrendingUp } from 'lucide-vue-next';
 
 interface Props {
-    categories: Category[];
+    categories: TCategory[];
 }
 
 const props = defineProps<Props>();
 
-const incomeCategories = computed(() => props.categories.filter((cat) => cat.type === 'income'));
-const expenseCategories = computed(() => props.categories.filter((cat) => cat.type === 'expense'));
+const incomeCategories = computed(() => props.categories.filter((cat) => cat.kind === 'income'));
+const expenseCategories = computed(() => props.categories.filter((cat) => cat.kind === 'expense'));
 
-const totalIncome = computed(() => incomeCategories.value.reduce((sum, cat) => sum + cat.totalAmount, 0));
-const totalExpenses = computed(() => expenseCategories.value.reduce((sum, cat) => sum + cat.totalAmount, 0));
-const totalTransactions = computed(() => props.categories.reduce((sum, cat) => sum + cat.transactionCount, 0));
+const totalIncome = computed(() => incomeCategories.value.reduce((sum, cat) => sum + cat.total_amount, 0));
+const totalExpenses = computed(() => expenseCategories.value.reduce((sum, cat) => sum + cat.total_amount, 0));
+const totalTransactions = computed(() => props.categories.reduce((sum, cat) => sum + cat.transaction_count, 0));
 
 const chartData = computed(() =>
     [...props.categories]
-        .sort((a, b) => b.totalAmount - a.totalAmount)
+        .sort((a, b) => b.total_amount - a.total_amount)
         .slice(0, 6)
         .map((cat) => ({
             name: cat.name,
-            amount: cat.totalAmount,
-            transactions: cat.transactionCount,
+            amount: cat.total_amount,
+            transactions: cat.transaction_count,
             fill: cat.color,
         })),
 );

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Category } from '@/lib/mock-data';
+import type { TCategory } from '@/types/models';
 
-import { mockCategories } from '@/lib/mock-data';
+import { categories as fakeCategories } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Button } from '@/components/ui/button';
@@ -14,36 +14,36 @@ import CategoryCard from '@/components/screens/categories/CategoryCard.vue';
 import CategoryForm from '@/components/screens/categories/CategoryForm.vue';
 import CategoryStats from '@/components/screens/categories/CategoryStats.vue';
 
-const categories = ref<Category[]>(mockCategories);
+const categories = ref<TCategory[]>(fakeCategories);
 const showForm = ref(false);
-const editingCategory = ref<Category | null>(null);
+const editingCategory = ref<TCategory | null>(null);
 const searchTerm = ref('');
 const typeFilter = ref('all');
 
 const filteredCategories = computed(() => {
     return categories.value.filter((category) => {
         const matchesSearch = category.name.toLowerCase().includes(searchTerm.value.toLowerCase());
-        const matchesType = typeFilter.value === 'all' || category.type === typeFilter.value;
+        const matchesType = typeFilter.value === 'all' || category.kind === typeFilter.value;
         return matchesSearch && matchesType;
     });
 });
 
-const handleAddCategory = (categoryData: Omit<Category, 'id' | 'transactionCount' | 'totalAmount'>) => {
-    const newCategory: Category = {
+const handleAddCategory = (categoryData: Omit<TCategory, 'id' | 'transaction_count' | 'total_amount'>) => {
+    const newCategory: TCategory = {
         ...categoryData,
         id: Date.now().toString(),
-        transactionCount: 0,
-        totalAmount: 0,
+        transaction_count: 0,
+        total_amount: 0,
     };
     categories.value = [...categories.value, newCategory];
     showForm.value = false;
 };
 
-const handleEditCategory = (categoryData: Omit<Category, 'id' | 'transactionCount' | 'totalAmount'>) => {
+const handleEditCategory = (categoryData: Omit<TCategory, 'id' | 'transaction_count' | 'total_amount'>) => {
     if (!editingCategory.value) return;
 
     categories.value = categories.value.map((c) =>
-        c.id === editingCategory.value!.id ? { ...categoryData, id: c.id, transactionCount: c.transactionCount, totalAmount: c.totalAmount } : c,
+        c.id === editingCategory.value!.id ? { ...categoryData, id: c.id, transaction_count: c.transaction_count, total_amount: c.total_amount } : c,
     );
     editingCategory.value = null;
     showForm.value = false;

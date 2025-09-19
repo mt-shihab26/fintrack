@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Budget } from '@/lib/mock-data';
+import type { TBudget } from '@/types/models';
 
-import { mockCategories } from '@/lib/mock-data';
+import { categories } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Button } from '@/components/ui/button';
@@ -11,8 +11,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Props {
-    budget?: Budget | null;
-    onSubmit: (budget: Omit<Budget, 'id' | 'spent'>) => void;
+    budget?: TBudget | null;
+    onSubmit: (budget: Omit<TBudget, 'id' | 'spent'>) => void;
     onCancel: () => void;
 }
 
@@ -33,7 +33,7 @@ const handleSubmit = (e: Event) => {
     });
 };
 
-const expenseCategories = computed(() => mockCategories.filter((cat) => cat.type === 'expense'));
+const expenseCategories = computed(() => categories.filter((cat) => cat.kind === 'expense'));
 </script>
 
 <template>

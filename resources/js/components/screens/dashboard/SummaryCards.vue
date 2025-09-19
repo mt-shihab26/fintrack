@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { mockBudgets, mockTransactions } from '@/lib/mock-data';
+import { budgets, transactions } from '@/lib/mock-data';
 
 import { Target, TrendingDown, TrendingUp, Wallet } from 'lucide-vue-next';
 
 import SummaryCard from './SummaryCard.vue';
 
-const totalIncome = mockTransactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+const totalIncome = transactions.filter((t) => t.kind === 'income').reduce((sum, t) => sum + t.amount, 0);
 
-const totalExpenses = mockTransactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+const totalExpenses = transactions.filter((t) => t.kind === 'expense').reduce((sum, t) => sum + t.amount, 0);
 
 const netBalance = totalIncome - totalExpenses;
 
-const totalBudget = mockBudgets.reduce((sum, b) => sum + b.amount, 0);
-const totalSpent = mockBudgets.reduce((sum, b) => sum + b.spent, 0);
+const totalBudget = budgets.reduce((sum, b) => sum + b.amount, 0);
+const totalSpent = budgets.reduce((sum, b) => sum + b.spent, 0);
 const budgetUtilization = (totalSpent / totalBudget) * 100;
 </script>
 

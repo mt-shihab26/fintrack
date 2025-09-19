@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category } from '@/lib/mock-data';
+import type { TCategory } from '@/types/models';
 
 import { ref } from 'vue';
 
@@ -10,8 +10,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Props {
-    category?: Category | null;
-    onSubmit: (category: Omit<Category, 'id' | 'transactionCount' | 'totalAmount'>) => void;
+    category?: TCategory | null;
+    onSubmit: (category: Omit<TCategory, 'id' | 'transaction_count' | 'total_amount'>) => void;
     onCancel: () => void;
 }
 
@@ -32,15 +32,15 @@ const colorOptions = [
 
 const formData = ref({
     name: props.category?.name || '',
-    type: props.category?.type || 'expense',
+    kind: props.category?.kind || 'expense',
     color: props.category?.color || '#059669',
 });
 
-const handleSubmit = (e: Event) => {
+const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     props.onSubmit({
         name: formData.value.name,
-        type: formData.value.type as 'income' | 'expense',
+        kind: formData.value.kind,
         color: formData.value.color,
     });
 };
@@ -61,7 +61,7 @@ const handleSubmit = (e: Event) => {
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <Label for="type">Type</Label>
-                        <Select v-model="formData.type">
+                        <Select v-model="formData.kind">
                             <SelectTrigger>
                                 <SelectValue />
                             </SelectTrigger>
@@ -93,7 +93,7 @@ const handleSubmit = (e: Event) => {
                 <div class="flex items-center gap-2 rounded-lg bg-muted p-3">
                     <div class="h-6 w-6 rounded-full" :style="{ backgroundColor: formData.color }" />
                     <span class="font-medium">{{ formData.name || 'Category Name' }}</span>
-                    <span class="text-sm text-muted-foreground capitalize">({{ formData.type }})</span>
+                    <span class="text-sm text-muted-foreground capitalize">({{ formData.kind }})</span>
                 </div>
 
                 <div class="flex gap-2 pt-4">

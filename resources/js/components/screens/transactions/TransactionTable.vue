@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TTransaction } from '@/lib/mock-data';
+import type { TTransaction } from '@/types/models';
 
 import { computed, ref } from 'vue';
 
@@ -97,13 +97,13 @@ const isAllSelected = computed(() => selectedIds.value.length === props.transact
                                 <div
                                     :class="[
                                         'rounded-full p-1',
-                                        transaction.type === 'income' ? 'bg-primary/10 text-primary' : 'bg-destructive/10 text-destructive',
+                                        transaction.kind === 'income' ? 'bg-primary/10 text-primary' : 'bg-destructive/10 text-destructive',
                                     ]"
                                 >
-                                    <ArrowUpRight v-if="transaction.type === 'income'" class="h-3 w-3" />
+                                    <ArrowUpRight v-if="transaction.kind === 'income'" class="h-3 w-3" />
                                     <ArrowDownRight v-else class="h-3 w-3" />
                                 </div>
-                                <span class="text-sm capitalize">{{ transaction.type }}</span>
+                                <span class="text-sm capitalize">{{ transaction.kind }}</span>
                             </div>
                         </TableCell>
                         <TableCell class="font-medium">{{ transaction.description }}</TableCell>
@@ -111,8 +111,8 @@ const isAllSelected = computed(() => selectedIds.value.length === props.transact
                             <Badge variant="secondary">{{ transaction.category }}</Badge>
                         </TableCell>
                         <TableCell>
-                            <span :class="['font-semibold', transaction.type === 'income' ? 'text-primary' : 'text-foreground']">
-                                {{ transaction.type === 'income' ? '+' : '-' }}${{ formatAmount(transaction.amount) }}
+                            <span :class="['font-semibold', transaction.kind === 'income' ? 'text-primary' : 'text-foreground']">
+                                {{ transaction.kind === 'income' ? '+' : '-' }}${{ formatAmount(transaction.amount) }}
                             </span>
                         </TableCell>
                         <TableCell>{{ formatDate(transaction.date) }}</TableCell>
