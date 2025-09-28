@@ -1,4 +1,3 @@
-import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import { defineConfig } from 'vite';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -14,9 +13,6 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-        wayfinder({
-            formVariants: true,
-        }),
         vue({
             template: {
                 transformAssetUrls: {

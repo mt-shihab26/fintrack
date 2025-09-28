@@ -5,7 +5,6 @@ import type { InertiaLinkProps } from '@inertiajs/vue3';
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { mainNavLinks, rightNavLinks } from '@/layouts/app-layout/nav-links';
 import { getInitials, toUrl, urlIsActive } from '@/lib/utils';
-import { dashboard } from '@/routes';
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -90,7 +89,7 @@ const activeItemStyles = computed(
                     </Sheet>
                 </div>
 
-                <Link :href="dashboard()" class="flex items-center gap-x-2">
+                <Link :href="route('dashboard')" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
 

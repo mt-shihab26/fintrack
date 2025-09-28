@@ -20,7 +20,6 @@
       },
       "devDependencies": {
         "@eslint/js": "^9.35.0",
-        "@laravel/vite-plugin-wayfinder": "^0.1.3",
         "@tailwindcss/vite": "^4.1.13",
         "@types/bun": "^1.2.22",
         "@types/node": "^22.18.5",
@@ -241,8 +240,6 @@
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
 
     "@juggle/resize-observer": ["@juggle/resize-observer@3.4.0", "", {}, "sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA=="],
-
-    "@laravel/vite-plugin-wayfinder": ["@laravel/vite-plugin-wayfinder@0.1.3", "", {}, "sha512-S/21Lzl7lci7LrRo/VsN5AXT02AMf7rs+OPTyt3VPgffBB1wTrzwsPr28sCU0gcR/APhfC1eVIUwpLbAvBmyKw=="],
 
     "@mapbox/geojson-rewind": ["@mapbox/geojson-rewind@0.5.2", "", { "dependencies": { "get-stream": "^6.0.1", "minimist": "^1.2.6" }, "bin": { "geojson-rewind": "geojson-rewind" } }, "sha512-tJaT+RbYGJYStt7wI3cq4Nl4SXxG8W7JDG5DMJu97V25RnbNg3QtQtf+KD+VLjNpWKYsRvXDNmNrBgEETr1ifA=="],
 

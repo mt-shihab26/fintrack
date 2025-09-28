@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout/Layout.vue';
-import { store } from '@/routes/password/confirm';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 </script>
@@ -13,7 +12,7 @@ import { LoaderCircle } from 'lucide-vue-next';
     <AuthLayout title="Confirm your password" description="This is a secure area of the application. Please confirm your password before continuing.">
         <Head title="Confirm password" />
 
-        <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }">
+        <Form method="post" :action="route('password.confirm.store')" reset-on-success v-slot="{ errors, processing }">
             <div class="space-y-6">
                 <div class="grid gap-2">
                     <Label htmlFor="password">Password</Label>

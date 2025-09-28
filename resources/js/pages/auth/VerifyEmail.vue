@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import EmailVerificationNotificationController from '@/actions/App/Http/Controllers/Auth/EmailVerificationNotificationController';
 import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout/Layout.vue';
-import { logout } from '@/routes';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
@@ -20,13 +18,13 @@ defineProps<{
             A new verification link has been sent to the email address you provided during registration.
         </div>
 
-        <Form v-bind="EmailVerificationNotificationController.store.form()" class="space-y-6 text-center" v-slot="{ processing }">
+        <Form :action="route('verification.send')" method="post" class="space-y-6 text-center" v-slot="{ processing }">
             <Button :disabled="processing" variant="secondary">
                 <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
                 Resend verification email
             </Button>
 
-            <TextLink :href="logout()" as="button" class="mx-auto block text-sm"> Log out </TextLink>
+            <TextLink :href="route('logout')" as="button" class="mx-auto block text-sm"> Log out </TextLink>
         </Form>
     </AuthLayout>
 </template>

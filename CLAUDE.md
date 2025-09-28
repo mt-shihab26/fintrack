@@ -13,7 +13,6 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/fortify (FORTIFY) - v1
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
-- laravel/wayfinder (WAYFINDER) - v0
 - tightenco/ziggy (ZIGGY) - v2
 - larastan/larastan (LARASTAN) - v3
 - laravel/pint (PINT) - v1
@@ -23,7 +22,6 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - @inertiajs/vue3 (INERTIA) - v2
 - tailwindcss (TAILWINDCSS) - v4
 - vue (VUE) - v3
-- @laravel/vite-plugin-wayfinder (WAYFINDER) - v0
 - eslint (ESLINT) - v9
 - prettier (PRETTIER) - v3
 

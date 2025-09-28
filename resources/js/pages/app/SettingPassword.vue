@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import PasswordController from '@/actions/App/Http/Controllers/App/PasswordController';
 import InputError from '@/components/elements/InputError.vue';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
@@ -35,7 +34,8 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                 <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
 
                 <Form
-                    v-bind="PasswordController.update.form()"
+                    :action="route('password.update')"
+                    method="put"
                     :options="{
                         preserveScroll: true,
                     }"

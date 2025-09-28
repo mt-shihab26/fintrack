@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AuthenticatedSessionController from '@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
 import InputError from '@/components/elements/InputError.vue';
 import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -7,8 +6,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/auth-layout/Layout.vue';
-import { register } from '@/routes';
-import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
@@ -27,7 +24,8 @@ defineProps<{
         </div>
 
         <Form
-            v-bind="AuthenticatedSessionController.store.form()"
+            :action="route('login')"
+            method="post"
             :reset-on-success="['password']"
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
@@ -51,7 +49,7 @@ defineProps<{
                 <div class="grid gap-2">
                     <div class="flex items-center justify-between">
                         <Label for="password">Password</Label>
-                        <TextLink v-if="canResetPassword" :href="request()" class="text-sm" :tabindex="5"> Forgot password? </TextLink>
+                        <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5"> Forgot password? </TextLink>
                     </div>
                     <Input
                         id="password"
@@ -80,7 +78,7 @@ defineProps<{
 
             <div class="text-center text-sm text-muted-foreground">
                 Don't have an account?
-                <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
+                <TextLink :href="route('register')" :tabindex="5">Sign up</TextLink>
             </div>
         </Form>
     </AuthBase>
