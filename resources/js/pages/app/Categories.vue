@@ -15,43 +15,20 @@ import CategoryForm from '@/components/screens/categories/CategoryForm.vue';
 import CategoryStats from '@/components/screens/categories/CategoryStats.vue';
 
 const categories = ref<TCategory[]>(fakeCategories);
+
 const showForm = ref(false);
-const editingCategory = ref<TCategory | null>(null);
+const categoryForm = ref<TCategory | null>(null);
+
 const searchTerm = ref('');
 const typeFilter = ref('all');
 
-const filteredCategories = computed(() => {
-    return categories.value.filter((category) => {
+const filteredCategories = computed(() =>
+    categories.value.filter((category) => {
         const matchesSearch = category.name.toLowerCase().includes(searchTerm.value.toLowerCase());
         const matchesType = typeFilter.value === 'all' || category.kind === typeFilter.value;
         return matchesSearch && matchesType;
-    });
-});
-
-const handleAddCategory = (categoryData: Omit<TCategory, 'id' | 'transaction_count' | 'total_amount'>) => {
-    const newCategory: TCategory = {
-        ...categoryData,
-        id: Date.now().toString(),
-        transaction_count: 0,
-        total_amount: 0,
-    };
-    categories.value = [...categories.value, newCategory];
-    showForm.value = false;
-};
-
-const handleEditCategory = (categoryData: Omit<TCategory, 'id' | 'transaction_count' | 'total_amount'>) => {
-    if (!editingCategory.value) return;
-
-    categories.value = categories.value.map((c) =>
-        c.id === editingCategory.value!.id ? { ...categoryData, id: c.id, transaction_count: c.transaction_count, total_amount: c.total_amount } : c,
-    );
-    editingCategory.value = null;
-    showForm.value = false;
-};
-
-const handleDeleteCategory = (id: string) => {
-    categories.value = categories.value.filter((c) => c.id !== id);
-};
+    }),
+);
 </script>
 
 <template>
@@ -62,29 +39,25 @@ const handleDeleteCategory = (id: string) => {
                     <h1 class="text-3xl font-bold text-balance">Categories</h1>
                     <p class="text-pretty text-muted-foreground">Organize your transactions with custom categories and track usage statistics.</p>
                 </div>
-                <Button @click="() => (showForm = true)">
+                <Button @click="showForm = true">
                     <Plus class="mr-2 h-4 w-4" />
                     Add Category
                 </Button>
             </div>
 
-            <!-- Category Form -->
             <CategoryForm
                 v-if="showForm"
-                :category="editingCategory"
-                :onSubmit="editingCategory ? handleEditCategory : handleAddCategory"
-                :onCancel="
+                :category="categoryForm"
+                :cancel="
                     () => {
                         showForm = false;
-                        editingCategory = null;
+                        categoryForm = null;
                     }
                 "
             />
 
-            <!-- Category Statistics -->
             <CategoryStats :categories="categories" />
 
-            <!-- Filters -->
             <div class="flex gap-4">
                 <div class="relative flex-1">
                     <Search class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
@@ -102,7 +75,6 @@ const handleDeleteCategory = (id: string) => {
                 </Select>
             </div>
 
-            <!-- Categories Grid -->
             <div>
                 <div class="mb-4 flex items-center justify-between">
                     <h2 class="text-xl font-semibold">Your Categories</h2>
@@ -115,11 +87,15 @@ const handleDeleteCategory = (id: string) => {
                         :category="category"
                         :onEdit="
                             (category) => {
-                                editingCategory = category;
+                                categoryForm = category;
                                 showForm = true;
                             }
                         "
-                        :onDelete="handleDeleteCategory"
+                        :onDelete="
+                            (id: string) => {
+                                categories = categories.filter((c) => c.id !== id);
+                            }
+                        "
                     />
                 </div>
                 <div v-if="filteredCategories.length === 0" class="py-8 text-center text-muted-foreground">
