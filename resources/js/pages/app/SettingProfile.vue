@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Link } from '@inertiajs/vue3';
 import { Upload } from 'lucide-vue-next';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';

@@ -28,26 +28,33 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        $user = $request->user();
+
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($request->user()->id)],
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'email' => ['sometimes', 'required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
             'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
 
+        $data = [
+            'name' => $validated['name'] ?? $user->name,
+            'email' => $validated['email'] ?? $user->email,
+        ];
+
         if ($request->hasFile('avatar')) {
-            if ($request->user()->avatar) {
-                Storage::public()->delete($request->user()->avatar);
+            if ($user->avatar) {
+                Storage::public()->delete($user->avatar);
             }
-            $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
 
-        $request->user()->fill($validated);
+        $user->fill($data);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
