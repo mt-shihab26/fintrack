@@ -6,8 +6,13 @@ export type TUser = {
     id: TId;
     name: string;
     email: string;
-    avatar: string | null;
     email_verified_at: string | null;
+    avatar: string | null;
+    currency: TCurrency;
+    email_notifications: boolean;
+    push_notifications: boolean;
+    budget_alerts: boolean;
+    weekly_reports: boolean;
     created_at: string;
     updated_at: string;
 };

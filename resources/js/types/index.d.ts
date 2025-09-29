@@ -14,11 +14,10 @@ export type TNavItem = {
     isActive?: boolean;
 };
 
+type TFlashItem = { message: string; timestamp: string };
+
 export type TAppProps = {
     name: string;
     auth: { user: TUser };
-    flash: {
-        success: { message: string; timestamp: string } | null;
-        error: { message: string; timestamp: string } | null;
-    };
+    flash: { success: TFlashItem | null; error: TFlashItem | null };
 };

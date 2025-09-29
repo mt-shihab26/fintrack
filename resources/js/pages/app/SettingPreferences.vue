@@ -1,50 +1,35 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import type { TAppProps } from '@/types';
+import type { TCurrency } from '@/types/enums';
+
+import { useForm, usePage } from '@inertiajs/vue3';
 
 import { Button } from '@/components/ui/button';
+import { Error } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Form } from '@inertiajs/vue3';
+import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import { Error } from '@/components/ui/input';
-import AppLayout from '@/layouts/app-layout/Layout.vue';
-import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 
-interface UserPreferences {
-    currency: string;
-    theme: string;
-    notifications: {
-        email: boolean;
-        push: boolean;
-        budgetAlerts: boolean;
-        weeklyReports: boolean;
-    };
-    dateFormat: string;
-    language: string;
-}
+const page = usePage<TAppProps>();
 
-defineProps<{
-    preferences?: UserPreferences;
-}>();
+const user = page.props.auth.user;
 
-const formData = reactive<UserPreferences>({
-    currency: 'USD',
-    theme: 'system',
-    notifications: {
-        email: true,
-        push: false,
-        budgetAlerts: true,
-        weeklyReports: true,
-    },
-    dateFormat: 'MM/DD/YYYY',
-    language: 'en',
+const form = useForm<{
+    currency: TCurrency;
+    email_notifications: boolean;
+    push_notifications: boolean;
+    budget_alerts: boolean;
+    weekly_reports: boolean;
+}>({
+    currency: user.currency ?? 'BDT',
+    push_notifications: user.push_notifications ?? true,
+    email_notifications: user.email_notifications ?? false,
+    budget_alerts: user.budget_alerts ?? false,
+    weekly_reports: user.weekly_reports ?? false,
 });
-
-const updateNotification = (key: keyof typeof formData.notifications, value: boolean) => {
-    formData.notifications[key] = value;
-};
 </script>
 
 <template>
@@ -62,32 +47,29 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
             },
         ]"
     >
-        <SettingsLayout>
+        <SettingLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Preferences" description="Update your general and notification preferences" />
 
-                <Form
-                    :action="route('app.settings.preferences.update')"
-                    method="patch"
-                    class="space-y-6"
-                    v-slot="{ errors, processing, recentlySuccessful }"
-                >
+                {{ form.data() }}
+
+                <form @submit.prevent="form.patch(route('app.settings.preferences.update'))" class="space-y-6">
                     <div class="space-y-6">
                         <div class="space-y-4">
                             <h3 class="text-lg font-medium">General</h3>
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 <div class="grid gap-2">
                                     <Label for="currency">Currency</Label>
-                                    <Select v-model="formData.currency" name="currency">
+                                    <Select v-model="form.currency" name="currency">
                                         <SelectTrigger>
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
+                                            <SelectItem value="BDT">BDT (৳)</SelectItem>
                                             <SelectItem value="USD">USD ($)</SelectItem>
-                                            <SelectItem value="BTD">BTD (৳)</SelectItem>
                                         </SelectContent>
                                     </Select>
-                                    <Error class="mt-2" :message="errors.currency" />
+                                    <Error class="mt-2" :message="form.errors.currency" />
                                 </div>
                             </div>
                         </div>
@@ -97,28 +79,24 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between">
                                     <div class="space-y-0.5">
-                                        <Label for="email-notifications">Email Notifications</Label>
-                                        <p class="text-sm text-muted-foreground">Receive notifications via email</p>
+                                        <Label for="push-notifications">Push Notifications</Label>
+                                        <p class="text-sm text-muted-foreground">Receive push notifications in browser</p>
                                     </div>
-                                    <Switch
-                                        id="email-notifications"
-                                        name="notifications[email]"
-                                        :checked="formData.notifications.email"
-                                        @update:checked="(checked: boolean) => updateNotification('email', checked)"
-                                    />
+                                    <div class="flex flex-col gap-2">
+                                        <Switch id="push-notifications" name="push_notifications" v-model:checked="form.push_notifications" />
+                                        <Error v-if="form.errors.push_notifications" :message="form.errors.push_notifications" />
+                                    </div>
                                 </div>
 
                                 <div class="flex items-center justify-between">
                                     <div class="space-y-0.5">
-                                        <Label for="push-notifications">Push Notifications</Label>
-                                        <p class="text-sm text-muted-foreground">Receive push notifications in browser</p>
+                                        <Label for="email-notifications">Email Notifications</Label>
+                                        <p class="text-sm text-muted-foreground">Receive notifications via email</p>
                                     </div>
-                                    <Switch
-                                        id="push-notifications"
-                                        name="notifications[push]"
-                                        :checked="formData.notifications.push"
-                                        @update:checked="(checked: boolean) => updateNotification('push', checked)"
-                                    />
+                                    <div class="flex flex-col gap-2">
+                                        <Switch id="email-notifications" name="email_notifications" v-model:checked="form.email_notifications" />
+                                        <Error v-if="form.errors.email_notifications" :message="form.errors.email_notifications" />
+                                    </div>
                                 </div>
 
                                 <div class="flex items-center justify-between">
@@ -126,12 +104,10 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
                                         <Label for="budget-alerts">Budget Alerts</Label>
                                         <p class="text-sm text-muted-foreground">Get notified when approaching budget limits</p>
                                     </div>
-                                    <Switch
-                                        id="budget-alerts"
-                                        name="notifications[budgetAlerts]"
-                                        :checked="formData.notifications.budgetAlerts"
-                                        @update:checked="(checked: boolean) => updateNotification('budgetAlerts', checked)"
-                                    />
+                                    <div class="flex flex-col gap-2">
+                                        <Switch id="budget-alerts" name="budget_alerts" v-model:checked="form.budget_alerts" />
+                                        <Error v-if="form.errors.budget_alerts" :message="form.errors.budget_alerts" />
+                                    </div>
                                 </div>
 
                                 <div class="flex items-center justify-between">
@@ -139,20 +115,18 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
                                         <Label for="weekly-reports">Weekly Reports</Label>
                                         <p class="text-sm text-muted-foreground">Receive weekly spending summaries</p>
                                     </div>
-                                    <Switch
-                                        id="weekly-reports"
-                                        name="notifications[weeklyReports]"
-                                        :checked="formData.notifications.weeklyReports"
-                                        @update:checked="(checked: boolean) => updateNotification('weeklyReports', checked)"
-                                    />
+                                    <div class="flex flex-col gap-2">
+                                        <Switch id="weekly-reports" name="weekly_reports" v-model:checked="form.weekly_reports" />
+                                        <Error v-if="form.errors.weekly_reports" :message="form.errors.weekly_reports" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <Button :disabled="processing" data-test="save-preferences-button">
-                            {{ processing ? 'Saving...' : 'Save Preferences' }}
+                        <Button :disabled="form.processing" data-test="save-preferences-button">
+                            {{ form.processing ? 'Saving...' : 'Save Preferences' }}
                         </Button>
 
                         <Transition
@@ -161,11 +135,11 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
                             leave-active-class="transition ease-in-out"
                             leave-to-class="opacity-0"
                         >
-                            <p v-show="recentlySuccessful" class="text-sm text-neutral-600">Preferences saved.</p>
+                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Preferences saved.</p>
                         </Transition>
                     </div>
-                </Form>
+                </form>
             </div>
-        </SettingsLayout>
+        </SettingLayout>
     </AppLayout>
 </template>

@@ -4,14 +4,13 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 import { Link } from '@inertiajs/vue3';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 import AvatarUpload from '@/components/screens/settings/AvatarUpload.vue';
 import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
-import AppLayout from '@/layouts/app-layout/Layout.vue';
-import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 
 defineProps<{
     mustVerifyEmail: boolean;
@@ -44,7 +43,7 @@ const form = useForm({
             },
         ]"
     >
-        <SettingsLayout>
+        <SettingLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your profile picture, name and email address" />
 
@@ -108,6 +107,6 @@ const form = useForm({
 
             <DataExport />
             <DangerZone />
-        </SettingsLayout>
+        </SettingLayout>
     </AppLayout>
 </template>

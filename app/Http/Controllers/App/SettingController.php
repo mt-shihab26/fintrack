@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class ProfileController extends Controller
+class SettingController extends Controller
 {
     /**
      * Show the user's profile settings page.
@@ -79,5 +79,28 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * Show the user's preferences settings page.
+     */
+    public function preferencesEdit()
+    {
+        return inertia('app/SettingPreferences');
+    }
+
+    /**
+     * Update the user's preferences information.
+     */
+    public function preferencesUpdate(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+        ]);
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Preferences updated successfully.');
     }
 }

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\PasswordController;
-use App\Http\Controllers\App\ProfileController;
+use App\Http\Controllers\App\SettingController;
 use App\Http\Controllers\App\TwoFactorAuthenticationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -44,13 +44,13 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::redirect('/settings', '/settings/profile')->name('app.settings.index');
 
-    Route::get('/settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/settings/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/settings/export', [ProfileController::class, 'update'])->name('profile.export');
-    Route::delete('/settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/settings/profile', [SettingController::class, 'edit'])->name('profile.edit');
+    Route::patch('/settings/profile', [SettingController::class, 'update'])->name('profile.update');
+    Route::post('/settings/export', [SettingController::class, 'export'])->name('profile.export');
+    Route::delete('/settings/profile', [SettingController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/settings/preferences', fn () => inertia('app/SettingPreferences'))->name('app.settings.preferences.edit');
-    Route::patch('/settings/preferences', fn () => '')->name('app.settings.preferences.update');
+    Route::get('/settings/preferences', [SettingController::class, 'preferencesEdit'])->name('app.settings.preferences.edit');
+    Route::patch('/settings/preferences', [SettingController::class, 'preferencesUpdate'])->name('app.settings.preferences.update');
 
     Route::get('/settings/password', [PasswordController::class, 'edit'])->name('password.edit');
     Route::put('/settings/password', [PasswordController::class, 'update'])->middleware('throttle:6,1')->name('password.update');
