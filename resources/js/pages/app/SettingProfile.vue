@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { usePage } from '@inertiajs/vue3';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Form, Link } from '@inertiajs/vue3';
 import { Upload } from 'lucide-vue-next';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
@@ -24,6 +23,19 @@ defineProps<{
 
 const page = usePage();
 const user = page.props.auth.user;
+
+const form = useForm({
+    name: user.name,
+    email: user.email,
+    avatar: null as File | null,
+});
+
+const handleFileChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+        form.avatar = target.files[0];
+    }
+};
 </script>
 
 <template>
@@ -45,14 +57,9 @@ const user = page.props.auth.user;
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your profile picture, name and email address" />
 
-                <Form
-                    :action="route('profile.update')"
-                    method="patch"
-                    enctype="multipart/form-data"
-                    class="space-y-6"
-                    v-slot="{ errors, processing, recentlySuccessful }"
-                    :options="{ preserveScroll: true }"
-                >
+                {{ form.data() }}
+
+                <form @submit.prevent="() => form.patch(route('profile.update'), { preserveScroll: true })" class="space-y-6">
                     <div class="grid gap-4">
                         <Label>Profile Avatar</Label>
                         <div class="flex items-center gap-6">
@@ -62,7 +69,7 @@ const user = page.props.auth.user;
                             </Avatar>
 
                             <div class="flex flex-col gap-2">
-                                <input ref="fileInput" type="file" name="avatar" accept="image/*" class="hidden" />
+                                <input ref="fileInput" type="file" accept="image/*" class="hidden" @change="handleFileChange" />
                                 <Button
                                     type="button"
                                     variant="outline"
@@ -76,35 +83,26 @@ const user = page.props.auth.user;
                                 <p class="text-xs text-muted-foreground">JPG, PNG or GIF. Max 2MB.</p>
                             </div>
                         </div>
-                        <Error :message="errors.avatar" />
+                        <Error :message="form.errors.avatar" />
                     </div>
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
-                        <Input
-                            id="name"
-                            class="mt-1 block w-full"
-                            name="name"
-                            :default-value="user.name"
-                            required
-                            autocomplete="name"
-                            placeholder="Full name"
-                        />
-                        <Error class="mt-2" :message="errors.name" />
+                        <Input id="name" v-model="form.name" class="mt-1 block w-full" required autocomplete="name" placeholder="Full name" />
+                        <Error class="mt-2" :message="form.errors.name" />
                     </div>
 
                     <div class="grid gap-2">
                         <Label for="email">Email address</Label>
                         <Input
                             id="email"
+                            v-model="form.email"
                             type="email"
                             class="mt-1 block w-full"
-                            name="email"
-                            :default-value="user.email"
                             required
                             autocomplete="username"
                             placeholder="Email address"
                         />
-                        <Error class="mt-2" :message="errors.email" />
+                        <Error class="mt-2" :message="form.errors.email" />
                     </div>
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
@@ -125,7 +123,7 @@ const user = page.props.auth.user;
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <Button :disabled="processing" data-test="update-profile-button">Save</Button>
+                        <Button type="submit" :disabled="form.processing" data-test="update-profile-button">Save</Button>
 
                         <Transition
                             enter-active-class="transition ease-in-out"
@@ -133,10 +131,10 @@ const user = page.props.auth.user;
                             leave-active-class="transition ease-in-out"
                             leave-to-class="opacity-0"
                         >
-                            <p v-show="recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
+                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
                         </Transition>
                     </div>
-                </Form>
+                </form>
             </div>
 
             <DataExport />
