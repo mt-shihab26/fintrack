@@ -4,6 +4,7 @@ import type { TCategory } from '@/types/models';
 import { ref } from 'vue';
 
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { AppLayout } from '@/layouts/app-layout';
 import { Plus } from 'lucide-vue-next';
 
@@ -40,9 +41,18 @@ const cancel = () => {
                     Add Category
                 </Button>
             </div>
-            <Form v-if="showForm" :category="categoryForm" :cancel="cancel" />
+
             <Stats :categories="categories" />
             <List :categories="categories" :edit="edit" />
         </div>
+
+        <Dialog v-model:open="showForm">
+            <DialogContent class="sm:max-w-lg">
+                <DialogHeader>
+                    <DialogTitle>{{ categoryForm ? 'Edit Category' : 'Create New Category' }}</DialogTitle>
+                </DialogHeader>
+                <Form :category="categoryForm" :cancel="cancel" />
+            </DialogContent>
+        </Dialog>
     </AppLayout>
 </template>
