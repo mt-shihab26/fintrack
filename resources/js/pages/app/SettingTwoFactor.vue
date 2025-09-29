@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
-import { disable, enable } from '@/routes/two-factor';
 import { Form } from '@inertiajs/vue3';
 import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
 import { onUnmounted, ref } from 'vue';
@@ -59,7 +58,7 @@ onUnmounted(() => {
 
                     <div>
                         <Button v-if="hasSetupData" @click="showSetupModal = true"> <ShieldCheck />Continue Setup </Button>
-                        <Form v-else v-bind="enable.form()" @success="showSetupModal = true" #default="{ processing }">
+                        <Form v-else method="post" :action="route('two-factor.enable')" @success="showSetupModal = true" #default="{ processing }">
                             <Button type="submit" :disabled="processing"> <ShieldCheck />Enable 2FA</Button></Form
                         >
                     </div>
@@ -76,7 +75,7 @@ onUnmounted(() => {
                     <TwoFactorRecoveryCodes />
 
                     <div class="relative inline">
-                        <Form v-bind="disable.form()" #default="{ processing }">
+                        <Form method="delete" :action="route('two-factor.disable')" #default="{ processing }">
                             <Button variant="destructive" type="submit" :disabled="processing">
                                 <ShieldBan />
                                 Disable 2FA

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Budget } from '@/lib/mock-data';
+import type { TBudget } from '@/types/models';
 
 import { computed } from 'vue';
 
@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, Target, TrendingDown, TrendingUp } from 'lucide-vue-next';
 
 interface Props {
-    budgets: Budget[];
+    budgets: TBudget[];
 }
 
 const props = defineProps<Props>();

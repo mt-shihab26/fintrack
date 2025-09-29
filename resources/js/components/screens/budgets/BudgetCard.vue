@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Budget } from '@/lib/mock-data';
+import type { TBudget } from '@/types/models';
 
 import { computed } from 'vue';
 
@@ -11,8 +11,8 @@ import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, Edit, MoreHorizontal, Trash2, TrendingDown, TrendingUp } from 'lucide-vue-next';
 
 interface Props {
-    budget: Budget;
-    onEdit: (budget: Budget) => void;
+    budget: TBudget;
+    onEdit: (budget: TBudget) => void;
     onDelete: (id: string) => void;
 }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mockTransactions } from '@/lib/mock-data';
+import { transactions } from '@/lib/mock-data';
 import { router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowDownRight, ArrowUpRight, MoreHorizontal } from 'lucide-vue-next';
 
-const recentTransactions = computed(() => mockTransactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5));
+const recentTransactions = computed(() => transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5));
 
 const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString();
@@ -32,10 +32,10 @@ const formatAmount = (amount: number) => {
                         <div
                             :class="[
                                 'rounded-full p-2',
-                                transaction.type === 'income' ? 'bg-primary/10 text-primary' : 'bg-destructive/10 text-destructive',
+                                transaction.kind === 'income' ? 'bg-primary/10 text-primary' : 'bg-destructive/10 text-destructive',
                             ]"
                         >
-                            <ArrowUpRight v-if="transaction.type === 'income'" class="h-4 w-4" />
+                            <ArrowUpRight v-if="transaction.kind === 'income'" class="h-4 w-4" />
                             <ArrowDownRight v-else class="h-4 w-4" />
                         </div>
                         <div>
@@ -51,8 +51,8 @@ const formatAmount = (amount: number) => {
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <span :class="['font-semibold', transaction.type === 'income' ? 'text-primary' : 'text-foreground']">
-                            {{ transaction.type === 'income' ? '+' : '-' }}${{ formatAmount(transaction.amount) }}
+                        <span :class="['font-semibold', transaction.kind === 'income' ? 'text-primary' : 'text-foreground']">
+                            {{ transaction.kind === 'income' ? '+' : '-' }}${{ formatAmount(transaction.amount) }}
                         </span>
                         <Button variant="ghost" size="sm">
                             <MoreHorizontal class="h-4 w-4" />

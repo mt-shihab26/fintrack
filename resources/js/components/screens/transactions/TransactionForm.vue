@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { TTransaction } from '@/lib/mock-data';
+import type { TTransaction } from '@/types/models';
 
-import { mockCategories } from '@/lib/mock-data';
+import { categories } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
@@ -25,7 +25,7 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const formData = ref({
-    type: props.transaction?.type || 'expense',
+    kind: props.transaction?.kind || 'expense',
     amount: props.transaction?.amount?.toString() || '',
     category: props.transaction?.category || '',
     description: props.transaction?.description || '',
@@ -35,10 +35,10 @@ const formData = ref({
 
 const newTag = ref('');
 
-const handleSubmit = (e: Event) => {
+const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     emit('submit', {
-        type: formData.value.type as 'income' | 'expense',
+        kind: formData.value.kind as 'income' | 'expense',
         amount: Number.parseFloat(formData.value.amount),
         category: formData.value.category,
         description: formData.value.description,
@@ -65,7 +65,7 @@ const handleKeyPress = (e: KeyboardEvent) => {
     }
 };
 
-const availableCategories = computed(() => mockCategories.filter((cat) => cat.type === formData.value.type));
+const availableCategories = computed(() => categories.filter((cat) => cat.kind === formData.value.kind));
 </script>
 
 <template>
@@ -78,7 +78,7 @@ const availableCategories = computed(() => mockCategories.filter((cat) => cat.ty
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <Label for="type">Type</Label>
-                        <Select v-model="formData.type">
+                        <Select v-model="formData.kind">
                             <SelectTrigger>
                                 <SelectValue />
                             </SelectTrigger>

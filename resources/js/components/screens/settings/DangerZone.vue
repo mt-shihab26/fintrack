@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label';
 import { Form } from '@inertiajs/vue3';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 
 const passwordInput = ref<InstanceType<typeof Input> | null>(null);
 </script>
@@ -58,7 +58,7 @@ const passwordInput = ref<InstanceType<typeof Input> | null>(null);
                         <div class="grid gap-2">
                             <Label for="password" class="sr-only">Password</Label>
                             <Input id="password" type="password" name="password" ref="passwordInput" placeholder="Password" />
-                            <InputError :message="errors.password" />
+                            <Error :message="errors.password" />
                         </div>
 
                         <DialogFooter class="gap-2">

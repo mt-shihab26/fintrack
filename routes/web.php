@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\PasswordController;
 use App\Http\Controllers\App\ProfileController;
 use App\Http\Controllers\App\TwoFactorAuthenticationController;
@@ -60,7 +61,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
-    Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions');
-    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.budgets');
-    Route::get('/categories', fn () => inertia('app/Categories'))->name('app.categories');
+    Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions.index');
+    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.budgets.index');
+
+    Route::prefix('/categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('app.categories.index');
+        Route::post('/', [CategoryController::class, 'store'])->name('app.categories.store');
+        Route::patch('/{category}', [CategoryController::class, 'update'])->name('app.categories.update');
+        Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('app.categories.destroy');
+    });
 });

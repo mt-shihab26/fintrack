@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { TTransactionFilters } from '@/components/screens/transactions/TransactionFilters.vue';
-import type { TTransaction } from '@/lib/mock-data';
+import type { TTransaction } from '@/types/models';
 
-import { mockTransactions } from '@/lib/mock-data';
+import { transactions as fakeTransactions } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Button } from '@/components/ui/button';
@@ -14,12 +14,12 @@ import TransactionFilters from '@/components/screens/transactions/TransactionFil
 import TransactionForm from '@/components/screens/transactions/TransactionForm.vue';
 import TransactionTable from '@/components/screens/transactions/TransactionTable.vue';
 
-const transactions = ref<TTransaction[]>([...mockTransactions]);
+const transactions = ref<TTransaction[]>([...fakeTransactions]);
 const showForm = ref(false);
 const editingTransaction = ref<TTransaction | undefined>(undefined);
 const filters = ref<TTransactionFilters>({
     search: '',
-    type: '',
+    kind: '',
     category: '',
     dateFrom: '',
     dateTo: '',
@@ -35,7 +35,7 @@ const filteredTransactions = computed(() => {
         }
 
         // Type filter
-        if (filters.value.type && transaction.type !== filters.value.type) {
+        if (filters.value.kind && transaction.kind !== filters.value.kind) {
             return false;
         }
 
@@ -91,9 +91,9 @@ const handleBulkDelete = (ids: string[]) => {
 
 const handleExport = () => {
     const csvContent = [
-        ['Date', 'Type', 'Category', 'Description', 'Amount', 'Tags'].join(','),
+        ['Date', 'Kind', 'Category', 'Description', 'Amount', 'Tags'].join(','),
         ...filteredTransactions.value.map((t) =>
-            [t.date, t.type, t.category, `"${t.description}"`, t.amount, `"${t.tags?.join('; ') || ''}"`].join(','),
+            [t.date, t.kind, t.category, `"${t.description}"`, t.amount, `"${t.tags?.join('; ') || ''}"`].join(','),
         ),
     ].join('\n');
 
@@ -109,7 +109,7 @@ const handleExport = () => {
 const clearFilters = () => {
     filters.value = {
         search: '',
-        type: '',
+        kind: '',
         category: '',
         dateFrom: '',
         dateTo: '',

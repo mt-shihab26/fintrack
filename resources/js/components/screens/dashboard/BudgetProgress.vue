@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mockBudgets } from '@/lib/mock-data';
+import { budgets } from '@/lib/mock-data';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,7 +13,7 @@ import { Progress } from '@/components/ui/progress';
         </CardHeader>
         <CardContent>
             <div class="space-y-4">
-                <div v-for="budget in mockBudgets" :key="budget.id" class="space-y-2">
+                <div v-for="budget in budgets" :key="budget.id" class="space-y-2">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
                             <span class="font-medium">{{ budget.category }}</span>

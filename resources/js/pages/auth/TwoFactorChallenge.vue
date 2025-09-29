@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';
-import AuthLayout from '@/layouts/auth-layout/Layout.vue';
-import { store } from '@/routes/two-factor/login';
-import { Form, Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+
+import { Button } from '@/components/ui/button';
+import { Error, Input } from '@/components/ui/input';
+import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';
+import { AuthLayout } from '@/layouts/auth-layout';
+import { Form } from '@inertiajs/vue3';
 
 interface AuthConfigContent {
     title: string;
@@ -43,12 +42,17 @@ const codeValue = computed<string>(() => code.value.join(''));
 </script>
 
 <template>
-    <AuthLayout :title="authConfigContent.title" :description="authConfigContent.description">
-        <Head title="Two-Factor Authentication" />
-
+    <AuthLayout title="Two-Factor Authentication" :label="authConfigContent.title" :description="authConfigContent.description">
         <div class="space-y-6">
             <template v-if="!showRecoveryInput">
-                <Form v-bind="store.form()" class="space-y-4" reset-on-error @error="code = []" #default="{ errors, processing, clearErrors }">
+                <Form
+                    method="post"
+                    :action="route('two-factor.login.store')"
+                    class="space-y-4"
+                    reset-on-error
+                    @error="code = []"
+                    #default="{ errors, processing, clearErrors }"
+                >
                     <input type="hidden" name="code" :value="codeValue" />
                     <div class="flex flex-col items-center justify-center space-y-3 text-center">
                         <div class="flex w-full items-center justify-center">
@@ -58,7 +62,7 @@ const codeValue = computed<string>(() => code.value.join(''));
                                 </PinInputGroup>
                             </PinInput>
                         </div>
-                        <InputError :message="errors.code" />
+                        <Error :message="errors.code" />
                     </div>
                     <Button type="submit" class="w-full" :disabled="processing">Continue</Button>
                     <div class="text-center text-sm text-muted-foreground">
@@ -75,9 +79,15 @@ const codeValue = computed<string>(() => code.value.join(''));
             </template>
 
             <template v-else>
-                <Form v-bind="store.form()" class="space-y-4" reset-on-error #default="{ errors, processing, clearErrors }">
+                <Form
+                    method="post"
+                    :action="route('two-factor.login.store')"
+                    class="space-y-4"
+                    reset-on-error
+                    #default="{ errors, processing, clearErrors }"
+                >
                     <Input name="recovery_code" type="text" placeholder="Enter recovery code" :autofocus="showRecoveryInput" required />
-                    <InputError :message="errors.recovery_code" />
+                    <Error :message="errors.recovery_code" />
                     <Button type="submit" class="w-full" :disabled="processing">Continue</Button>
 
                     <div class="text-center text-sm text-muted-foreground">

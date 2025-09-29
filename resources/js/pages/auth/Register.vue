@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/RegisteredUserController';
-import InputError from '@/components/elements/InputError.vue';
-import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/auth-layout/Layout.vue';
-import { login } from '@/routes';
-import { Form, Head } from '@inertiajs/vue3';
+import { AuthLayout } from '@/layouts/auth-layout';
+import { Form } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+
+import TextLink from '@/components/elements/TextLink.vue';
 </script>
 
 <template>
-    <AuthBase title="Create an account" description="Enter your details below to create your account">
-        <Head title="Register" />
-
+    <AuthLayout title="Register" label="Create an account" description="Enter your details below to create your account">
         <Form
-            v-bind="RegisteredUserController.store.form()"
+            :action="route('register')"
+            method="post"
             :reset-on-success="['password', 'password_confirmation']"
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
@@ -25,19 +22,19 @@ import { LoaderCircle } from 'lucide-vue-next';
                 <div class="grid gap-2">
                     <Label for="name">Name</Label>
                     <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" name="name" placeholder="Full name" />
-                    <InputError :message="errors.name" />
+                    <Error :message="errors.name" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
                     <Input id="email" type="email" required :tabindex="2" autocomplete="email" name="email" placeholder="email@example.com" />
-                    <InputError :message="errors.email" />
+                    <Error :message="errors.email" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
                     <Input id="password" type="password" required :tabindex="3" autocomplete="new-password" name="password" placeholder="Password" />
-                    <InputError :message="errors.password" />
+                    <Error :message="errors.password" />
                 </div>
 
                 <div class="grid gap-2">
@@ -51,7 +48,7 @@ import { LoaderCircle } from 'lucide-vue-next';
                         name="password_confirmation"
                         placeholder="Confirm password"
                     />
-                    <InputError :message="errors.password_confirmation" />
+                    <Error :message="errors.password_confirmation" />
                 </div>
 
                 <Button type="submit" class="mt-2 w-full" tabindex="5" :disabled="processing" data-test="register-user-button">
@@ -62,8 +59,8 @@ import { LoaderCircle } from 'lucide-vue-next';
 
             <div class="text-center text-sm text-muted-foreground">
                 Already have an account?
-                <TextLink :href="login()" class="underline underline-offset-4" :tabindex="6">Log in</TextLink>
+                <TextLink :href="route('login')" class="underline underline-offset-4" :tabindex="6">Log in</TextLink>
             </div>
         </Form>
-    </AuthBase>
+    </AuthLayout>
 </template>

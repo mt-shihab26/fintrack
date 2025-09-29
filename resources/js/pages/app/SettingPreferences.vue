@@ -8,7 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Form } from '@inertiajs/vue3';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 
@@ -87,7 +87,7 @@ const updateNotification = (key: keyof typeof formData.notifications, value: boo
                                             <SelectItem value="BTD">BTD (৳)</SelectItem>
                                         </SelectContent>
                                     </Select>
-                                    <InputError class="mt-2" :message="errors.currency" />
+                                    <Error class="mt-2" :message="errors.currency" />
                                 </div>
                             </div>
                         </div>

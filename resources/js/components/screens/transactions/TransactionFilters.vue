@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mockCategories } from '@/lib/mock-data';
+import { categories } from '@/lib/mock-data';
 import { computed } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +10,7 @@ import { Filter, X } from 'lucide-vue-next';
 
 export interface TTransactionFilters {
     search: string;
-    type: string;
+    kind: string;
     category: string;
     dateFrom: string;
     dateTo: string;
@@ -67,7 +67,7 @@ const handleClearFilters = () => {
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Input placeholder="Search transactions..." :model-value="filters.search" @update:model-value="handleStringFilter('search')" />
 
-            <Select :model-value="filters.type" @update:model-value="handleStringFilter('type')">
+            <Select :model-value="filters.kind" @update:model-value="handleStringFilter('kind')">
                 <SelectTrigger>
                     <SelectValue placeholder="All types" />
                 </SelectTrigger>
@@ -84,7 +84,7 @@ const handleClearFilters = () => {
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">All categories</SelectItem>
-                    <SelectItem v-for="cat in mockCategories" :key="cat.id" :value="cat.name">
+                    <SelectItem v-for="cat in categories" :key="cat.id" :value="cat.name">
                         {{ cat.name }}
                     </SelectItem>
                 </SelectContent>

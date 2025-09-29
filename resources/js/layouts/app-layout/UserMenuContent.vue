@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { TUser } from '@/types/models';
 
-import { logout } from '@/routes';
 import { router } from '@inertiajs/vue3';
 
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
@@ -38,7 +37,7 @@ defineProps<Props>();
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">
-        <Link class="block w-full" :href="logout()" @click="handleLogout" as="button" data-test="logout-button">
+        <Link method="post" class="block w-full" :href="route('logout')" @click="handleLogout" as="button" data-test="logout-button">
             <LogOut class="mr-2 h-4 w-4" />
             Log out
         </Link>

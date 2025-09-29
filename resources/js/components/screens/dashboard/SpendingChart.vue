@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { mockCategories } from '@/lib/mock-data';
+import { categories } from '@/lib/mock-data';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DonutChart } from '@/components/ui/chart-donut';
 
-const expenseCategories = mockCategories.filter((cat) => cat.type === 'expense');
+const expenseCategories = categories.filter((cat) => cat.kind === 'expense');
 
 const data = expenseCategories.map((cat) => ({
     name: cat.name,
-    total: cat.totalAmount,
+    total: cat.total_amount,
 }));
 
 const colors = expenseCategories.map((cat) => cat.color);

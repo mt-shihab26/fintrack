@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { send } from '@/routes/verification';
 import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -11,9 +10,9 @@ import { Form, Link } from '@inertiajs/vue3';
 import { Upload } from 'lucide-vue-next';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputError from '@/components/elements/InputError.vue';
 import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
+import { Error } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 
@@ -77,7 +76,7 @@ const user = page.props.auth.user;
                                 <p class="text-xs text-muted-foreground">JPG, PNG or GIF. Max 2MB.</p>
                             </div>
                         </div>
-                        <InputError :message="errors.avatar" />
+                        <Error :message="errors.avatar" />
                     </div>
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
@@ -90,7 +89,7 @@ const user = page.props.auth.user;
                             autocomplete="name"
                             placeholder="Full name"
                         />
-                        <InputError class="mt-2" :message="errors.name" />
+                        <Error class="mt-2" :message="errors.name" />
                     </div>
 
                     <div class="grid gap-2">
@@ -105,14 +104,14 @@ const user = page.props.auth.user;
                             autocomplete="username"
                             placeholder="Email address"
                         />
-                        <InputError class="mt-2" :message="errors.email" />
+                        <Error class="mt-2" :message="errors.email" />
                     </div>
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
                         <p class="-mt-4 text-sm text-muted-foreground">
                             Your email address is unverified.
                             <Link
-                                :href="send()"
+                                :href="route('verification.send')"
                                 as="button"
                                 class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                             >
