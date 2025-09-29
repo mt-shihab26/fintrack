@@ -21,10 +21,6 @@ const edit = (c: TCategory) => {
     open.value = true;
 };
 
-const cancel = () => {
-    open.value = false;
-    category.value = null;
-};
 </script>
 
 <template>
@@ -43,6 +39,6 @@ const cancel = () => {
             <Stats :categories="categories" />
             <List :categories="categories" :edit="edit" />
         </div>
-        <Form :open="open" :category="category" :cancel="cancel" />
+        <Form v-model:open="open" v-model:category="category" />
     </AppLayout>
 </template>

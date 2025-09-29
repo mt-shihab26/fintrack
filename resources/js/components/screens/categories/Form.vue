@@ -4,6 +4,7 @@ import type { TCategory } from '@/types/models';
 
 import { colorOptions } from '@/lib/categories';
 import { useForm } from '@inertiajs/vue3';
+import { watch } from 'vue';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -14,7 +15,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 const props = defineProps<{
     open: boolean;
     category?: TCategory | null;
-    cancel: () => void;
+}>();
+
+const emit = defineEmits<{
+    'update:open': [value: boolean];
+    'update:category': [value: TCategory | null];
 }>();
 
 const form = useForm<{
@@ -22,22 +27,40 @@ const form = useForm<{
     kind: TKind;
     color: string;
 }>({
-    name: props.category?.name || '',
-    kind: props.category?.kind || 'expense',
-    color: props.category?.color || colorOptions[0].value,
+    name: '',
+    kind: 'expense',
+    color: colorOptions[0].value,
 });
+
+watch(
+    () => props.category,
+    (category) => {
+        if (!category) return;
+        form.name = category.name;
+        form.kind = category.kind;
+        form.color = category.color;
+    },
+    {
+        immediate: true,
+    },
+);
+
+const cancel = () => {
+    emit('update:open', false);
+    emit('update:category', null);
+};
 
 const submit = () => {
     if (props.category) {
-        form.patch(route('app.categories.update', { category: props.category }), { onSuccess: props.cancel });
+        form.patch(route('app.categories.update', { category: props.category }), { onSuccess: cancel, preserveScroll: true });
     } else {
-        form.post(route('app.categories.store'), { onSuccess: props.cancel });
+        form.post(route('app.categories.store'), { onSuccess: cancel, preserveScroll: true });
     }
 };
 </script>
 
 <template>
-    <Dialog v-model:open="open">
+    <Dialog :open="open" @update:open="cancel">
         <DialogContent class="sm:max-w-lg">
             <DialogHeader>
                 <DialogTitle>{{ category ? 'Edit Category' : 'Create New Category' }}</DialogTitle>

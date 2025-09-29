@@ -50,7 +50,7 @@ const filteredCategories = computed(() =>
             <p class="text-sm text-muted-foreground">Showing {{ filteredCategories.length }} of {{ categories.length }} categories</p>
         </div>
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Item v-for="category in filteredCategories" :key="category.id" :category="category" :onEdit="edit" :onDelete="() => {}" />
+            <Item v-for="category in filteredCategories" :key="category.id" :category="category" :edit="edit" />
         </div>
         <div v-if="filteredCategories.length === 0" class="py-8 text-center text-muted-foreground">
             <p>

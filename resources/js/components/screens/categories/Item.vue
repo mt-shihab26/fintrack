@@ -5,17 +5,15 @@ import { useFormat } from '@/composables/use-format';
 import { computed } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Edit, MoreHorizontal, Trash2 } from 'lucide-vue-next';
+
+import Actions from './Actions.vue';
 
 const { currency } = useFormat();
 
 const props = defineProps<{
     category: TCategory;
-    onEdit: (category: TCategory) => void;
-    onDelete: (id: string) => void;
+    edit: (category: TCategory) => void;
 }>();
 
 const averagePerTransaction = computed(() => {
@@ -30,23 +28,7 @@ const averagePerTransaction = computed(() => {
                 <div class="h-4 w-4 rounded-full" :style="{ 'background-color': category.color }" />
                 <CardTitle class="text-base font-medium">{{ category.name }}</CardTitle>
             </div>
-            <DropdownMenu>
-                <DropdownMenuTrigger as-child>
-                    <Button variant="ghost" size="sm">
-                        <MoreHorizontal class="h-4 w-4" />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuItem @click="onEdit(category)">
-                        <Edit class="mr-2 h-4 w-4" />
-                        Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem @click="onDelete(category.id)" class="text-destructive focus:text-destructive">
-                        <Trash2 class="mr-2 h-4 w-4" />
-                        Delete
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+            <Actions :category="category" :edit="edit" />
         </CardHeader>
         <CardContent class="space-y-4">
             <div class="flex items-center justify-between">
