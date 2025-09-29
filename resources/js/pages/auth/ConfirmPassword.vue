@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,7 +26,7 @@ import { LoaderCircle } from 'lucide-vue-next';
                         autofocus
                     />
 
-                    <InputError :message="errors.password" />
+                    <Error :message="errors.password" />
                 </div>
 
                 <div class="flex items-center">

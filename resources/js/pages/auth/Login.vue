@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -43,7 +43,7 @@ defineProps<{
                         autocomplete="email"
                         placeholder="email@example.com"
                     />
-                    <InputError :message="errors.email" />
+                    <Error :message="errors.email" />
                 </div>
 
                 <div class="grid gap-2">
@@ -60,7 +60,7 @@ defineProps<{
                         autocomplete="current-password"
                         placeholder="Password"
                     />
-                    <InputError :message="errors.password" />
+                    <Error :message="errors.password" />
                 </div>
 
                 <div class="flex items-center justify-between">

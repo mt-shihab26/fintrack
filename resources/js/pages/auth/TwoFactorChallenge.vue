@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';
@@ -57,7 +57,7 @@ const codeValue = computed<string>(() => code.value.join(''));
                                 </PinInputGroup>
                             </PinInput>
                         </div>
-                        <InputError :message="errors.code" />
+                        <Error :message="errors.code" />
                     </div>
                     <Button type="submit" class="w-full" :disabled="processing">Continue</Button>
                     <div class="text-center text-sm text-muted-foreground">
@@ -76,7 +76,7 @@ const codeValue = computed<string>(() => code.value.join(''));
             <template v-else>
                 <Form method="post" :action="route('two-factor.login.store')" class="space-y-4" reset-on-error #default="{ errors, processing, clearErrors }">
                     <Input name="recovery_code" type="text" placeholder="Enter recovery code" :autofocus="showRecoveryInput" required />
-                    <InputError :message="errors.recovery_code" />
+                    <Error :message="errors.recovery_code" />
                     <Button type="submit" class="w-full" :disabled="processing">Continue</Button>
 
                     <div class="text-center text-sm text-muted-foreground">

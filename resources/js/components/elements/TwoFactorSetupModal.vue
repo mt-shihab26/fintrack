@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';
@@ -163,7 +163,7 @@ watch(
                                         <PinInputSlot autofocus v-for="(id, index) in 6" :key="id" :index="index" :disabled="processing" />
                                     </PinInputGroup>
                                 </PinInput>
-                                <InputError :message="errors?.confirmTwoFactorAuthentication?.code" />
+                                <Error :message="errors?.confirmTwoFactorAuthentication?.code" />
                             </div>
 
                             <div class="flex w-full items-center space-x-5">

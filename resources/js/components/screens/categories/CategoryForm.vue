@@ -7,7 +7,7 @@ import { useForm } from '@inertiajs/vue3';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -53,6 +53,7 @@ const submit = () => {
                 <div class="space-y-2">
                     <Label for="name">Category Name</Label>
                     <Input v-model="form.name" id="name" name="name" placeholder="Enter category name" :required="true" />
+                    <Error :message="form.errors.name" />
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -67,6 +68,7 @@ const submit = () => {
                                 <SelectItem value="expense">Expense</SelectItem>
                             </SelectContent>
                         </Select>
+                        <Error :message="form.errors.kind" />
                     </div>
 
                     <div class="space-y-2">
@@ -84,6 +86,7 @@ const submit = () => {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        <Error :message="form.errors.color" />
                     </div>
                 </div>
 

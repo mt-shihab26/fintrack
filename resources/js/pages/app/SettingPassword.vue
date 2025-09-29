@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 import { Form } from '@inertiajs/vue3';
@@ -55,7 +55,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                             autocomplete="current-password"
                             placeholder="Current password"
                         />
-                        <InputError :message="errors.current_password" />
+                        <Error :message="errors.current_password" />
                     </div>
 
                     <div class="grid gap-2">
@@ -69,7 +69,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                             autocomplete="new-password"
                             placeholder="New password"
                         />
-                        <InputError :message="errors.password" />
+                        <Error :message="errors.password" />
                     </div>
 
                     <div class="grid gap-2">
@@ -82,7 +82,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                             autocomplete="new-password"
                             placeholder="Confirm password"
                         />
-                        <InputError :message="errors.password_confirmation" />
+                        <Error :message="errors.password_confirmation" />
                     </div>
 
                     <div class="flex items-center gap-4">

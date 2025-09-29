@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,7 +31,7 @@ const inputEmail = ref(props.email);
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
                     <Input id="email" type="email" name="email" autocomplete="email" v-model="inputEmail" class="mt-1 block w-full" readonly />
-                    <InputError :message="errors.email" class="mt-2" />
+                    <Error :message="errors.email" class="mt-2" />
                 </div>
 
                 <div class="grid gap-2">
@@ -45,7 +45,7 @@ const inputEmail = ref(props.email);
                         autofocus
                         placeholder="Password"
                     />
-                    <InputError :message="errors.password" />
+                    <Error :message="errors.password" />
                 </div>
 
                 <div class="grid gap-2">
@@ -58,7 +58,7 @@ const inputEmail = ref(props.email);
                         class="mt-1 block w-full"
                         placeholder="Confirm password"
                     />
-                    <InputError :message="errors.password_confirmation" />
+                    <Error :message="errors.password_confirmation" />
                 </div>
 
                 <Button type="submit" class="mt-4 w-full" :disabled="processing" data-test="reset-password-button">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/components/elements/InputError.vue';
+import { Error } from '@/components/ui/input';
 import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,7 +26,7 @@ defineProps<{
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
                     <Input id="email" type="email" name="email" autocomplete="off" autofocus placeholder="email@example.com" />
-                    <InputError :message="errors.email" />
+                    <Error :message="errors.email" />
                 </div>
 
                 <div class="my-6 flex items-center justify-start">
