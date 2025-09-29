@@ -10,7 +10,6 @@ import { Plus } from 'lucide-vue-next';
 import Form from '@/components/screens/categories/Form.vue';
 import List from '@/components/screens/categories/List.vue';
 import Stats from '@/components/screens/categories/Stats.vue';
-import UsageChart from '@/components/screens/categories/UsageChart.vue';
 
 defineProps<{ categories: TCategory[] }>();
 
@@ -43,7 +42,6 @@ const cancel = () => {
             </div>
             <Form v-if="showForm" :category="categoryForm" :cancel="cancel" />
             <Stats :categories="categories" />
-            <UsageChart :categories="categories" />
             <List :categories="categories" :edit="edit" />
         </div>
     </AppLayout>
