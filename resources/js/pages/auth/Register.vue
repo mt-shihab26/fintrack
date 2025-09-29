@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { Error } from '@/components/ui/input';
-import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/auth-layout/Layout.vue';
-import { Form, Head } from '@inertiajs/vue3';
+import { AuthLayout } from '@/layouts/auth-layout';
+import { Form } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+
+import TextLink from '@/components/elements/TextLink.vue';
 </script>
 
 <template>
-    <AuthBase title="Create an account" description="Enter your details below to create your account">
-        <Head title="Register" />
-
+    <AuthLayout title="Register" label="Create an account" description="Enter your details below to create your account">
         <Form
             :action="route('register')"
             method="post"
@@ -64,5 +62,5 @@ import { LoaderCircle } from 'lucide-vue-next';
                 <TextLink :href="route('login')" class="underline underline-offset-4" :tabindex="6">Log in</TextLink>
             </div>
         </Form>
-    </AuthBase>
+    </AuthLayout>
 </template>

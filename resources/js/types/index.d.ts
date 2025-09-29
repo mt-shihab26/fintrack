@@ -14,9 +14,8 @@ export type TNavItem = {
     isActive?: boolean;
 };
 
-export type TAppProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
+export type TAppProps = {
     name: string;
-    quote: { message: string; author: string };
     auth: { user: TUser };
-    sidebarOpen: boolean;
+    flash: { success: string; error: string };
 };

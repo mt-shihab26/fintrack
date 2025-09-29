@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import TextLink from '@/components/elements/TextLink.vue';
 import { Button } from '@/components/ui/button';
-import AuthLayout from '@/layouts/auth-layout/Layout.vue';
-import { Form, Head } from '@inertiajs/vue3';
+import { AuthLayout } from '@/layouts/auth-layout';
+import { Form } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+
+import TextLink from '@/components/elements/TextLink.vue';
 
 defineProps<{
     status?: string;
@@ -11,9 +12,11 @@ defineProps<{
 </script>
 
 <template>
-    <AuthLayout title="Verify email" description="Please verify your email address by clicking on the link we just emailed to you.">
-        <Head title="Email verification" />
-
+    <AuthLayout
+        title="Email verification"
+        label="Verify email"
+        description="Please verify your email address by clicking on the link we just emailed to you."
+    >
         <div v-if="status === 'verification-link-sent'" class="mb-4 text-center text-sm font-medium text-green-600">
             A new verification link has been sent to the email address you provided during registration.
         </div>

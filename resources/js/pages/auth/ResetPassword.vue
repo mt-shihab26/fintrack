@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Error } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout/Layout.vue';
-import { Form, Head } from '@inertiajs/vue3';
-import { LoaderCircle } from 'lucide-vue-next';
 import { ref } from 'vue';
+
+import { Button } from '@/components/ui/button';
+import { Error, Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { AuthLayout } from '@/layouts/auth-layout';
+import { Form } from '@inertiajs/vue3';
+import { LoaderCircle } from 'lucide-vue-next';
 
 const props = defineProps<{
     token: string;
@@ -17,9 +17,7 @@ const inputEmail = ref(props.email);
 </script>
 
 <template>
-    <AuthLayout title="Reset password" description="Please enter your new password below">
-        <Head title="Reset password" />
-
+    <AuthLayout title="Reset password" label="Reset password" description="Please enter your new password below">
         <Form
             :action="route('password.store')"
             method="post"
