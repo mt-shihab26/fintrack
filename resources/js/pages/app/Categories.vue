@@ -20,7 +20,6 @@ const edit = (c: TCategory) => {
     category.value = c;
     open.value = true;
 };
-
 </script>
 
 <template>

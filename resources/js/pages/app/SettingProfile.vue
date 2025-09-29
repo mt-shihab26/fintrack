@@ -10,9 +10,9 @@ import { Form, Link } from '@inertiajs/vue3';
 import { Upload } from 'lucide-vue-next';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import { Error } from '@/components/ui/input';
 import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
+import { Error } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 
