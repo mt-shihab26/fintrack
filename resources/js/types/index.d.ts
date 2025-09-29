@@ -17,5 +17,8 @@ export type TNavItem = {
 export type TAppProps = {
     name: string;
     auth: { user: TUser };
-    flash: { success: string; error: string };
+    flash: {
+        success: { message: string; timestamp: string } | null;
+        error: { message: string; timestamp: string } | null;
+    };
 };

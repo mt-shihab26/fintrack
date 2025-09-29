@@ -4,7 +4,7 @@ import { ref } from 'vue';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Form, Link } from '@inertiajs/vue3';
 import { Upload } from 'lucide-vue-next';
@@ -12,7 +12,6 @@ import { Upload } from 'lucide-vue-next';
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
-import { Error } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 
@@ -52,6 +51,7 @@ const user = page.props.auth.user;
                     enctype="multipart/form-data"
                     class="space-y-6"
                     v-slot="{ errors, processing, recentlySuccessful }"
+                    :options="{ preserveScroll: true }"
                 >
                     <div class="grid gap-4">
                         <Label>Profile Avatar</Label>
