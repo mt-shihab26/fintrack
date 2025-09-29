@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Error } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Error } from '@/components/ui/input';
 import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { Form } from '@inertiajs/vue3';
@@ -154,7 +154,14 @@ watch(
                 </template>
 
                 <template v-else>
-                    <Form method="post" :action="route('two-factor.confirm')" reset-on-error @finish="code = []" @success="isOpen = false" v-slot="{ errors, processing }">
+                    <Form
+                        method="post"
+                        :action="route('two-factor.confirm')"
+                        reset-on-error
+                        @finish="code = []"
+                        @success="isOpen = false"
+                        v-slot="{ errors, processing }"
+                    >
                         <input type="hidden" name="code" :value="codeValue" />
                         <div ref="pinInputContainerRef" class="relative w-full space-y-3">
                             <div class="flex w-full flex-col items-center justify-center space-y-3 py-2">

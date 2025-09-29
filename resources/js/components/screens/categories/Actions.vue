@@ -3,7 +3,9 @@ import type { TCategory } from '@/types/models';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Edit, MoreHorizontal, Trash2 } from 'lucide-vue-next';
+import { Edit, MoreHorizontal } from 'lucide-vue-next';
+
+import Delete from './Delete.vue';
 
 defineProps<{
     category: TCategory;
@@ -23,10 +25,7 @@ defineProps<{
                 <Edit class="mr-2 h-4 w-4" />
                 Edit
             </DropdownMenuItem>
-            <DropdownMenuItem @click="" class="text-destructive focus:text-destructive">
-                <Trash2 class="mr-2 h-4 w-4" />
-                Delete
-            </DropdownMenuItem>
+            <Delete :category="category" />
         </DropdownMenuContent>
     </DropdownMenu>
 </template>
