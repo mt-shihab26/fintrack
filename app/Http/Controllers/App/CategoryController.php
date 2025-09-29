@@ -6,6 +6,7 @@ use App\Enums\Kind;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
@@ -13,9 +14,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::query()
+        $categories = $request->user()->categories()
             ->limit(1000)
             ->get()
             ->map(fn ($category) => [
@@ -40,7 +41,7 @@ class CategoryController extends Controller
             'color' => ['required', 'string', 'regex:/^#[a-fA-F0-9]{6}$/'],
         ]);
 
-        Category::create($validated);
+        $request->user()->categories()->create($validated);
 
         return redirect()->back()->with('success', 'Category created successfully.');
     }
@@ -50,6 +51,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        Gate::allowIf(fn ($user) => $category->user_id === $user->id);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'kind' => ['required', 'string', Rule::in(Kind::values())],
@@ -66,6 +69,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        Gate::allowIf(fn ($user) => $category->user_id === $user->id);
+
         $category->delete();
 
         return redirect()->back()->with('success', 'Category deleted successfully.');
