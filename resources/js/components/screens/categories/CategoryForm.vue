@@ -28,7 +28,7 @@ const form = useForm<{
 
 const submit = () => {
     if (props.category) {
-        form.patch(route('app.categories.update'));
+        form.patch(route('app.categories.update', { category: props.category }));
     } else {
         form.post(route('app.categories.store'));
     }
