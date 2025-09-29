@@ -15,7 +15,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return inertia('app/Categories');
+        $categories = Category::query()
+            ->limit(1000)
+            ->get()
+            ->map(fn ($category) => [
+                ...$category->toArray(),
+                'transaction_count' => 1,
+                'total_amount' => 123,
+            ]);
+
+        return inertia('app/Categories', [
+            'categories' => $categories,
+        ]);
     }
 
     /**

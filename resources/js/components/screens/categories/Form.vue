@@ -21,16 +21,16 @@ const form = useForm<{
     kind: TKind;
     color: string;
 }>({
-    name: '',
-    kind: 'expense',
-    color: colorOptions[0].value,
+    name: props.category?.name || '',
+    kind: props.category?.kind || 'expense',
+    color: props.category?.color || colorOptions[0].value,
 });
 
 const submit = () => {
     if (props.category) {
-        form.patch(route('app.categories.update', { category: props.category }));
+        form.patch(route('app.categories.update', { category: props.category }), { onSuccess: props.cancel });
     } else {
-        form.post(route('app.categories.store'));
+        form.post(route('app.categories.store'), { onSuccess: props.cancel });
     }
 };
 </script>
