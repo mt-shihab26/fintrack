@@ -119,13 +119,19 @@ php artisan migrate
 php artisan db:seed # optional
 ```
 
-6. **Run development servers**
+6. **Link public storage**
+
+```bash
+php artisan storage:link
+```
+
+7. **Run development servers**
 
 ```bash
 composer dev
 ```
 
-7. **Open the app**
+8. **Open the app**
    Visit [http://localhost:8000](http://localhost:8000)
 
 ---

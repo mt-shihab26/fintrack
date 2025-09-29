@@ -6,11 +6,8 @@ use Illuminate\Support\Facades\Storage as StorageFacade;
 
 class Storage
 {
-    public static function public(): StorageFacade
+    public static function public(): mixed
     {
-        /** @var mixed $storage */
-        $storage = StorageFacade::disk('public');
-
-        return $storage;
+        return StorageFacade::disk('public');
     }
 }
