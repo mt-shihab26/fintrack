@@ -4,7 +4,7 @@ import TwoFactorRecoveryCodes from '@/components/elements/TwoFactorRecoveryCodes
 import TwoFactorSetupModal from '@/components/elements/TwoFactorSetupModal.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
+import { useTwoFactorAuth } from '@/composables/use-two-factor-auth';
 import AppLayout from '@/layouts/app-layout/Layout.vue';
 import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
 import { Form } from '@inertiajs/vue3';
