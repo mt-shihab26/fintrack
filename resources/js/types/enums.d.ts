@@ -1,5 +1,5 @@
+export type TCurrency = 'USD' | 'BDT';
+
 export type TKind = 'income' | 'expense';
 
-export type TBudgetPeriod = 'monthly' | 'weekly';
-
-export type TCurrency = 'USD' | 'BDT';
+export type TPeriod = 'monthly' | 'weekly';

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\BudgetController;
 use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\SettingController;
 use App\Http\Controllers\App\TwoFactorAuthController;
@@ -44,7 +45,13 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
     Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions.index');
-    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.budgets.index');
+
+    Route::prefix('/budgets')->group(function () {
+        Route::get('/', [BudgetController::class, 'index'])->name('app.budgets.index');
+        Route::post('/', [BudgetController::class, 'store'])->name('app.budgets.store');
+        Route::patch('/{budget}', [BudgetController::class, 'update'])->name('app.budgets.update');
+        Route::delete('/{budget}', [BudgetController::class, 'destroy'])->name('app.budgets.destroy');
+    });
 
     Route::prefix('/categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('app.categories.index');
