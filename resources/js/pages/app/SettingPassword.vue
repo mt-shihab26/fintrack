@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import { Error } from '@/components/ui/input';
-import AppLayout from '@/layouts/app-layout/Layout.vue';
-import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
-import { Form } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+
+import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 
 import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import InputPassword from '@/components/screens/settings/InputPassword.vue';
+import SubmitButton from '@/components/screens/settings/SubmitButton.vue';
 
-const passwordInput = ref<HTMLInputElement | null>(null);
-const currentPasswordInput = ref<HTMLInputElement | null>(null);
+const form = useForm<{
+    current_password: string;
+    password: string;
+    password_confirmation: string;
+}>({
+    current_password: '',
+    password: '',
+    password_confirmation: '',
+});
 </script>
 
 <template>
@@ -29,76 +33,55 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
             },
         ]"
     >
-        <SettingsLayout>
+        <SettingLayout>
             <div class="space-y-6">
                 <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
 
-                <Form
-                    :action="route('app.settings.password.update')"
-                    method="put"
-                    :options="{
-                        preserveScroll: true,
-                    }"
-                    reset-on-success
-                    :reset-on-error="['password', 'password_confirmation', 'current_password']"
+                <form
+                    @submit.prevent="() => form.put(route('app.settings.password.update'), { preserveScroll: true, onSuccess: () => form.reset() })"
                     class="space-y-6"
-                    v-slot="{ errors, processing, recentlySuccessful }"
                 >
-                    <div class="grid gap-2">
-                        <Label for="current_password">Current password</Label>
-                        <Input
-                            id="current_password"
-                            ref="currentPasswordInput"
-                            name="current_password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="current-password"
-                            placeholder="Current password"
-                        />
-                        <Error :message="errors.current_password" />
-                    </div>
+                    <InputPassword
+                        id="current_password"
+                        name="current_password"
+                        label="Current password"
+                        placeholder="Current password"
+                        autocomplete="current-password"
+                        v-model="form.current_password"
+                        :error="form.errors.current_password"
+                        required
+                    />
 
-                    <div class="grid gap-2">
-                        <Label for="password">New password</Label>
-                        <Input
-                            id="password"
-                            ref="passwordInput"
-                            name="password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="new-password"
-                            placeholder="New password"
-                        />
-                        <Error :message="errors.password" />
-                    </div>
+                    <InputPassword
+                        id="password"
+                        name="password"
+                        label="New password"
+                        placeholder="New password"
+                        autocomplete="new-password"
+                        v-model="form.password"
+                        :error="form.errors.password"
+                        required
+                    />
 
-                    <div class="grid gap-2">
-                        <Label for="password_confirmation">Confirm password</Label>
-                        <Input
-                            id="password_confirmation"
-                            name="password_confirmation"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="new-password"
-                            placeholder="Confirm password"
-                        />
-                        <Error :message="errors.password_confirmation" />
-                    </div>
+                    <InputPassword
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        label="Confirm password"
+                        placeholder="Confirm password"
+                        autocomplete="new-password"
+                        v-model="form.password_confirmation"
+                        :error="form.errors.password_confirmation"
+                        required
+                    />
 
-                    <div class="flex items-center gap-4">
-                        <Button :disabled="processing" data-test="update-password-button">Save password</Button>
-
-                        <Transition
-                            enter-active-class="transition ease-in-out"
-                            enter-from-class="opacity-0"
-                            leave-active-class="transition ease-in-out"
-                            leave-to-class="opacity-0"
-                        >
-                            <p v-show="recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
-                        </Transition>
-                    </div>
-                </Form>
+                    <SubmitButton
+                        :processing="form.processing"
+                        :recently-successful="form.recentlySuccessful"
+                        test-id="update-password-button"
+                        button-text="Save password"
+                    />
+                </form>
             </div>
-        </SettingsLayout>
+        </SettingLayout>
     </AppLayout>
 </template>

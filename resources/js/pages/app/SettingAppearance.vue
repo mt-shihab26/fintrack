@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import AppearanceTabs from '@/components/elements/AppearanceTabs.vue';
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
+import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 
-import AppLayout from '@/layouts/app-layout/Layout.vue';
-import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
+import HeadingSmall from '@/components/elements/HeadingSmall.vue';
+import AppearanceTabs from '@/components/screens/settings/AppearanceTabs.vue';
 </script>
 
 <template>
@@ -21,11 +20,11 @@ import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
             },
         ]"
     >
-        <SettingsLayout>
+        <SettingLayout>
             <div class="space-y-6">
                 <HeadingSmall title="Appearance settings" description="Update your account's appearance settings" />
                 <AppearanceTabs />
             </div>
-        </SettingsLayout>
+        </SettingLayout>
     </AppLayout>
 </template>
