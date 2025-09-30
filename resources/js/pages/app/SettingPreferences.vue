@@ -5,12 +5,9 @@ import type { TCurrency } from '@/types/enums';
 import { currencyOptions } from '@/lib/options';
 import { useForm, usePage } from '@inertiajs/vue3';
 
+import { HeadingSmall } from '@/components/elements';
+import { InputSelect, InputToggle, SubmitButton } from '@/components/screens/settings';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
-
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputSelect from '@/components/screens/settings/InputSelect.vue';
-import InputToggle from '@/components/screens/settings/InputToggle.vue';
-import SubmitButton from '@/components/screens/settings/SubmitButton.vue';
 
 const page = usePage<TAppProps>();
 

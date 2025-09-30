@@ -1,32 +1,30 @@
 <script setup lang="ts">
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import TwoFactorRecoveryCodes from '@/components/elements/TwoFactorRecoveryCodes.vue';
-import TwoFactorSetupModal from '@/components/elements/TwoFactorSetupModal.vue';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/composables/use-two-factor-auth';
-import AppLayout from '@/layouts/app-layout/Layout.vue';
-import SettingsLayout from '@/layouts/app-layout/SettingLayout.vue';
-import { Form } from '@inertiajs/vue3';
-import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
 import { onUnmounted, ref } from 'vue';
 
-interface Props {
-    requiresConfirmation?: boolean;
-    twoFactorEnabled?: boolean;
-}
+import { HeadingSmall, TwoFactorRecoveryCodes, TwoFactorSetupModal } from '@/components/elements';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { AppLayout, SettingLayout } from '@/layouts/app-layout';
+import { Form } from '@inertiajs/vue3';
+import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
 
-withDefaults(defineProps<Props>(), {
-    requiresConfirmation: false,
-    twoFactorEnabled: false,
-});
+withDefaults(
+    defineProps<{
+        requiresConfirmation?: boolean;
+        twoFactorEnabled?: boolean;
+    }>(),
+    {
+        requiresConfirmation: false,
+        twoFactorEnabled: false,
+    },
+);
 
 const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth();
+
 const showSetupModal = ref<boolean>(false);
 
-onUnmounted(() => {
-    clearTwoFactorAuthData();
-});
+onUnmounted(() => clearTwoFactorAuthData());
 </script>
 
 <template>
@@ -44,7 +42,7 @@ onUnmounted(() => {
             },
         ]"
     >
-        <SettingsLayout>
+        <SettingLayout>
             <div class="space-y-6">
                 <HeadingSmall title="Two-Factor Authentication" description="Manage your two-factor authentication settings" />
 
@@ -90,6 +88,6 @@ onUnmounted(() => {
                     :twoFactorEnabled="twoFactorEnabled"
                 />
             </div>
-        </SettingsLayout>
+        </SettingLayout>
     </AppLayout>
 </template>

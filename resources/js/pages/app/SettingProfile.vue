@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import { useForm, usePage } from '@inertiajs/vue3';
 
+import { HeadingSmall } from '@/components/elements';
+import { AvatarUpload, DangerZone, DataExport, InputString, SubmitButton } from '@/components/screens/settings';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 import { Link } from '@inertiajs/vue3';
-
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import AvatarUpload from '@/components/screens/settings/AvatarUpload.vue';
-import DangerZone from '@/components/screens/settings/DangerZone.vue';
-import DataExport from '@/components/screens/settings/DataExport.vue';
-import InputString from '@/components/screens/settings/InputString.vue';
-import SubmitButton from '@/components/screens/settings/SubmitButton.vue';
 
 defineProps<{
     mustVerifyEmail: boolean;
@@ -47,7 +42,9 @@ const form = useForm({
                 <HeadingSmall title="Profile information" description="Update your profile picture, name and email address" />
 
                 <form
-                    @submit.prevent="() => form.post(route('app.settings.profile.update'), { preserveScroll: true, preserveState: false, forceFormData: true })"
+                    @submit.prevent="
+                        () => form.post(route('app.settings.profile.update'), { preserveScroll: true, preserveState: false, forceFormData: true })
+                    "
                     class="space-y-6"
                 >
                     <AvatarUpload :user="user" v-model="form.avatar" :error="form.errors.avatar" />

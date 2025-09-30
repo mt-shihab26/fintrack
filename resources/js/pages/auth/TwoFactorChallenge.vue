@@ -7,13 +7,11 @@ import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input
 import { AuthLayout } from '@/layouts/auth-layout';
 import { Form } from '@inertiajs/vue3';
 
-interface AuthConfigContent {
+const authConfigContent = computed<{
     title: string;
     description: string;
     toggleText: string;
-}
-
-const authConfigContent = computed<AuthConfigContent>(() => {
+}>(() => {
     if (showRecoveryInput.value) {
         return {
             title: 'Recovery Code',

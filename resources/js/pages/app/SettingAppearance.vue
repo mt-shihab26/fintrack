@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import { HeadingSmall } from '@/components/elements';
+import { AppearanceTabs } from '@/components/screens/settings';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
-
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import AppearanceTabs from '@/components/screens/settings/AppearanceTabs.vue';
 </script>
 
 <template>

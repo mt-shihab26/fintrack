@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import { TextLink } from '@/components/elements';
 import { Button } from '@/components/ui/button';
 import { AuthLayout } from '@/layouts/auth-layout';
 import { Form } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
-
-import TextLink from '@/components/elements/TextLink.vue';
 
 defineProps<{
     status?: string;

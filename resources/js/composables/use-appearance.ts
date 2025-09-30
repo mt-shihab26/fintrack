@@ -1,8 +1,8 @@
 import { onMounted, ref } from 'vue';
 
-type Appearance = 'light' | 'dark' | 'system';
+type TAppearance = 'light' | 'dark' | 'system';
 
-export function updateTheme(value: Appearance) {
+export function updateTheme(value: TAppearance) {
     if (typeof window === 'undefined') {
         return;
     }
@@ -40,7 +40,7 @@ const getStoredAppearance = () => {
         return null;
     }
 
-    return localStorage.getItem('appearance') as Appearance | null;
+    return localStorage.getItem('appearance') as TAppearance | null;
 };
 
 const handleSystemThemeChange = () => {
@@ -62,18 +62,18 @@ export function initializeTheme() {
     mediaQuery()?.addEventListener('change', handleSystemThemeChange);
 }
 
-const appearance = ref<Appearance>('system');
+const appearance = ref<TAppearance>('system');
 
 export function useAppearance() {
     onMounted(() => {
-        const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
+        const savedAppearance = localStorage.getItem('appearance') as TAppearance | null;
 
         if (savedAppearance) {
             appearance.value = savedAppearance;
         }
     });
 
-    function updateAppearance(value: Appearance) {
+    function updateAppearance(value: TAppearance) {
         appearance.value = value;
 
         // Store in localStorage for client-side persistence...

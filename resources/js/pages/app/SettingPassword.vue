@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 
+import { HeadingSmall } from '@/components/elements';
+import { InputPassword, SubmitButton } from '@/components/screens/settings';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
-
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import InputPassword from '@/components/screens/settings/InputPassword.vue';
-import SubmitButton from '@/components/screens/settings/SubmitButton.vue';
 
 const form = useForm<{
     current_password: string;
