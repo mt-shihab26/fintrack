@@ -64,4 +64,3 @@ const filteredBudgets = computed(() =>
         </div>
     </div>
 </template>
-

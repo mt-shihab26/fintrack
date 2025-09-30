@@ -28,4 +28,3 @@ defineProps<{
         </DropdownMenuContent>
     </DropdownMenu>
 </template>
-
