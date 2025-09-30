@@ -6,7 +6,7 @@ import { currencyOptions } from '@/lib/options';
 import { useForm, usePage } from '@inertiajs/vue3';
 
 import { HeadingSmall } from '@/components/elements';
-import { InputSelect, InputToggle, SubmitButton } from '@/components/screens/settings';
+import { InputSelect, InputToggle, SubmitButton, WarningAlert } from '@/components/screens/settings';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 
 const page = usePage<TAppProps>();
@@ -54,7 +54,7 @@ const form = useForm<{
                     <div class="space-y-6">
                         <div class="space-y-4">
                             <h3 class="text-lg font-medium">General</h3>
-                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div class="space-y-4">
                                 <InputSelect
                                     id="currency"
                                     name="currency"
@@ -62,6 +62,10 @@ const form = useForm<{
                                     v-model="form.currency"
                                     :options="currencyOptions"
                                     :error="form.errors.currency"
+                                />
+                                <WarningAlert
+                                    title="Important"
+                                    message="Changing your currency will only update the display format for future transactions. Existing transaction amounts will not be converted. For best results, set your preferred currency immediately after registration, before adding any transactions."
                                 />
                             </div>
                         </div>

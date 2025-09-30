@@ -7,3 +7,4 @@ export { default as InputSelect } from './InputSelect.vue';
 export { default as InputString } from './InputString.vue';
 export { default as InputToggle } from './InputToggle.vue';
 export { default as SubmitButton } from './SubmitButton.vue';
+export { default as WarningAlert } from './WarningAlert.vue';
