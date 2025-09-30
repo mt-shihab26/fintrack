@@ -67,7 +67,7 @@ const filteredTransactions = computed(() => {
 const handleAddTransaction = (transactionData: Omit<TTransaction, 'id'>) => {
     const newTransaction: TTransaction = {
         ...transactionData,
-        id: Date.now().toString(),
+        id: Date.now(),
     };
     transactions.value = [newTransaction, ...transactions.value];
     showForm.value = false;
@@ -81,11 +81,11 @@ const handleEditTransaction = (transactionData: Omit<TTransaction, 'id'>) => {
     showForm.value = false;
 };
 
-const handleDeleteTransaction = (id: string) => {
+const handleDeleteTransaction = (id: number) => {
     transactions.value = transactions.value.filter((t) => t.id !== id);
 };
 
-const handleBulkDelete = (ids: string[]) => {
+const handleBulkDelete = (ids: number[]) => {
     transactions.value = transactions.value.filter((t) => !ids.includes(t.id));
 };
 

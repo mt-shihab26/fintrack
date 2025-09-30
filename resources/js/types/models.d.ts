@@ -1,6 +1,6 @@
 import type { TCurrency, TKind, TPeriod } from './enums';
 
-export type TId = string;
+export type TId = number;
 
 export type TUser = {
     id: TId;

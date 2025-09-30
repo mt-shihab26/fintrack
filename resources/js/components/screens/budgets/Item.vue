@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import type { TBudget } from '@/types/models';
+import type { TBudgetCategory } from '@/types/models';
 
+import { useFormat } from '@/composables/use-format';
 import { computed } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Progress } from '@/components/ui/progress';
-import { AlertTriangle, Edit, MoreHorizontal, Trash2, TrendingDown, TrendingUp } from 'lucide-vue-next';
+import { AlertTriangle, TrendingDown, TrendingUp } from 'lucide-vue-next';
+import { Actions } from '.';
 
-interface Props {
-    budget: TBudget;
-    onEdit: (budget: TBudget) => void;
-    onDelete: (id: string) => void;
-}
+const { currency } = useFormat();
 
-const props = defineProps<Props>();
+const props = defineProps<{
+    budget: TBudgetCategory;
+    edit: (budget: TBudgetCategory) => void;
+}>();
 
 const percentage = computed(() => (props.budget.spent / props.budget.amount) * 100);
 const remaining = computed(() => props.budget.amount - props.budget.spent);
@@ -57,30 +56,17 @@ const getStatusBadgeText = computed(() => {
 <template>
     <Card>
         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle class="text-base font-medium">{{ budget.category }}</CardTitle>
-            <DropdownMenu>
-                <DropdownMenuTrigger as-child>
-                    <Button variant="ghost" size="sm">
-                        <MoreHorizontal class="h-4 w-4" />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuItem @click="onEdit(budget)">
-                        <Edit class="mr-2 h-4 w-4" />
-                        Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem @click="onDelete(budget.id)" class="text-destructive focus:text-destructive">
-                        <Trash2 class="mr-2 h-4 w-4" />
-                        Delete
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+            <div class="flex items-center space-x-2">
+                <div class="h-4 w-4 rounded-full" :style="{ 'background-color': budget.category.color }" />
+                <CardTitle class="text-base font-medium">{{ budget.category.name }}</CardTitle>
+            </div>
+            <Actions :budget="budget" :edit="edit" />
         </CardHeader>
         <CardContent class="space-y-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <component :is="getStatusIcon" :class="getStatusIconClass" />
-                    <span :class="`text-2xl font-bold ${getStatusColor}`">${{ budget.spent.toLocaleString() }}</span>
+                    <span :class="`text-2xl font-bold ${getStatusColor}`">{{ currency(budget.spent) }}</span>
                 </div>
                 <Badge :variant="getStatusBadgeVariant">{{ getStatusBadgeText }}</Badge>
             </div>
@@ -96,12 +82,12 @@ const getStatusBadgeText = computed(() => {
             <div class="grid grid-cols-2 gap-4 text-sm">
                 <div>
                     <p class="text-muted-foreground">Budget</p>
-                    <p class="font-semibold">${{ budget.amount.toLocaleString() }}</p>
+                    <p class="font-semibold">{{ currency(budget.amount) }}</p>
                 </div>
                 <div>
                     <p class="text-muted-foreground">Remaining</p>
                     <p :class="`font-semibold ${remaining >= 0 ? 'text-primary' : 'text-destructive'}`">
-                        ${{ Math.abs(remaining).toLocaleString() }}
+                        {{ currency(Math.abs(remaining)) }}
                         <span v-if="remaining < 0"> over</span>
                     </p>
                 </div>
