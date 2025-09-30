@@ -2,7 +2,7 @@
 import type { TUser } from '@/types/models';
 
 import { getInitials } from '@/lib/utils';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -23,12 +23,23 @@ const emit = defineEmits<{
 const fileInput = ref<HTMLInputElement | null>(null);
 const previewUrl = ref<string | null>(null);
 
-const avatarSrc = computed(() => {
-    if (props.modelValue) {
+watch(
+    () => props.modelValue,
+    (newFile) => {
         if (previewUrl.value) {
             URL.revokeObjectURL(previewUrl.value);
+            previewUrl.value = null;
         }
-        previewUrl.value = URL.createObjectURL(props.modelValue);
+
+        if (newFile) {
+            previewUrl.value = URL.createObjectURL(newFile);
+        }
+    },
+    { immediate: true },
+);
+
+const avatarSrc = computed(() => {
+    if (previewUrl.value) {
         return previewUrl.value;
     }
     return props.user.avatar || '';
