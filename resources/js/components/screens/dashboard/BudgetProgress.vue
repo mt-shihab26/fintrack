@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { TBudgetCategory } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
-// Mock data for now - replace with actual prop when backend is ready
-const budgets: TBudgetCategory[] = [];
+const budgets: TIndexBudget[] = [];
 </script>
 
 <template>

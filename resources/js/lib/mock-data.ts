@@ -1,5 +1,5 @@
-import type { TBudget, TTransaction } from '@/types/models';
-import type { TIndexCategory } from '@/types/props';
+import type { TTransaction } from '@/types/models';
+import type { TIndexBudget, TIndexCategory } from '@/types/props';
 
 export const transactions: TTransaction[] = [
     {
@@ -94,117 +94,6 @@ export const transactions: TTransaction[] = [
     },
 ];
 
-export const categories: TIndexCategory[] = [
-    {
-        id: 1,
-        user_id: 1,
-        name: 'Food',
-        kind: 'expense',
-        color: '#ef4444',
-        transaction_count: 15,
-        total_amount: 450.75,
-    },
-    {
-        id: 2,
-        user_id: 1,
-        name: 'Transportation',
-        kind: 'expense',
-        color: '#3b82f6',
-        transaction_count: 8,
-        total_amount: 230.5,
-    },
-    {
-        id: 3,
-        user_id: 1,
-        name: 'Entertainment',
-        kind: 'expense',
-        color: '#8b5cf6',
-        transaction_count: 5,
-        total_amount: 125.0,
-    },
-    {
-        id: 4,
-        user_id: 1,
-        name: 'Healthcare',
-        kind: 'expense',
-        color: '#10b981',
-        transaction_count: 3,
-        total_amount: 180.25,
-    },
-    {
-        id: 5,
-        user_id: 1,
-        name: 'Salary',
-        kind: 'income',
-        color: '#f59e0b',
-        transaction_count: 12,
-        total_amount: 42000.0,
-    },
-    {
-        id: 6,
-        user_id: 1,
-        name: 'Freelance',
-        kind: 'income',
-        color: '#06b6d4',
-        transaction_count: 4,
-        total_amount: 2400.0,
-    },
-    {
-        id: 7,
-        user_id: 1,
-        name: 'Investment',
-        kind: 'income',
-        color: '#84cc16',
-        transaction_count: 2,
-        total_amount: 350.0,
-    },
-    {
-        id: 8,
-        user_id: 1,
-        name: 'Utilities',
-        kind: 'expense',
-        color: '#f97316',
-        transaction_count: 6,
-        total_amount: 480.3,
-    },
-    {
-        id: 9,
-        user_id: 1,
-        name: 'Rent',
-        kind: 'expense',
-        color: '#ef4444',
-        transaction_count: 1,
-        total_amount: 1200.0,
-    },
-];
+export const categories: TIndexCategory[] = [];
 
-export const budgets: TBudget[] = [
-    {
-        id: 1,
-        category_id: 1,
-        amount: 500.0,
-        period: 'monthly',
-        spent: 320.5,
-    },
-    {
-        id: 2,
-        category_id: 2,
-        amount: 200.0,
-        period: 'monthly',
-        spent: 150.75,
-    },
-    {
-        id: 3,
-        category_id: 3,
-        amount: 100.0,
-        period: 'weekly',
-        spent: 85.25,
-    },
-    {
-        id: 4,
-        category_id: 8,
-        amount: 150.0,
-        period: 'monthly',
-        spent: 95.3,
-    },
-];
+export const budgets: TIndexBudget[] = [];
