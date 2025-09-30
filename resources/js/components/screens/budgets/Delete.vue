@@ -36,7 +36,9 @@ defineProps<{
         <AlertDialogContent>
             <AlertDialogHeader>
                 <AlertDialogTitle>Delete Budget</AlertDialogTitle>
-                <AlertDialogDescription> Are you sure you want to delete this budget? This action cannot be undone. </AlertDialogDescription>
+                <AlertDialogDescription>
+                    Are you sure you want to delete the budget for "{{ budget.category.name }}" (${{ budget.amount.toLocaleString() }}/{{ budget.period }})? This action cannot be undone.
+                </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
