@@ -13,11 +13,11 @@ import {
 
 import type { TCategory } from '@/types/models';
 
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { router } from '@inertiajs/vue3';
 
-import { buttonVariants } from '@/components/ui/button';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-vue-next';
 
 const props = defineProps<{

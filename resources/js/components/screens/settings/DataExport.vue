@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import { HeadingSmall } from '@/components/elements';
 import { Button } from '@/components/ui/button';
 import { Form } from '@inertiajs/vue3';
-
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 </script>
 
 <template>

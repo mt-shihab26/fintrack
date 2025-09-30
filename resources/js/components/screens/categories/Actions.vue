@@ -4,8 +4,7 @@ import type { TCategory } from '@/types/models';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Edit, MoreHorizontal } from 'lucide-vue-next';
-
-import Delete from './Delete.vue';
+import { Delete } from '.';
 
 defineProps<{
     category: TCategory;

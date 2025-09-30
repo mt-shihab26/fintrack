@@ -5,8 +5,7 @@ import { useFormat } from '@/composables/use-format';
 import { computed } from 'vue';
 
 import { Activity, FolderOpen, TrendingDown, TrendingUp } from 'lucide-vue-next';
-
-import Stat from './Stat.vue';
+import { Stat } from '.';
 
 const props = defineProps<{ categories: TCategory[] }>();
 

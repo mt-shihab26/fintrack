@@ -6,8 +6,7 @@ import { computed, ref } from 'vue';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search } from 'lucide-vue-next';
-
-import Item from './Item.vue';
+import { Item } from '.';
 
 const props = defineProps<{
     categories: TCategory[];
