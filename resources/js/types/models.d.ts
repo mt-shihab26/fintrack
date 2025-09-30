@@ -17,6 +17,32 @@ export type TUser = {
     updated_at: string;
 };
 
+export type TCategory = {
+    id: TId;
+    user_id: TId;
+    name: string;
+    kind: TKind;
+    color: string;
+    transaction_count: number;
+    total_amount: number;
+};
+
+export type TCategoryUser = TCategory & {
+    user: TUser;
+};
+
+export type TBudget = {
+    id: TId;
+    category_id: TId;
+    amount: number;
+    spent: number;
+    period: TBudgetPeriod;
+};
+
+export type TBudgetCategory = TBudget & {
+    category: TCategory;
+};
+
 export type TTransaction = {
     id: TId;
     kind: TKind;
@@ -25,21 +51,4 @@ export type TTransaction = {
     description: string;
     date: string;
     tags?: string[];
-};
-
-export type TBudget = {
-    id: TId;
-    category: string;
-    amount: number;
-    spent: number;
-    period: TBudgetPeriod;
-};
-
-export type TCategory = {
-    id: TId;
-    name: string;
-    kind: TKind;
-    color: string;
-    transaction_count: number;
-    total_amount: number;
 };
