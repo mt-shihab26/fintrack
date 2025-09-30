@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useForm, usePage } from '@inertiajs/vue3';
 
-import { Button } from '@/components/ui/button';
 import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
@@ -11,6 +10,7 @@ import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 import AvatarUpload from '@/components/screens/settings/AvatarUpload.vue';
 import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
+import SubmitButton from '@/components/screens/settings/SubmitButton.vue';
 
 defineProps<{
     mustVerifyEmail: boolean;
@@ -90,18 +90,7 @@ const form = useForm({
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                        <Button type="submit" :disabled="form.processing" data-test="update-profile-button">Save</Button>
-
-                        <Transition
-                            enter-active-class="transition ease-in-out"
-                            enter-from-class="opacity-0"
-                            leave-active-class="transition ease-in-out"
-                            leave-to-class="opacity-0"
-                        >
-                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
-                        </Transition>
-                    </div>
+                    <SubmitButton :processing="form.processing" :recently-successful="form.recentlySuccessful" test-id="update-profile-button" />
                 </form>
             </div>
 

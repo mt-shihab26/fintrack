@@ -10,3 +10,8 @@ export const colorOptions: { value: string; label: string }[] = [
     { value: '#8b5cf6', label: 'Indigo' },
     { value: '#06b6d4', label: 'Cyan' },
 ];
+
+export const currencyOptions = [
+    { value: 'BDT', label: 'BDT (৳)' },
+    { value: 'USD', label: 'USD ($)' },
+];
