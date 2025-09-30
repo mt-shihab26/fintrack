@@ -20,7 +20,7 @@ defineEmits<{
 </script>
 
 <template>
-    <div class="grid gap-2">
+    <div class="flex flex-col gap-2">
         <Label :for="id">{{ label }}</Label>
         <Select :model-value="modelValue" :name="name" @update:model-value="$emit('update:modelValue', $event)">
             <SelectTrigger>

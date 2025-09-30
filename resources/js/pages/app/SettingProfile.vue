@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useForm, usePage } from '@inertiajs/vue3';
 
-import { Error, Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { AppLayout, SettingLayout } from '@/layouts/app-layout';
 import { Link } from '@inertiajs/vue3';
 
@@ -10,6 +8,7 @@ import HeadingSmall from '@/components/elements/HeadingSmall.vue';
 import AvatarUpload from '@/components/screens/settings/AvatarUpload.vue';
 import DangerZone from '@/components/screens/settings/DangerZone.vue';
 import DataExport from '@/components/screens/settings/DataExport.vue';
+import InputString from '@/components/screens/settings/InputString.vue';
 import SubmitButton from '@/components/screens/settings/SubmitButton.vue';
 
 defineProps<{
@@ -53,25 +52,28 @@ const form = useForm({
                 >
                     <AvatarUpload :user="user" v-model="form.avatar" :error="form.errors.avatar" />
 
-                    <div class="grid gap-2">
-                        <Label for="name">Name</Label>
-                        <Input id="name" v-model="form.name" class="mt-1 block w-full" required autocomplete="name" placeholder="Full name" />
-                        <Error class="mt-2" :message="form.errors.name" />
-                    </div>
+                    <InputString
+                        id="name"
+                        name="name"
+                        label="Name"
+                        v-model="form.name"
+                        placeholder="Full name"
+                        autocomplete="name"
+                        required
+                        :error="form.errors.name"
+                    />
 
-                    <div class="grid gap-2">
-                        <Label for="email">Email address</Label>
-                        <Input
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            class="mt-1 block w-full"
-                            required
-                            autocomplete="username"
-                            placeholder="Email address"
-                        />
-                        <Error class="mt-2" :message="form.errors.email" />
-                    </div>
+                    <InputString
+                        id="email"
+                        name="email"
+                        label="Email address"
+                        type="email"
+                        v-model="form.email"
+                        placeholder="Email address"
+                        autocomplete="username"
+                        required
+                        :error="form.errors.email"
+                    />
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
                         <p class="-mt-4 text-sm text-muted-foreground">

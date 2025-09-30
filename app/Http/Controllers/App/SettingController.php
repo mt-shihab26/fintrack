@@ -16,7 +16,7 @@ class SettingController extends Controller
     /**
      * Show the user's profile settings page.
      */
-    public function edit(Request $request)
+    public function profileEdit(Request $request)
     {
         return inertia('app/SettingProfile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -27,7 +27,7 @@ class SettingController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request)
+    public function profileUpdate(Request $request)
     {
         $user = $request->user();
 
@@ -62,27 +62,6 @@ class SettingController extends Controller
     }
 
     /**
-     * Delete the user's profile.
-     */
-    public function destroy(Request $request)
-    {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
-    }
-
-    /**
      * Show the user's preferences settings page.
      */
     public function preferencesEdit()
@@ -108,5 +87,26 @@ class SettingController extends Controller
         $user->update($validated);
 
         return redirect()->back()->with('success', 'Preferences updated successfully.');
+    }
+
+    /**
+     * Delete the user's profile.
+     */
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

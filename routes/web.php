@@ -44,8 +44,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::redirect('/settings', '/settings/profile')->name('app.settings.index');
 
-    Route::get('/settings/profile', [SettingController::class, 'edit'])->name('profile.edit');
-    Route::patch('/settings/profile', [SettingController::class, 'update'])->name('profile.update');
+    Route::get('/settings/profile', [SettingController::class, 'profileEdit'])->name('profile.edit');
+    Route::patch('/settings/profile', [SettingController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/settings/export', [SettingController::class, 'export'])->name('profile.export');
     Route::delete('/settings/profile', [SettingController::class, 'destroy'])->name('profile.destroy');
 
