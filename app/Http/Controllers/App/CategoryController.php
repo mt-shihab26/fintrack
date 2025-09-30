@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Enums\Kind;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -51,7 +52,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        Gate::allowIf(fn ($user) => $category->user_id === $user->id);
+        Gate::allowIf(fn (User $user) => $category->user_id === $user->id);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -69,7 +70,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        Gate::allowIf(fn ($user) => $category->user_id === $user->id);
+        Gate::allowIf(fn (User $user) => $category->user_id === $user->id);
 
         $category->delete();
 
