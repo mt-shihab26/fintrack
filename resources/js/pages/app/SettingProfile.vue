@@ -47,7 +47,7 @@ const form = useForm({
                 <HeadingSmall title="Profile information" description="Update your profile picture, name and email address" />
 
                 <form
-                    @submit.prevent="() => form.post(route('profile.update'), { preserveScroll: true, preserveState: false, forceFormData: true })"
+                    @submit.prevent="() => form.post(route('app.settings.profile.update'), { preserveScroll: true, preserveState: false, forceFormData: true })"
                     class="space-y-6"
                 >
                     <AvatarUpload :user="user" v-model="form.avatar" :error="form.errors.avatar" />

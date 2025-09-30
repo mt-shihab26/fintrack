@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\App\CategoryController;
-use App\Http\Controllers\App\PasswordController;
 use App\Http\Controllers\App\SettingController;
 use App\Http\Controllers\App\TwoFactorAuthenticationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -44,19 +43,20 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::redirect('/settings', '/settings/profile')->name('app.settings.index');
 
-    Route::get('/settings/profile', [SettingController::class, 'profileEdit'])->name('profile.edit');
-    Route::patch('/settings/profile', [SettingController::class, 'profileUpdate'])->name('profile.update');
-    Route::post('/settings/export', [SettingController::class, 'export'])->name('profile.export');
-    Route::delete('/settings/profile', [SettingController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/settings/profile', [SettingController::class, 'profileEdit'])->name('app.settings.profile.edit');
+    Route::patch('/settings/profile', [SettingController::class, 'profileUpdate'])->name('app.settings.profile.update');
+    Route::post('/settings/profile/export', [SettingController::class, 'profileExport'])->name('app.settings.profile.export');
+    Route::delete('/settings/profile', [SettingController::class, 'profileDestroy'])->name('app.settings.profile.destroy');
 
     Route::get('/settings/preferences', [SettingController::class, 'preferencesEdit'])->name('app.settings.preferences.edit');
     Route::patch('/settings/preferences', [SettingController::class, 'preferencesUpdate'])->name('app.settings.preferences.update');
 
-    Route::get('/settings/password', [PasswordController::class, 'edit'])->name('password.edit');
-    Route::put('/settings/password', [PasswordController::class, 'update'])->middleware('throttle:6,1')->name('password.update');
+    Route::get('/settings/password', [SettingController::class, 'passwordEdit'])->name('app.settings.password.edit');
+    Route::put('/settings/password', [SettingController::class, 'passwordUpdate'])->middleware('throttle:6,1')->name('app.settings.password.update');
 
-    Route::get('/settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])->name('two-factor.show');
-    Route::get('/settings/appearance', fn () => inertia('app/SettingAppearance'))->name('appearance.edit');
+    Route::get('/settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])->name('app.settings.two-factor.show');
+
+    Route::get('/settings/appearance', [SettingController::class, 'appearanceEdit'])->name('app.settings.appearance.edit');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

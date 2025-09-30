@@ -37,7 +37,7 @@ const passwordInput = ref<InstanceType<typeof Input> | null>(null);
                 </DialogTrigger>
                 <DialogContent>
                     <Form
-                        :action="route('profile.destroy')"
+                        :action="route('app.settings.profile.destroy')"
                         method="delete"
                         reset-on-success
                         @error="() => passwordInput?.$el?.focus()"

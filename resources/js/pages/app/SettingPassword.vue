@@ -34,7 +34,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                 <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
 
                 <Form
-                    :action="route('password.update')"
+                    :action="route('app.settings.password.update')"
                     method="put"
                     :options="{
                         preserveScroll: true,

@@ -13,7 +13,7 @@ import HeadingSmall from '@/components/elements/HeadingSmall.vue';
                 <p class="font-medium">Data Export</p>
                 <p class="text-sm">Download a copy of all your account data including transactions, budgets, and categories.</p>
             </div>
-            <Form :action="route('profile.export')" method="post" v-slot="{ processing }">
+            <Form :action="route('app.settings.profile.export')" method="post" v-slot="{ processing }">
                 <Button :disabled="processing" data-test="export-data-button">
                     {{ processing ? 'Exporting...' : 'Export data' }}
                 </Button>

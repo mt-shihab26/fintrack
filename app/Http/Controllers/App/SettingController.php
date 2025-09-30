@@ -9,7 +9,9 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class SettingController extends Controller
 {
@@ -58,7 +60,28 @@ class SettingController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully.');
+        return redirect()->back()->with('success', 'app.settings.profile.updated successfully.');
+    }
+
+    /**
+     * Delete the user's profile.
+     */
+    public function profileDestroy(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     /**
@@ -90,23 +113,35 @@ class SettingController extends Controller
     }
 
     /**
-     * Delete the user's profile.
+     * Show the user's password settings page.
      */
-    public function destroy(Request $request)
+    public function passwordEdit()
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
+        return inertia('app/SettingPassword');
+    }
+
+    /**
+     * Update the user's password.
+     */
+    public function passwordUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
-        $user = $request->user();
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
 
-        Auth::logout();
+        return redirect()->back();
+    }
 
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+    /**
+     * Show the appearance settings page.
+     */
+    public function appearanceEdit()
+    {
+        return inertia('app/SettingAppearance');
     }
 }
