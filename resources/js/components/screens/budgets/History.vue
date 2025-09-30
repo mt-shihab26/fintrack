@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import type { TIndexBudget } from '@/types/props';
-
 import { ref } from 'vue';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LineChart } from '@/components/ui/chart-line';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-defineProps<{
-    budgets: TIndexBudget[];
-}>();
-
-const selectedPeriod = ref('6months');
 
 const mockHistoryData = [
     { month: 'Jan', Food: 450, Transport: 180, Entertainment: 280, Utilities: 120 },
@@ -21,6 +14,8 @@ const mockHistoryData = [
     { month: 'Jun', Food: 490, Transport: 185, Entertainment: 275, Utilities: 140 },
 ];
 
+const selectedPeriod = ref('6months');
+
 const categories = ['Food', 'Transport', 'Entertainment', 'Utilities'] as any;
 const colors = ['#f59e0b', '#059669', '#7c3aed', '#4b5563'];
 
@@ -30,7 +25,7 @@ const yFormatter = (tick: number | Date) => `$${tick}` as any;
 <template>
     <Card>
         <CardHeader class="flex flex-row items-center justify-between">
-            <CardTitle>Budget vs Spent Comparison</CardTitle>
+            <CardTitle>Budget Performance History</CardTitle>
             <Select v-model="selectedPeriod">
                 <SelectTrigger class="w-32">
                     <SelectValue />
