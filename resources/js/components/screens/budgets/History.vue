@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import type { TIndexBudget } from '@/types/props';
+
 import { ref } from 'vue';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart } from '@/components/ui/chart-line';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+const props = defineProps<{
+    budgets: TIndexBudget[];
+}>();
 
 const mockHistoryData = [
     { month: 'Jan', Food: 450, Transport: 180, Entertainment: 280, Utilities: 120 },

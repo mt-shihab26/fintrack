@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TBudgetCategory } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
 import { computed, ref } from 'vue';
 
@@ -9,8 +9,8 @@ import { Search } from 'lucide-vue-next';
 import { Item } from '.';
 
 const props = defineProps<{
-    budgets: TBudgetCategory[];
-    edit: (budget: TBudgetCategory) => void;
+    budgets: TIndexBudget[];
+    edit: (budget: TIndexBudget) => void;
 }>();
 
 const searchTerm = ref('');
@@ -64,3 +64,4 @@ const filteredBudgets = computed(() =>
         </div>
     </div>
 </template>
+

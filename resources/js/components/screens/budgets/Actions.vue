@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TBudgetCategory } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -7,8 +7,8 @@ import { Edit, MoreHorizontal } from 'lucide-vue-next';
 import { Delete } from '.';
 
 defineProps<{
-    budget: TBudgetCategory;
-    edit: (budget: TBudgetCategory) => void;
+    budget: TIndexBudget;
+    edit: (budget: TIndexBudget) => void;
 }>();
 </script>
 
@@ -28,3 +28,4 @@ defineProps<{
         </DropdownMenuContent>
     </DropdownMenu>
 </template>
+

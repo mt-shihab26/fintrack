@@ -38,7 +38,7 @@ const edit = (b: TIndexBudget) => {
             </div>
             <Overview :budgets="budgets" />
             <List :budgets="budgets" :edit="edit" />
-            <History v-if="budgets.length > 0" />
+            <History v-if="budgets.length > 0" :budgets="budgets" />
         </div>
         <Form v-model:open="open" v-model:budget="budget" :categories="categories" />
     </AppLayout>

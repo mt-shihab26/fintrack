@@ -2,11 +2,11 @@
 import type { TIndexBudget } from '@/types/props';
 
 import { useFormat } from '@/composables/use-format';
+import { formatPercentage, formatProgressValue } from '@/lib/format';
 import { computed } from 'vue';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, Target, TrendingDown, TrendingUp } from 'lucide-vue-next';
+import { Stat } from '.';
 
 const props = defineProps<{
     budgets: TIndexBudget[];
@@ -14,72 +14,74 @@ const props = defineProps<{
 
 const { currency } = useFormat();
 
-const totalBudget = computed(() => props.budgets.reduce((sum, b) => sum + b.amount, 0));
-const totalSpent = computed(() => props.budgets.reduce((sum, b) => sum + b.spent, 0));
-const totalRemaining = computed(() => totalBudget.value - totalSpent.value);
-const overallPercentage = computed(() => (totalSpent.value / totalBudget.value) * 100);
+const budget = computed(() => props.budgets.reduce((sum, b) => sum + (Number(b.amount) || 0), 0));
+const spent = computed(() => props.budgets.reduce((sum, b) => sum + (Number(b.spent) || 0), 0));
+const percentage = computed(() => (budget.value > 0 ? (spent.value / budget.value) * 100 : 0));
 
-const overBudgetCount = computed(() => props.budgets.filter((b) => (b.spent / b.amount) * 100 > 100).length);
+const remaining = computed(() => budget.value - spent.value);
+
+const onTrackCount = computed(
+    () =>
+        props.budgets.filter((b) => {
+            const amount = Number(b.amount) || 0;
+            const spent = Number(b.spent) || 0;
+            return amount > 0 && (spent / amount) * 100 <= 80;
+        }).length,
+);
+
+const overBudgetCount = computed(
+    () =>
+        props.budgets.filter((b) => {
+            const amount = Number(b.amount) || 0;
+            const spent = Number(b.spent) || 0;
+            return amount > 0 && (spent / amount) * 100 > 100;
+        }).length,
+);
+
 const nearLimitCount = computed(
     () =>
         props.budgets.filter((b) => {
-            const percentage = (b.spent / b.amount) * 100;
+            const amount = Number(b.amount) || 0;
+            const spent = Number(b.spent) || 0;
+            if (amount <= 0) return false;
+            const percentage = (spent / amount) * 100;
             return percentage > 80 && percentage <= 100;
         }).length,
 );
-const onTrackCount = computed(() => props.budgets.filter((b) => (b.spent / b.amount) * 100 <= 80).length);
 </script>
 
 <template>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-            <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle class="text-sm font-medium">Total Budget</CardTitle>
-                <Target class="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-                <div class="text-2xl font-bold">{{ currency(totalBudget) }}</div>
-                <div class="mt-2 space-y-2">
-                    <Progress :value="Math.min(overallPercentage, 100)" class="h-2" />
-                    <p class="text-xs text-muted-foreground">{{ currency(totalSpent) }} spent ({{ overallPercentage.toFixed(1) }}%)</p>
-                </div>
-            </CardContent>
-        </Card>
+        <Stat
+            title="Total Budget"
+            :value="currency(budget)"
+            :icon="Target"
+            :progressValue="formatProgressValue(percentage)"
+            :description="`${currency(spent)} spent (${formatPercentage(percentage)})`"
+        />
 
-        <Card>
-            <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle class="text-sm font-medium">Remaining</CardTitle>
-                <TrendingDown v-if="totalRemaining >= 0" class="h-4 w-4 text-primary" />
-                <TrendingUp v-else class="h-4 w-4 text-destructive" />
-            </CardHeader>
-            <CardContent>
-                <div :class="`text-2xl font-bold ${totalRemaining >= 0 ? 'text-primary' : 'text-destructive'}`">
-                    ${{ Math.abs(totalRemaining).toLocaleString() }}
-                </div>
-                <p class="text-xs text-muted-foreground">{{ totalRemaining >= 0 ? 'Under budget' : 'Over budget' }}</p>
-            </CardContent>
-        </Card>
+        <Stat
+            title="Remaining"
+            :value="currency(Math.abs(remaining))"
+            :icon="remaining >= 0 ? TrendingDown : TrendingUp"
+            :iconClass="remaining >= 0 ? 'h-4 w-4 text-primary' : 'h-4 w-4 text-destructive'"
+            :description="remaining >= 0 ? 'Under budget' : 'Over budget'"
+        />
 
-        <Card>
-            <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle class="text-sm font-medium">On Track</CardTitle>
-                <TrendingDown class="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-                <div class="text-2xl font-bold text-primary">{{ onTrackCount }}</div>
-                <p class="text-xs text-muted-foreground">Budgets under 80%</p>
-            </CardContent>
-        </Card>
+        <Stat
+            title="On Track"
+            :value="onTrackCount.toString()"
+            :icon="TrendingDown"
+            iconClass="h-4 w-4 text-primary"
+            description="Budgets under 80%"
+        />
 
-        <Card>
-            <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle class="text-sm font-medium">Alerts</CardTitle>
-                <AlertTriangle class="h-4 w-4 text-destructive" />
-            </CardHeader>
-            <CardContent>
-                <div class="text-2xl font-bold text-destructive">{{ overBudgetCount + nearLimitCount }}</div>
-                <p class="text-xs text-muted-foreground">{{ overBudgetCount }} over, {{ nearLimitCount }} near limit</p>
-            </CardContent>
-        </Card>
+        <Stat
+            title="Alerts"
+            :value="(overBudgetCount + nearLimitCount).toString()"
+            :icon="AlertTriangle"
+            iconClass="h-4 w-4 text-destructive"
+            :description="`${overBudgetCount} over, ${nearLimitCount} near limit`"
+        />
     </div>
 </template>

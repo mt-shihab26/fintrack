@@ -5,3 +5,4 @@ export { default as History } from './History.vue';
 export { default as Item } from './Item.vue';
 export { default as List } from './List.vue';
 export { default as Overview } from './Overview.vue';
+export { default as Stat } from './Stat.vue';

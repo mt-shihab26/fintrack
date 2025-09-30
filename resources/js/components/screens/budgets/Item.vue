@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { TBudgetCategory } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
 import { useFormat } from '@/composables/use-format';
+import { formatPercentage, formatProgressValue } from '@/lib/format';
 import { computed } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
@@ -13,8 +14,8 @@ import { Actions } from '.';
 const { currency } = useFormat();
 
 const props = defineProps<{
-    budget: TBudgetCategory;
-    edit: (budget: TBudgetCategory) => void;
+    budget: TIndexBudget;
+    edit: (budget: TIndexBudget) => void;
 }>();
 
 const percentage = computed(() => (props.budget.spent / props.budget.amount) * 100);
@@ -74,9 +75,9 @@ const getStatusBadgeText = computed(() => {
             <div class="space-y-2">
                 <div class="flex justify-between text-sm">
                     <span>Progress</span>
-                    <span>{{ percentage.toFixed(1) }}%</span>
+                    <span>{{ formatPercentage(percentage) }}</span>
                 </div>
-                <Progress :value="Math.min(percentage, 100)" class="h-2" />
+                <Progress :modelValue="formatProgressValue(percentage)" class="h-2" />
             </div>
 
             <div class="grid grid-cols-2 gap-4 text-sm">

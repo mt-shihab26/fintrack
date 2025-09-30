@@ -22,7 +22,7 @@ class BudgetController extends Controller
             ->get()
             ->map(fn ($budget) => [
                 ...$budget->toArray(),
-                'spent' => 0, // TODO: Calculate actual spent amount from transactions
+                'spent' => 123, // TODO: Calculate actual spent amount from transactions
             ]);
 
         $categories = $request->user()->categories()
