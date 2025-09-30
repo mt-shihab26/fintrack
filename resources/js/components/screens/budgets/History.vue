@@ -45,7 +45,7 @@ const { currency } = useFormat();
             </Select>
         </CardHeader>
         <CardContent>
-            <div class="h-[300px]">
+            <div class="h-[300px] w-full">
                 <LineChart
                     :data="mockHistoryData"
                     :categories="categories"
