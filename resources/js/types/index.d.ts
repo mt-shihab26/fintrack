@@ -1,5 +1,6 @@
 import type { InertiaLinkProps } from '@inertiajs/vue3';
 import type { LucideIcon } from 'lucide-vue-next';
+import type { TUser } from './models';
 
 export type TBreadcrumb = {
     title?: string;

@@ -20,7 +20,7 @@ class SettingController extends Controller
      */
     public function profileEdit(Request $request)
     {
-        return inertia('app/SettingProfile', [
+        return inertia('app/settings/Profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);
@@ -89,7 +89,7 @@ class SettingController extends Controller
      */
     public function preferencesEdit()
     {
-        return inertia('app/SettingPreferences');
+        return inertia('app/settings/Preferences');
     }
 
     /**
@@ -117,7 +117,7 @@ class SettingController extends Controller
      */
     public function passwordEdit()
     {
-        return inertia('app/SettingPassword');
+        return inertia('app/settings/Password');
     }
 
     /**
@@ -142,6 +142,6 @@ class SettingController extends Controller
      */
     public function appearanceEdit()
     {
-        return inertia('app/SettingAppearance');
+        return inertia('app/settings/Appearance');
     }
 }
