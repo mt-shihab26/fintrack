@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import type { TBudgetCategory, TCategory } from '@/types/models';
+import type { TCategory } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
 import { ref } from 'vue';
 
+import { Form, History, List, Overview } from '@/components/screens/budgets';
 import { Button } from '@/components/ui/button';
 import { AppLayout } from '@/layouts/app-layout';
 import { Plus } from 'lucide-vue-next';
 
-import { Form, History, List, Overview } from '@/components/screens/budgets';
-
 defineProps<{
-    budgets: TBudgetCategory[];
+    budgets: TIndexBudget[];
     categories: TCategory[];
 }>();
 
 const open = ref(false);
-const budget = ref<TBudgetCategory | null>(null);
+const budget = ref<TIndexBudget | null>(null);
 
-const edit = (b: TBudgetCategory) => {
+const edit = (b: TIndexBudget) => {
     budget.value = b;
     open.value = true;
 };
@@ -36,7 +36,6 @@ const edit = (b: TBudgetCategory) => {
                     Create Budget
                 </Button>
             </div>
-
             <Overview :budgets="budgets" />
             <List :budgets="budgets" :edit="edit" />
             <History v-if="budgets.length > 0" />

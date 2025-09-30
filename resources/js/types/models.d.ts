@@ -30,12 +30,6 @@ export type TBudget = {
     category_id: TId;
     amount: number;
     period: TPeriod;
-
-    spent: number;
-};
-
-export type TBudgetCategory = TBudget & {
-    category: TCategory;
 };
 
 export type TTransaction = {

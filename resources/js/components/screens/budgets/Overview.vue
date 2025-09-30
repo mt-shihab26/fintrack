@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import type { TBudget } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
+import { useFormat } from '@/composables/use-format';
 import { computed } from 'vue';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, Target, TrendingDown, TrendingUp } from 'lucide-vue-next';
 
-interface Props {
-    budgets: TBudget[];
-}
+const props = defineProps<{
+    budgets: TIndexBudget[];
+}>();
 
-const props = defineProps<Props>();
+const { currency } = useFormat();
 
 const totalBudget = computed(() => props.budgets.reduce((sum, b) => sum + b.amount, 0));
 const totalSpent = computed(() => props.budgets.reduce((sum, b) => sum + b.spent, 0));
@@ -37,10 +38,10 @@ const onTrackCount = computed(() => props.budgets.filter((b) => (b.spent / b.amo
                 <Target class="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div class="text-2xl font-bold">${{ totalBudget.toLocaleString() }}</div>
+                <div class="text-2xl font-bold">{{ currency(totalBudget) }}</div>
                 <div class="mt-2 space-y-2">
                     <Progress :value="Math.min(overallPercentage, 100)" class="h-2" />
-                    <p class="text-xs text-muted-foreground">${{ totalSpent.toLocaleString() }} spent ({{ overallPercentage.toFixed(1) }}%)</p>
+                    <p class="text-xs text-muted-foreground">{{ currency(totalSpent) }} spent ({{ overallPercentage.toFixed(1) }}%)</p>
                 </div>
             </CardContent>
         </Card>

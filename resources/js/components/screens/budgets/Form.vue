@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { TPeriod } from '@/types/enums';
-import type { TBudgetCategory, TCategory } from '@/types/models';
+import type { TCategory, TId } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
 import { useForm } from '@inertiajs/vue3';
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -13,17 +14,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const props = defineProps<{
     open: boolean;
-    budget?: TBudgetCategory | null;
+    budget?: TIndexBudget | null;
     categories: TCategory[];
 }>();
 
 const emit = defineEmits<{
     'update:open': [value: boolean];
-    'update:budget': [value: TBudgetCategory | null];
+    'update:budget': [value: TIndexBudget | null];
 }>();
 
 const form = useForm<{
-    category_id: number | null;
+    category_id: TId | null;
     amount: string;
     period: TPeriod;
 }>({
@@ -36,7 +37,7 @@ watch(
     () => props.budget,
     (budget) => {
         if (!budget) return;
-        form.category_id = budget.category.id;
+        form.category_id = budget.category_id;
         form.amount = budget.amount.toString();
         form.period = budget.period;
     },
@@ -58,6 +59,8 @@ const submit = () => {
         form.post(route('app.budgets.store'), { onSuccess: cancel, preserveScroll: true });
     }
 };
+
+const categories = computed(() => (props.budget ? [props.budget.category, ...props.categories] : props.categories));
 </script>
 
 <template>
