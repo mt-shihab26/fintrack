@@ -11,6 +11,20 @@ defineProps<{
 }>();
 
 const selectedPeriod = ref('6months');
+
+const mockHistoryData = [
+    { month: 'Jan', Food: 450, Transport: 180, Entertainment: 280, Utilities: 120 },
+    { month: 'Feb', Food: 520, Transport: 160, Entertainment: 320, Utilities: 110 },
+    { month: 'Mar', Food: 480, Transport: 200, Entertainment: 250, Utilities: 130 },
+    { month: 'Apr', Food: 510, Transport: 190, Entertainment: 290, Utilities: 125 },
+    { month: 'May', Food: 470, Transport: 170, Entertainment: 310, Utilities: 115 },
+    { month: 'Jun', Food: 490, Transport: 185, Entertainment: 275, Utilities: 140 },
+];
+
+const categories = ['Food', 'Transport', 'Entertainment', 'Utilities'] as any;
+const colors = ['#f59e0b', '#059669', '#7c3aed', '#4b5563'];
+
+const yFormatter = (tick: number | Date) => `$${tick}` as any;
 </script>
 
 <template>
@@ -29,7 +43,19 @@ const selectedPeriod = ref('6months');
             </Select>
         </CardHeader>
         <CardContent>
-            <div class="h-[300px]"></div>
+            <div class="h-[300px]">
+                <LineChart
+                    :data="mockHistoryData"
+                    :categories="categories"
+                    index="month"
+                    :colors="colors"
+                    :y-formatter="yFormatter"
+                    :show-grid-line="true"
+                    :show-legend="true"
+                    :show-tooltip="true"
+                    class="h-full"
+                />
+            </div>
         </CardContent>
     </Card>
 </template>
