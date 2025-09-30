@@ -19,7 +19,7 @@ class BudgetFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => Category::inRandomOrder()->first()?->id,
+            'category_id' => Category::factory(),
             'amount' => fake()->randomFloat(2, 100, 5000),
             'period' => fake()->randomElement(Period::values()),
         ];

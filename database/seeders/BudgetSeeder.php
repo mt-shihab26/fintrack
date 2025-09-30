@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Budget;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class BudgetSeeder extends Seeder
@@ -12,7 +13,13 @@ class BudgetSeeder extends Seeder
      */
     public function run(): void
     {
-        Budget::factory()->monthly()->count(10)->create();
-        Budget::factory()->weekly()->count(5)->create();
+        $categories = Category::all();
+
+        $categories->take(8)->each(function ($category, $index) {
+            Budget::factory()
+                ->state(['category_id' => $category->id])
+                ->when($index < 5, fn ($factory) => $factory->monthly(), fn ($factory) => $factory->weekly())
+                ->create();
+        });
     }
 }
