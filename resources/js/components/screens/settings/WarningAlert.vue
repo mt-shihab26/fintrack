@@ -16,4 +16,3 @@ defineProps<{
         </AlertDescription>
     </Alert>
 </template>
-
