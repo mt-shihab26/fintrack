@@ -50,7 +50,10 @@ const form = useForm<{
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Preferences" description="Update your general and notification preferences" />
 
-                <form @submit.prevent="form.patch(route('app.settings.preferences.update'))" class="space-y-6">
+                <form
+                    @submit.prevent="form.patch(route('app.settings.preferences.update'), { preserveScroll: true, preserveState: false })"
+                    class="space-y-6"
+                >
                     <div class="space-y-6">
                         <div class="space-y-4">
                             <h3 class="text-lg font-medium">General</h3>

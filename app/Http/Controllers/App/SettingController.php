@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Enums\Currency;
 use App\Helpers\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -97,9 +98,14 @@ class SettingController extends Controller
         $user = $request->user();
 
         $validated = $request->validate([
+            'currency' => ['required', 'string', Rule::in(Currency::values())],
+            'push_notifications' => ['required', 'boolean'],
+            'email_notifications' => ['required', 'boolean'],
+            'budget_alerts' => ['required', 'boolean'],
+            'weekly_reports' => ['required', 'boolean'],
         ]);
 
-        $user->save();
+        $user->update($validated);
 
         return redirect()->back()->with('success', 'Preferences updated successfully.');
     }

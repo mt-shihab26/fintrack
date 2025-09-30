@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\Currency;
 use App\Helpers\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,6 +27,11 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'currency',
+        'push_notifications',
+        'email_notifications',
+        'budget_alerts',
+        'weekly_reports',
     ];
 
     /**
@@ -48,6 +54,11 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'currency' => Currency::class,
+            'push_notifications' => 'boolean',
+            'email_notifications' => 'boolean',
+            'budget_alerts' => 'boolean',
+            'weekly_reports' => 'boolean',
         ];
     }
 

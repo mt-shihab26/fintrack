@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -29,6 +30,11 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'avatar' => fake()->imageUrl(200, 200, 'people'),
+            'currency' => fake()->randomElement(Currency::values()),
+            'push_notifications' => fake()->boolean(),
+            'email_notifications' => fake()->boolean(),
+            'budget_alerts' => fake()->boolean(),
+            'weekly_reports' => fake()->boolean(),
             'remember_token' => Str::random(10),
         ];
     }
