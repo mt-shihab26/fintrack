@@ -11,7 +11,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-import type { TCategory } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -20,20 +20,16 @@ import { router } from '@inertiajs/vue3';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Trash2 } from 'lucide-vue-next';
 
-const props = defineProps<{
-    category: TCategory;
+defineProps<{
+    category: TIndexCategory;
 }>();
-
-const deleteCategory = () => {
-    router.delete(route('app.categories.destroy', props.category.id), { preserveScroll: true });
-};
 </script>
 
 <template>
     <AlertDialog>
         <AlertDialogTrigger as-child>
             <DropdownMenuItem @select="(event: Event) => event.preventDefault()" class="text-destructive focus:text-destructive">
-                <Trash2 class="mr-2 h-4 w-4" />
+                <Trash2 class="mr-2 h-4 w-4 text-destructive" />
                 Delete
             </DropdownMenuItem>
         </AlertDialogTrigger>
@@ -49,7 +45,10 @@ const deleteCategory = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction :class="cn(buttonVariants({ variant: 'destructive' }))" @click="deleteCategory">
+                <AlertDialogAction
+                    :class="cn(buttonVariants({ variant: 'destructive' }))"
+                    @click="() => router.delete(route('app.categories.destroy', category.id), { preserveScroll: true })"
+                >
                     Delete Category
                 </AlertDialogAction>
             </AlertDialogFooter>

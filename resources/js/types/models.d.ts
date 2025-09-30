@@ -23,13 +23,6 @@ export type TCategory = {
     name: string;
     kind: TKind;
     color: string;
-
-    transaction_count: number;
-    total_amount: number;
-};
-
-export type TCategoryUser = TCategory & {
-    user: TUser;
 };
 
 export type TBudget = {

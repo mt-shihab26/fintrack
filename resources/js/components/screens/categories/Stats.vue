@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TCategory } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 import { useFormat } from '@/composables/use-format';
 import { computed } from 'vue';
@@ -7,7 +7,7 @@ import { computed } from 'vue';
 import { Activity, FolderOpen, TrendingDown, TrendingUp } from 'lucide-vue-next';
 import { Stat } from '.';
 
-const props = defineProps<{ categories: TCategory[] }>();
+const props = defineProps<{ categories: TIndexCategory[] }>();
 
 const { currency } = useFormat();
 

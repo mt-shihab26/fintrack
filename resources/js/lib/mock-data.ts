@@ -1,4 +1,5 @@
-import type { TBudget, TCategory, TTransaction } from '@/types/models';
+import type { TBudget, TTransaction } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 export const transactions: TTransaction[] = [
     {
@@ -93,7 +94,7 @@ export const transactions: TTransaction[] = [
     },
 ];
 
-export const categories: TCategory[] = [
+export const categories: TIndexCategory[] = [
     {
         id: 1,
         user_id: 1,
@@ -110,7 +111,7 @@ export const categories: TCategory[] = [
         kind: 'expense',
         color: '#3b82f6',
         transaction_count: 8,
-        total_amount: 230.50,
+        total_amount: 230.5,
     },
     {
         id: 3,
@@ -119,7 +120,7 @@ export const categories: TCategory[] = [
         kind: 'expense',
         color: '#8b5cf6',
         transaction_count: 5,
-        total_amount: 125.00,
+        total_amount: 125.0,
     },
     {
         id: 4,
@@ -137,7 +138,7 @@ export const categories: TCategory[] = [
         kind: 'income',
         color: '#f59e0b',
         transaction_count: 12,
-        total_amount: 42000.00,
+        total_amount: 42000.0,
     },
     {
         id: 6,
@@ -146,7 +147,7 @@ export const categories: TCategory[] = [
         kind: 'income',
         color: '#06b6d4',
         transaction_count: 4,
-        total_amount: 2400.00,
+        total_amount: 2400.0,
     },
     {
         id: 7,
@@ -155,7 +156,7 @@ export const categories: TCategory[] = [
         kind: 'income',
         color: '#84cc16',
         transaction_count: 2,
-        total_amount: 350.00,
+        total_amount: 350.0,
     },
     {
         id: 8,
@@ -164,7 +165,7 @@ export const categories: TCategory[] = [
         kind: 'expense',
         color: '#f97316',
         transaction_count: 6,
-        total_amount: 480.30,
+        total_amount: 480.3,
     },
     {
         id: 9,
@@ -173,7 +174,7 @@ export const categories: TCategory[] = [
         kind: 'expense',
         color: '#ef4444',
         transaction_count: 1,
-        total_amount: 1200.00,
+        total_amount: 1200.0,
     },
 ];
 
@@ -183,7 +184,7 @@ export const budgets: TBudget[] = [
         category_id: 1,
         amount: 500.0,
         period: 'monthly',
-        spent: 320.50,
+        spent: 320.5,
     },
     {
         id: 2,
@@ -204,6 +205,6 @@ export const budgets: TBudget[] = [
         category_id: 8,
         amount: 150.0,
         period: 'monthly',
-        spent: 95.30,
+        spent: 95.3,
     },
 ];

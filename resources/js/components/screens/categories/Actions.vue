@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TCategory } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -7,8 +7,8 @@ import { Edit, MoreHorizontal } from 'lucide-vue-next';
 import { Delete } from '.';
 
 defineProps<{
-    category: TCategory;
-    edit: (category: TCategory) => void;
+    category: TIndexCategory;
+    edit: (category: TIndexCategory) => void;
 }>();
 </script>
 

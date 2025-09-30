@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TCategory } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 import { ref } from 'vue';
 
@@ -9,13 +9,13 @@ import { AppLayout } from '@/layouts/app-layout';
 import { Plus } from 'lucide-vue-next';
 
 defineProps<{
-    categories: TCategory[];
+    categories: TIndexCategory[];
 }>();
 
 const open = ref(false);
-const category = ref<TCategory | null>(null);
+const category = ref<TIndexCategory | null>(null);
 
-const edit = (c: TCategory) => {
+const edit = (c: TIndexCategory) => {
     category.value = c;
     open.value = true;
 };
