@@ -47,7 +47,7 @@ defineProps<{
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                     :class="cn(buttonVariants({ variant: 'destructive' }))"
-                    @click="() => router.delete(route('app.categories.destroy', category.id), { preserveScroll: true })"
+                    @click="() => router.delete(route('app.categories.destroy', category), { preserveScroll: true })"
                 >
                     Delete Category
                 </AlertDialogAction>
