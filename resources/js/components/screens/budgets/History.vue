@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFormat } from '@/composables/use-format';
 import { ref } from 'vue';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +20,9 @@ const selectedPeriod = ref('6months');
 const categories = ['Food', 'Transport', 'Entertainment', 'Utilities'] as any;
 const colors = ['#f59e0b', '#059669', '#7c3aed', '#4b5563'];
 
-const yFormatter = (tick: number | Date) => `$${tick}` as any;
+const { currency } = useFormat();
+
+const yFormatter = (tick: number | Date) => (typeof tick === 'number' ? currency.value(tick) : ('' as any));
 </script>
 
 <template>
