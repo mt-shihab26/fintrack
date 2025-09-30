@@ -17,18 +17,15 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Link } from '@inertiajs/vue3';
 import { Menu, Search } from 'lucide-vue-next';
 
-import AppLogoIcon from '@/components/elements/AppLogoIcon.vue';
-import AppLogo from './AppLogo.vue';
+import LogoIcon from '@/components/elements/LogoIcon.vue';
 import Breadcrumbs from './Breadcrumbs.vue';
-import UserMenuContent from './UserMenuContent.vue';
+import Logo from './Logo.vue';
+import Notification from './Notification.vue';
+import ProfileMenu from './ProfileMenu.vue';
 
-interface Props {
+defineProps<{
     breadcrumbs?: TBreadcrumb[];
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    breadcrumbs: () => [],
-});
+}>();
 
 const page = usePage();
 const auth = computed(() => page.props.auth);
@@ -56,7 +53,7 @@ const activeItemStyles = computed(
                         <SheetContent side="left" class="w-[300px] p-6">
                             <SheetTitle class="sr-only">Navigation Menu</SheetTitle>
                             <SheetHeader class="flex justify-start text-left">
-                                <AppLogoIcon class="size-6 fill-current text-black dark:text-white" />
+                                <LogoIcon class="size-6 fill-current text-black dark:text-white" />
                             </SheetHeader>
                             <div class="flex h-full flex-1 flex-col justify-between space-y-4 py-6">
                                 <nav class="-mx-3 space-y-1">
@@ -90,7 +87,7 @@ const activeItemStyles = computed(
                 </div>
 
                 <Link :href="route('dashboard')" class="flex items-center gap-x-2">
-                    <AppLogo />
+                    <Logo />
                 </Link>
 
                 <!-- Desktop Menu -->
@@ -119,6 +116,8 @@ const activeItemStyles = computed(
                         <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer">
                             <Search class="size-5 opacity-80 group-hover:opacity-100" />
                         </Button>
+
+                        <Notification />
 
                         <div class="hidden space-x-1 lg:flex">
                             <template v-for="item in rightNavLinks" :key="item.title">
@@ -157,14 +156,14 @@ const activeItemStyles = computed(
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" class="w-56">
-                            <UserMenuContent :user="auth.user" />
+                            <ProfileMenu :user="auth.user" />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
             </div>
         </div>
 
-        <div v-if="props.breadcrumbs.length > 1" class="flex w-full border-b border-sidebar-border/70">
+        <div v-if="breadcrumbs && breadcrumbs.length > 1" class="flex w-full border-b border-sidebar-border/70">
             <div class="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </div>

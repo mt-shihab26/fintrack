@@ -7,23 +7,17 @@ import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSep
 import { Link } from '@inertiajs/vue3';
 import { LogOut, Settings } from 'lucide-vue-next';
 
-import UserInfo from './UserInfo.vue';
+import ProfileInfo from './ProfileInfo.vue';
 
-interface Props {
+defineProps<{
     user: TUser;
-}
-
-const handleLogout = () => {
-    router.flushAll();
-};
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
     <DropdownMenuLabel class="p-0 font-normal">
         <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <UserInfo :user="user" :show-email="true" />
+            <ProfileInfo :user="user" />
         </div>
     </DropdownMenuLabel>
     <DropdownMenuSeparator />
@@ -37,7 +31,7 @@ defineProps<Props>();
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">
-        <Link method="post" class="block w-full" :href="route('logout')" @click="handleLogout" as="button" data-test="logout-button">
+        <Link method="post" class="block w-full" :href="route('logout')" @click="router.flushAll()" as="button" data-test="logout-button">
             <LogOut class="mr-2 h-4 w-4" />
             Log out
         </Link>
