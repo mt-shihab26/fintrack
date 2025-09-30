@@ -3,15 +3,14 @@ import type { TCategory } from '@/types/models';
 
 import { ref } from 'vue';
 
+import { Form, List, Stats } from '@/components/screens/categories';
 import { Button } from '@/components/ui/button';
 import { AppLayout } from '@/layouts/app-layout';
 import { Plus } from 'lucide-vue-next';
 
-import Form from '@/components/screens/categories/Form.vue';
-import List from '@/components/screens/categories/List.vue';
-import Stats from '@/components/screens/categories/Stats.vue';
-
-defineProps<{ categories: TCategory[] }>();
+defineProps<{
+    categories: TCategory[];
+}>();
 
 const open = ref(false);
 const category = ref<TCategory | null>(null);

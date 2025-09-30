@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
-import { Form } from '@inertiajs/vue3';
-import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-vue-next';
+import { useTwoFactorAuth } from '@/composables/use-two-factor-auth';
 import { nextTick, onMounted, ref } from 'vue';
 
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form } from '@inertiajs/vue3';
+import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-vue-next';
+
 const { recoveryCodesList, fetchRecoveryCodes } = useTwoFactorAuth();
+
 const isRecoveryCodesVisible = ref<boolean>(false);
 const recoveryCodeSectionRef = ref<HTMLDivElement | null>(null);
 

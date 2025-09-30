@@ -3,7 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\Currency;
+use App\Helpers\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -22,6 +26,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'currency',
+        'push_notifications',
+        'email_notifications',
+        'budget_alerts',
+        'weekly_reports',
     ];
 
     /**
@@ -44,6 +54,35 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'currency' => Currency::class,
+            'push_notifications' => 'boolean',
+            'email_notifications' => 'boolean',
+            'budget_alerts' => 'boolean',
+            'weekly_reports' => 'boolean',
         ];
+    }
+
+    /**
+     * Get the user's avatar URL.
+     */
+    public function getAvatarAttribute($value): ?string
+    {
+        if (! $value) {
+            return null;
+        }
+
+        if (str_starts_with($value, 'http')) {
+            return $value;
+        }
+
+        return Storage::public()->url($value);
+    }
+
+    /**
+     * Get the categories for the user.
+     */
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class);
     }
 }

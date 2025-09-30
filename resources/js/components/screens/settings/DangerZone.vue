@@ -12,13 +12,11 @@ import {
 
 import { ref } from 'vue';
 
+import { HeadingSmall } from '@/components/elements';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Error, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Form } from '@inertiajs/vue3';
-
-import HeadingSmall from '@/components/elements/HeadingSmall.vue';
-import { Error } from '@/components/ui/input';
 
 const passwordInput = ref<InstanceType<typeof Input> | null>(null);
 </script>
@@ -37,7 +35,7 @@ const passwordInput = ref<InstanceType<typeof Input> | null>(null);
                 </DialogTrigger>
                 <DialogContent>
                     <Form
-                        :action="route('profile.destroy')"
+                        :action="route('app.settings.profile.destroy')"
                         method="delete"
                         reset-on-success
                         @error="() => passwordInput?.$el?.focus()"

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\Kind;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -31,6 +32,7 @@ class CategoryFactory extends Factory
         ];
 
         return [
+            'user_id' => User::inRandomOrder()->first()?->id,
             'name' => fake()->words(2, true),
             'kind' => fake()->randomElement([Kind::INCOME->value, Kind::EXPENSE->value]),
             'color' => fake()->randomElement($colorOptions),

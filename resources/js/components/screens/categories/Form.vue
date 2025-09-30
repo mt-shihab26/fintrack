@@ -2,7 +2,7 @@
 import type { TKind } from '@/types/enums';
 import type { TCategory } from '@/types/models';
 
-import { colorOptions } from '@/lib/categories';
+import { colorOptions } from '@/lib/options';
 import { useForm } from '@inertiajs/vue3';
 import { watch } from 'vue';
 

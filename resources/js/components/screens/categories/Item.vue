@@ -6,8 +6,7 @@ import { computed } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-import Actions from './Actions.vue';
+import { Actions } from '.';
 
 const { currency } = useFormat();
 

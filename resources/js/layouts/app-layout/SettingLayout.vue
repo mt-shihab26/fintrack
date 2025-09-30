@@ -8,7 +8,7 @@ import Heading from '@/components/elements/Heading.vue';
 const sidebarNavItems: { title: string; route: string }[] = [
     {
         title: 'Profile',
-        route: 'profile.edit',
+        route: 'app.settings.profile.edit',
     },
     {
         title: 'Preferences',
@@ -16,15 +16,15 @@ const sidebarNavItems: { title: string; route: string }[] = [
     },
     {
         title: 'Password',
-        route: 'password.edit',
+        route: 'app.settings.password.edit',
     },
     {
         title: 'Two-Factor',
-        route: 'two-factor.show',
+        route: 'app.settings.two-factor.show',
     },
     {
         title: 'Appearance',
-        route: 'appearance.edit',
+        route: 'app.settings.appearance.edit',
     },
 ];
 </script>

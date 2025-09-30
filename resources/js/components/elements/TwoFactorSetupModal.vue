@@ -1,20 +1,20 @@
 <script setup lang="ts">
+import { useTwoFactorAuth } from '@/composables/use-two-factor-auth';
+import { useClipboard } from '@vueuse/core';
+import { computed, nextTick, ref, watch } from 'vue';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Error } from '@/components/ui/input';
 import { PinInput, PinInputGroup, PinInputSlot } from '@/components/ui/pin-input';
-import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { Form } from '@inertiajs/vue3';
-import { useClipboard } from '@vueuse/core';
 import { Check, Copy, Loader2, ScanLine } from 'lucide-vue-next';
-import { computed, nextTick, ref, watch } from 'vue';
 
-interface Props {
+const props = defineProps<{
     requiresConfirmation: boolean;
     twoFactorEnabled: boolean;
-}
+}>();
 
-const props = defineProps<Props>();
 const isOpen = defineModel<boolean>('isOpen');
 
 const { copy, copied } = useClipboard();
