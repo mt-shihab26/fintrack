@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TIndexCategory } from '@/types/props';
+import type { TIndexBudget } from '@/types/props';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -7,8 +7,8 @@ import { Edit, MoreHorizontal } from 'lucide-vue-next';
 import { Delete } from '.';
 
 defineProps<{
-    category: TIndexCategory;
-    edit: (category: TIndexCategory) => void;
+    budget: TIndexBudget;
+    edit: (budget: TIndexBudget) => void;
 }>();
 </script>
 
@@ -20,11 +20,11 @@ defineProps<{
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-            <DropdownMenuItem @click="edit(category)">
+            <DropdownMenuItem @click="edit(budget)">
                 <Edit class="mr-2 h-4 w-4" />
                 Edit
             </DropdownMenuItem>
-            <Delete :category="category" />
+            <Delete :budget="budget" />
         </DropdownMenuContent>
     </DropdownMenu>
 </template>

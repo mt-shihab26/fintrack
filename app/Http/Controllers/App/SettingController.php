@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Enums\Currency;
 use App\Helpers\Storage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\TwoFactorAuthenticationRequest;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Fortify\Features;
 
 class SettingController extends Controller
 {
@@ -138,9 +140,22 @@ class SettingController extends Controller
     }
 
     /**
+     * Show the user's two-factor authentication settings page.
+     */
+    public function twoFactorShow(TwoFactorAuthenticationRequest $request)
+    {
+        $request->ensureStateIsValid();
+
+        return inertia('app/settings/TwoFactor', [
+            'twoFactorEnabled' => $request->user()->hasEnabledTwoFactorAuthentication(),
+            'requiresConfirmation' => Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm'),
+        ]);
+    }
+
+    /**
      * Show the appearance settings page.
      */
-    public function appearanceEdit()
+    public function appearanceShow()
     {
         return inertia('app/settings/Appearance');
     }

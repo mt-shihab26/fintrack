@@ -1,6 +1,6 @@
-import type { TKind } from './enums';
+import type { TCurrency, TKind, TPeriod } from './enums';
 
-export type TId = string;
+export type TId = number;
 
 export type TUser = {
     id: TId;
@@ -17,6 +17,21 @@ export type TUser = {
     updated_at: string;
 };
 
+export type TCategory = {
+    id: TId;
+    user_id: TId;
+    name: string;
+    kind: TKind;
+    color: string;
+};
+
+export type TBudget = {
+    id: TId;
+    category_id: TId;
+    amount: number;
+    period: TPeriod;
+};
+
 export type TTransaction = {
     id: TId;
     kind: TKind;
@@ -25,21 +40,4 @@ export type TTransaction = {
     description: string;
     date: string;
     tags?: string[];
-};
-
-export type TBudget = {
-    id: TId;
-    category: string;
-    amount: number;
-    spent: number;
-    period: TBudgetPeriod;
-};
-
-export type TCategory = {
-    id: TId;
-    name: string;
-    kind: TKind;
-    color: string;
-    transaction_count: number;
-    total_amount: number;
 };

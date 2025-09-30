@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\App\BudgetController;
 use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\SettingController;
-use App\Http\Controllers\App\TwoFactorAuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Middleware\TwoFactorAuthentication;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => inertia('Welcome'))->name('home');
@@ -44,7 +45,13 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
     Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions.index');
-    Route::get('/budgets', fn () => inertia('app/Budgets'))->name('app.budgets.index');
+
+    Route::prefix('/budgets')->group(function () {
+        Route::get('/', [BudgetController::class, 'index'])->name('app.budgets.index');
+        Route::post('/', [BudgetController::class, 'store'])->name('app.budgets.store');
+        Route::patch('/{budget}', [BudgetController::class, 'update'])->name('app.budgets.update');
+        Route::delete('/{budget}', [BudgetController::class, 'destroy'])->name('app.budgets.destroy');
+    });
 
     Route::prefix('/categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('app.categories.index');
@@ -54,21 +61,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-Route::middleware('auth')->group(function () {
-    Route::redirect('/settings', '/settings/profile')->name('app.settings.index');
-
-    Route::get('/settings/profile', [SettingController::class, 'profileEdit'])->name('app.settings.profile.edit');
-    Route::patch('/settings/profile', [SettingController::class, 'profileUpdate'])->name('app.settings.profile.update');
-    Route::post('/settings/profile/export', [SettingController::class, 'profileExport'])->name('app.settings.profile.export');
-    Route::delete('/settings/profile', [SettingController::class, 'profileDestroy'])->name('app.settings.profile.destroy');
-
-    Route::get('/settings/preferences', [SettingController::class, 'preferencesEdit'])->name('app.settings.preferences.edit');
-    Route::patch('/settings/preferences', [SettingController::class, 'preferencesUpdate'])->name('app.settings.preferences.update');
-
-    Route::get('/settings/password', [SettingController::class, 'passwordEdit'])->name('app.settings.password.edit');
-    Route::put('/settings/password', [SettingController::class, 'passwordUpdate'])->middleware('throttle:6,1')->name('app.settings.password.update');
-
-    Route::get('/settings/two-factor', [TwoFactorAuthController::class, 'show'])->name('app.settings.two-factor.show');
-
-    Route::get('/settings/appearance', [SettingController::class, 'appearanceEdit'])->name('app.settings.appearance.edit');
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/settings')->group(function () {
+        Route::redirect('/', '/settings/profile')->name('app.settings.index');
+        Route::get('/profile', [SettingController::class, 'profileEdit'])->name('app.settings.profile.edit');
+        Route::patch('/profile', [SettingController::class, 'profileUpdate'])->name('app.settings.profile.update');
+        Route::post('/profile/export', [SettingController::class, 'profileExport'])->name('app.settings.profile.export');
+        Route::delete('/profile', [SettingController::class, 'profileDestroy'])->name('app.settings.profile.destroy');
+        Route::get('/preferences', [SettingController::class, 'preferencesEdit'])->name('app.settings.preferences.edit');
+        Route::patch('/preferences', [SettingController::class, 'preferencesUpdate'])->name('app.settings.preferences.update');
+        Route::get('/password', [SettingController::class, 'passwordEdit'])->name('app.settings.password.edit');
+        Route::put('/password', [SettingController::class, 'passwordUpdate'])->middleware('throttle:6,1')->name('app.settings.password.update');
+        Route::get('/two-factor', [SettingController::class, 'twoFactorShow'])->middleware(TwoFactorAuthentication::class)->name('app.settings.two-factor.show');
+        Route::get('/appearance', [SettingController::class, 'appearanceShow'])->name('app.settings.appearance.edit');
+    });
 });

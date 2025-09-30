@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import type { TIndexBudget } from '@/types/props';
+
+import { useFormat } from '@/composables/use-format';
 import { ref } from 'vue';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart } from '@/components/ui/chart-line';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+defineProps<{
+    budgets?: TIndexBudget[];
+}>();
 
 const mockHistoryData = [
     { month: 'Jan', Food: 450, Transport: 180, Entertainment: 280, Utilities: 120 },
@@ -19,7 +26,7 @@ const selectedPeriod = ref('6months');
 const categories = ['Food', 'Transport', 'Entertainment', 'Utilities'] as any;
 const colors = ['#f59e0b', '#059669', '#7c3aed', '#4b5563'];
 
-const yFormatter = (tick: number | Date) => `$${tick}` as any;
+const { currency } = useFormat();
 </script>
 
 <template>
@@ -38,13 +45,13 @@ const yFormatter = (tick: number | Date) => `$${tick}` as any;
             </Select>
         </CardHeader>
         <CardContent>
-            <div class="h-[300px]">
+            <div class="h-[300px] w-full">
                 <LineChart
                     :data="mockHistoryData"
                     :categories="categories"
                     index="month"
                     :colors="colors"
-                    :y-formatter="yFormatter"
+                    :y-formatter="(tick: number | Date) => (typeof tick === 'number' ? currency(tick) : ('' as any))"
                     :show-grid-line="true"
                     :show-legend="true"
                     :show-tooltip="true"

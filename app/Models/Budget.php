@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use App\Enums\Kind;
+use App\Enums\Period;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Category extends Model
+class Budget extends Model
 {
-    /** @use HasFactory<\Database\Factories\CategoryFactory> */
+    /** @use HasFactory<\Database\Factories\BudgetFactory> */
     use HasFactory;
 
     /**
@@ -19,10 +18,9 @@ class Category extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
-        'name',
-        'kind',
-        'color',
+        'category_id',
+        'amount',
+        'period',
     ];
 
     /**
@@ -33,23 +31,16 @@ class Category extends Model
     protected function casts(): array
     {
         return [
-            'kind' => Kind::class,
+            'amount' => 'decimal:2',
+            'period' => Period::class,
         ];
     }
 
     /**
-     * Get the user that owns the category.
+     * Get the category that owns the budget.
      */
-    public function user(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the budget for the category.
-     */
-    public function budget(): HasOne
-    {
-        return $this->hasOne(Budget::class);
+        return $this->belongsTo(Category::class);
     }
 }

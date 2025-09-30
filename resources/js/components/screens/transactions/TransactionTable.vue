@@ -18,14 +18,14 @@ const props = defineProps<Props>();
 
 const emit = defineEmits<{
     edit: [transaction: TTransaction];
-    delete: [id: string];
-    bulkDelete: [ids: string[]];
+    delete: [id: number];
+    bulkDelete: [ids: number[]];
     export: [];
 }>();
 
-const selectedIds = ref<string[]>([]);
+const selectedIds = ref<number[]>([]);
 
-const toggleSelection = (id: string) => {
+const toggleSelection = (id: number) => {
     if (selectedIds.value.includes(id)) {
         selectedIds.value = selectedIds.value.filter((i) => i !== id);
     } else {

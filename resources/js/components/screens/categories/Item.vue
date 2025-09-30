@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TCategory } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 import { useFormat } from '@/composables/use-format';
 import { computed } from 'vue';
@@ -11,8 +11,8 @@ import { Actions } from '.';
 const { currency } = useFormat();
 
 const props = defineProps<{
-    category: TCategory;
-    edit: (category: TCategory) => void;
+    category: TIndexCategory;
+    edit: (category: TIndexCategory) => void;
 }>();
 
 const averagePerTransaction = computed(() => {

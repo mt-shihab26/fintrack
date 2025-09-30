@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { budgets } from '@/lib/mock-data';
+import type { TIndexBudget } from '@/types/props';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+
+const budgets: TIndexBudget[] = [];
 </script>
 
 <template>
@@ -16,7 +18,7 @@ import { Progress } from '@/components/ui/progress';
                 <div v-for="budget in budgets" :key="budget.id" class="space-y-2">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
-                            <span class="font-medium">{{ budget.category }}</span>
+                            <span class="font-medium">{{ budget.category.name }}</span>
                             <Badge v-if="(budget.spent / budget.amount) * 100 > 100" variant="destructive" class="text-xs"> Over Budget </Badge>
                             <Badge v-else-if="(budget.spent / budget.amount) * 100 > 80" variant="secondary" class="text-xs"> Near Limit </Badge>
                         </div>

@@ -11,7 +11,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-import type { TIndexCategory } from '@/types/props';
+import type { TIndexBudget } from '@/types/props';
 
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -21,7 +21,7 @@ import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Trash2 } from 'lucide-vue-next';
 
 defineProps<{
-    category: TIndexCategory;
+    budget: TIndexBudget;
 }>();
 </script>
 
@@ -35,21 +35,20 @@ defineProps<{
         </AlertDialogTrigger>
         <AlertDialogContent>
             <AlertDialogHeader>
-                <AlertDialogTitle>Delete Category</AlertDialogTitle>
+                <AlertDialogTitle>Delete Budget</AlertDialogTitle>
                 <AlertDialogDescription>
-                    Are you sure you want to delete the category "{{ category.name }}"? This action cannot be undone.
-                    <span v-if="category.transaction_count > 0" class="mt-2 block text-destructive">
-                        This category has {{ category.transaction_count }} transaction(s) associated with it.
-                    </span>
+                    Are you sure you want to delete the budget for "{{ budget.category.name }}" (${{ budget.amount.toLocaleString() }}/{{
+                        budget.period
+                    }})? This action cannot be undone.
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                     :class="cn(buttonVariants({ variant: 'destructive' }))"
-                    @click="() => router.delete(route('app.categories.destroy', category), { preserveScroll: true })"
+                    @click="() => router.delete(route('app.budgets.destroy', budget), { preserveScroll: true })"
                 >
-                    Delete Category
+                    Delete Budget
                 </AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>

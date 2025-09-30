@@ -1,42 +1,25 @@
 <script setup lang="ts">
-import type { TBudget } from '@/types/models';
+import type { TCategory } from '@/types/models';
+import type { TIndexBudget } from '@/types/props';
 
-import { budgets as fakeBudgets } from '@/lib/mock-data';
 import { ref } from 'vue';
 
+import { Form, History, List, Overview } from '@/components/screens/budgets';
 import { Button } from '@/components/ui/button';
 import { AppLayout } from '@/layouts/app-layout';
 import { Plus } from 'lucide-vue-next';
 
-import BudgetCard from '@/components/screens/budgets/BudgetCard.vue';
-import BudgetForm from '@/components/screens/budgets/BudgetForm.vue';
-import BudgetHistory from '@/components/screens/budgets/BudgetHistory.vue';
-import BudgetOverview from '@/components/screens/budgets/BudgetOverview.vue';
+defineProps<{
+    budgets: TIndexBudget[];
+    categories: TCategory[];
+}>();
 
-const budgets = ref<TBudget[]>(fakeBudgets);
-const showForm = ref(false);
-const editingBudget = ref<TBudget | null>(null);
+const open = ref(false);
+const budget = ref<TIndexBudget | null>(null);
 
-const handleAddBudget = (budgetData: Omit<TBudget, 'id' | 'spent'>) => {
-    const newBudget: TBudget = {
-        ...budgetData,
-        id: Date.now().toString(),
-        spent: 0,
-    };
-    budgets.value = [...budgets.value, newBudget];
-    showForm.value = false;
-};
-
-const handleEditBudget = (budgetData: Omit<TBudget, 'id' | 'spent'>) => {
-    if (!editingBudget.value) return;
-
-    budgets.value = budgets.value.map((b) => (b.id === editingBudget.value!.id ? { ...budgetData, id: b.id, spent: b.spent } : b));
-    editingBudget.value = null;
-    showForm.value = false;
-};
-
-const handleDeleteBudget = (id: string) => {
-    budgets.value = budgets.value.filter((b) => b.id !== id);
+const edit = (b: TIndexBudget) => {
+    budget.value = b;
+    open.value = true;
 };
 </script>
 
@@ -48,52 +31,15 @@ const handleDeleteBudget = (id: string) => {
                     <h1 class="text-3xl font-bold text-balance">Budget Management</h1>
                     <p class="text-pretty text-muted-foreground">Set spending limits, track progress, and stay on top of your financial goals.</p>
                 </div>
-                <Button @click="() => (showForm = true)">
+                <Button @click="open = true">
                     <Plus class="mr-2 h-4 w-4" />
                     Create Budget
                 </Button>
             </div>
-
-            <!-- Budget Form -->
-            <BudgetForm
-                v-if="showForm"
-                :budget="editingBudget"
-                :onSubmit="editingBudget ? handleEditBudget : handleAddBudget"
-                :onCancel="
-                    () => {
-                        showForm = false;
-                        editingBudget = null;
-                    }
-                "
-            />
-
-            <!-- Budget Overview -->
-            <BudgetOverview :budgets="budgets" />
-
-            <!-- Budget Cards -->
-            <div>
-                <h2 class="mb-4 text-xl font-semibold">Your Budgets</h2>
-                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <BudgetCard
-                        v-for="budget in budgets"
-                        :key="budget.id"
-                        :budget="budget"
-                        :onEdit="
-                            (budget) => {
-                                editingBudget = budget;
-                                showForm = true;
-                            }
-                        "
-                        :onDelete="handleDeleteBudget"
-                    />
-                </div>
-                <div v-if="budgets.length === 0" class="py-8 text-center text-muted-foreground">
-                    <p>No budgets created yet. Create your first budget to start tracking your spending limits.</p>
-                </div>
-            </div>
-
-            <!-- Budget History -->
-            <BudgetHistory v-if="budgets.length > 0" />
+            <Overview :budgets="budgets" />
+            <List :budgets="budgets" :edit="edit" />
+            <History v-if="budgets.length > 0" :budgets="budgets" />
         </div>
+        <Form v-model:open="open" v-model:budget="budget" :categories="categories" />
     </AppLayout>
 </template>

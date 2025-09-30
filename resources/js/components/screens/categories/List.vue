@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TCategory } from '@/types/models';
+import type { TIndexCategory } from '@/types/props';
 
 import { computed, ref } from 'vue';
 
@@ -9,8 +9,8 @@ import { Search } from 'lucide-vue-next';
 import { Item } from '.';
 
 const props = defineProps<{
-    categories: TCategory[];
-    edit: (category: TCategory) => void;
+    categories: TIndexCategory[];
+    edit: (category: TIndexCategory) => void;
 }>();
 
 const searchTerm = ref('');
