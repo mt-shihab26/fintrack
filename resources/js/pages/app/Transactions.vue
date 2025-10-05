@@ -21,6 +21,7 @@ const filters = ref<TTransactionFilters>({
     search: '',
     kind: '',
     category: '',
+    dateRange: 'all',
     dateFrom: '',
     dateTo: '',
     minAmount: '',

@@ -35,12 +35,16 @@ const filteredTransactions = computed(() => {
             return false;
         }
 
-        // Date range filter
-        if (props.filters.dateFrom && t.date < props.filters.dateFrom) {
-            return false;
-        }
-        if (props.filters.dateTo && t.date > props.filters.dateTo) {
-            return false;
+        // Date range filter - handle both dateRange tabs and custom dates
+        if (props.filters.dateRange !== 'all') {
+            // For custom range, use the dateFrom/dateTo fields
+            // For preset ranges, these are automatically calculated in the Filters component
+            if (props.filters.dateFrom && t.date < props.filters.dateFrom) {
+                return false;
+            }
+            if (props.filters.dateTo && t.date > props.filters.dateTo) {
+                return false;
+            }
         }
 
         // Amount range filter
