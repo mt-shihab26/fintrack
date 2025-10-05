@@ -94,4 +94,12 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Budget::class, Category::class);
     }
+
+    /**
+     * Get the transactions for the user.
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

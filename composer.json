@@ -55,8 +55,6 @@
             "bun x concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"bun run dev\" --names=server,queue,bundler --kill-others"
         ],
         "test": [
-            "@php artisan config:clear --ansi",
-            "bun run build",
             "@php artisan test"
         ],
         "format": [

@@ -1,131 +1,36 @@
 <script setup lang="ts">
-import type { TTransactionFilters } from '@/components/screens/transactions/TransactionFilters.vue';
-import type { TTransaction } from '@/types/models';
+import type { TCategory, TTransaction } from '@/types/models';
+import type { TTransactionFilters } from '@/types/utils';
 
-import { transactions as fakeTransactions } from '@/lib/mock-data';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
+import { Filters, Form, List } from '@/components/screens/transactions';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AppLayout } from '@/layouts/app-layout';
-import { Download, Plus } from 'lucide-vue-next';
+import { Plus } from 'lucide-vue-next';
 
-import TransactionFilters from '@/components/screens/transactions/TransactionFilters.vue';
-import TransactionForm from '@/components/screens/transactions/TransactionForm.vue';
-import TransactionTable from '@/components/screens/transactions/TransactionTable.vue';
+defineProps<{
+    transactions: TTransaction[];
+    categories: TCategory[];
+}>();
 
-const transactions = ref<TTransaction[]>([...fakeTransactions]);
-const showForm = ref(false);
-const editingTransaction = ref<TTransaction | undefined>(undefined);
+const open = ref(false);
+const transaction = ref<TTransaction | null>(null);
+
 const filters = ref<TTransactionFilters>({
     search: '',
     kind: '',
     category: '',
+    dateRange: 'all',
     dateFrom: '',
     dateTo: '',
     minAmount: '',
     maxAmount: '',
 });
 
-const filteredTransactions = computed(() => {
-    return transactions.value.filter((transaction) => {
-        // Search filter
-        if (filters.value.search && !transaction.description.toLowerCase().includes(filters.value.search.toLowerCase())) {
-            return false;
-        }
-
-        // Type filter
-        if (filters.value.kind && transaction.kind !== filters.value.kind) {
-            return false;
-        }
-
-        // Category filter
-        if (filters.value.category && transaction.category !== filters.value.category) {
-            return false;
-        }
-
-        // Date range filter
-        if (filters.value.dateFrom && transaction.date < filters.value.dateFrom) {
-            return false;
-        }
-        if (filters.value.dateTo && transaction.date > filters.value.dateTo) {
-            return false;
-        }
-
-        // Amount range filter
-        if (filters.value.minAmount && transaction.amount < Number.parseFloat(filters.value.minAmount)) {
-            return false;
-        }
-        if (filters.value.maxAmount && transaction.amount > Number.parseFloat(filters.value.maxAmount)) {
-            return false;
-        }
-
-        return true;
-    });
-});
-
-const handleAddTransaction = (transactionData: Omit<TTransaction, 'id'>) => {
-    const newTransaction: TTransaction = {
-        ...transactionData,
-        id: Date.now(),
-    };
-    transactions.value = [newTransaction, ...transactions.value];
-    showForm.value = false;
-};
-
-const handleEditTransaction = (transactionData: Omit<TTransaction, 'id'>) => {
-    if (!editingTransaction.value) return;
-
-    transactions.value = transactions.value.map((t) => (t.id === editingTransaction.value!.id ? { ...transactionData, id: t.id } : t));
-    editingTransaction.value = undefined;
-    showForm.value = false;
-};
-
-const handleDeleteTransaction = (id: number) => {
-    transactions.value = transactions.value.filter((t) => t.id !== id);
-};
-
-const handleBulkDelete = (ids: number[]) => {
-    transactions.value = transactions.value.filter((t) => !ids.includes(t.id));
-};
-
-const handleExport = () => {
-    const csvContent = [
-        ['Date', 'Kind', 'Category', 'Description', 'Amount', 'Tags'].join(','),
-        ...filteredTransactions.value.map((t) =>
-            [t.date, t.kind, t.category, `"${t.description}"`, t.amount, `"${t.tags?.join('; ') || ''}"`].join(','),
-        ),
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'transactions.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-};
-
-const clearFilters = () => {
-    filters.value = {
-        search: '',
-        kind: '',
-        category: '',
-        dateFrom: '',
-        dateTo: '',
-        minAmount: '',
-        maxAmount: '',
-    };
-};
-
-const handleEditClick = (transaction: TTransaction) => {
-    editingTransaction.value = transaction;
-    showForm.value = true;
-};
-
-const handleFormCancel = () => {
-    showForm.value = false;
-    editingTransaction.value = undefined;
+const edit = (t: TTransaction) => {
+    transaction.value = t;
+    open.value = true;
 };
 </script>
 
@@ -137,49 +42,14 @@ const handleFormCancel = () => {
                     <h1 class="text-3xl font-bold text-balance">Transactions</h1>
                     <p class="text-pretty text-muted-foreground">Manage your income and expenses with detailed tracking and filtering.</p>
                 </div>
-                <div class="flex gap-2">
-                    <Button variant="outline" @click="handleExport">
-                        <Download class="mr-2 h-4 w-4" />
-                        Export CSV
-                    </Button>
-                    <Button @click="showForm = true">
-                        <Plus class="mr-2 h-4 w-4" />
-                        Add Transaction
-                    </Button>
-                </div>
+                <Button @click="open = true">
+                    <Plus class="mr-2 h-4 w-4" />
+                    Add Transaction
+                </Button>
             </div>
-
-            <!-- Transaction Form -->
-            <TransactionForm
-                v-if="showForm"
-                :transaction="editingTransaction"
-                @submit="editingTransaction ? handleEditTransaction : handleAddTransaction"
-                @cancel="handleFormCancel"
-            />
-
-            <!-- Filters -->
-            <Card>
-                <CardHeader>
-                    <CardTitle>Filter Transactions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <TransactionFilters :filters="filters" @filters-change="filters = $event" @clear-filters="clearFilters" />
-                </CardContent>
-            </Card>
-
-            <!-- Results Summary -->
-            <div class="flex items-center justify-between">
-                <p class="text-sm text-muted-foreground">Showing {{ filteredTransactions.length }} of {{ transactions.length }} transactions</p>
-            </div>
-
-            <!-- Transaction Table -->
-            <TransactionTable
-                :transactions="filteredTransactions"
-                @edit="handleEditClick"
-                @delete="handleDeleteTransaction"
-                @bulk-delete="handleBulkDelete"
-                @export="handleExport"
-            />
+            <Filters :filters="filters" :categories="categories" @filters-change="filters = $event" />
+            <List :transactions="transactions" :filters="filters" :edit="edit" />
         </div>
+        <Form v-model:open="open" v-model:transaction="transaction" :categories="categories" />
     </AppLayout>
 </template>
