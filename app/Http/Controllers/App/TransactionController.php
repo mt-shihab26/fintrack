@@ -62,7 +62,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        Gate::allowIf(fn (User $user) => $transaction->user_id === $user->id); // @phpstan-ignore-line
+        Gate::allowIf(fn (User $user) => $transaction->user_id === $user->id);
 
         $validated = $request->validate([
             'category_id' => ['required', 'exists:categories,id', function ($attribute, $value, $fail) use ($request) {
@@ -88,7 +88,7 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        Gate::allowIf(fn (User $user) => $transaction->user_id === $user->id); // @phpstan-ignore-line
+        Gate::allowIf(fn (User $user) => $transaction->user_id === $user->id);
 
         $transaction->delete();
 

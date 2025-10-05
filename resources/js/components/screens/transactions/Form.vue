@@ -50,7 +50,7 @@ watch(
         form.category = transaction.category;
         form.description = transaction.description;
         form.date = transaction.date;
-        form.tags = [...transaction.tags];
+        form.tags = [...(transaction.tags || [])];
     },
     {
         immediate: true,
