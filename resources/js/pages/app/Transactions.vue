@@ -4,12 +4,10 @@ import type { TTransactionFilters } from '@/types/utils';
 
 import { computed, ref } from 'vue';
 
-import { Filters, List } from '@/components/screens/transactions';
+import { Filters, Form, List } from '@/components/screens/transactions';
 import { Button } from '@/components/ui/button';
 import { AppLayout } from '@/layouts/app-layout';
-import { Download, Plus } from 'lucide-vue-next';
-
-import TransactionForm from '@/components/screens/transactions/TransactionForm.vue';
+import { Plus } from 'lucide-vue-next';
 
 const props = defineProps<{
     transactions: TTransaction[];
@@ -98,20 +96,13 @@ const handleFormCancel = () => {
                     <p class="text-pretty text-muted-foreground">Manage your income and expenses with detailed tracking and filtering.</p>
                 </div>
                 <div class="flex gap-2">
-                    <Button variant="outline" @click="() => {}">
-                        <Download class="mr-2 h-4 w-4" />
-                        Export CSV
-                    </Button>
                     <Button @click="showForm = true">
                         <Plus class="mr-2 h-4 w-4" />
                         Add Transaction
                     </Button>
                 </div>
             </div>
-
-            <!-- Transaction Form -->
-            <TransactionForm v-if="showForm" :transaction="editingTransaction" @submit="() => {}" @cancel="handleFormCancel" />
-
+            <Form v-if="showForm" :transaction="editingTransaction" @submit="() => {}" @cancel="handleFormCancel" />
             <Filters :filters="filters" @filters-change="filters = $event" @clear-filters="clearFilters" />
             <List :transactions="filteredTransactions" @edit="handleEditClick" />
         </div>
