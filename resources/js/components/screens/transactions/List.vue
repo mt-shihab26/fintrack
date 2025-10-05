@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TTransaction } from '@/types/models';
 
+import { transactions } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
@@ -10,17 +11,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ArrowDownRight, ArrowUpRight, Download, Edit, MoreHorizontal, Trash2 } from 'lucide-vue-next';
 
-interface Props {
+const props = defineProps<{
     transactions: TTransaction[];
-}
-
-const props = defineProps<Props>();
+}>();
 
 const emit = defineEmits<{
     edit: [transaction: TTransaction];
-    delete: [id: number];
-    bulkDelete: [ids: number[]];
-    export: [];
 }>();
 
 const selectedIds = ref<number[]>([]);
@@ -37,11 +33,6 @@ const toggleSelectAll = () => {
     selectedIds.value = selectedIds.value.length === props.transactions.length ? [] : props.transactions.map((t) => t.id);
 };
 
-const handleBulkDelete = () => {
-    emit('bulkDelete', selectedIds.value);
-    selectedIds.value = [];
-};
-
 const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString();
 };
@@ -51,26 +42,43 @@ const formatAmount = (amount: number) => {
 };
 
 const isAllSelected = computed(() => selectedIds.value.length === props.transactions.length && props.transactions.length > 0);
+
+const handleExport = () => {
+    const csvContent = [
+        ['Date', 'Kind', 'Category', 'Description', 'Amount', 'Tags'].join(','),
+        ...transactions.map((t) => [t.date, t.kind, t.category, `"${t.description}"`, t.amount, `"${t.tags?.join('; ') || ''}"`].join(',')),
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'transactions.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+};
 </script>
 
 <template>
+    <div class="flex items-center justify-between">
+        <p class="text-sm text-muted-foreground">Showing {{ transactions.length }} of {{ transactions.length }} transactions</p>
+    </div>
+
     <div class="space-y-4">
-        <!-- Bulk Actions -->
         <div v-if="selectedIds.length > 0" class="flex items-center justify-between rounded-lg bg-muted p-4">
             <span class="text-sm font-medium">{{ selectedIds.length }} transactions selected</span>
             <div class="flex gap-2">
-                <Button variant="destructive" size="sm" @click="handleBulkDelete">
+                <Button variant="destructive" size="sm" @click="() => {}">
                     <Trash2 class="mr-1 h-4 w-4" />
                     Delete Selected
                 </Button>
-                <Button variant="outline" size="sm" @click="emit('export')">
+                <Button variant="outline" size="sm" @click="handleExport">
                     <Download class="mr-1 h-4 w-4" />
                     Export Selected
                 </Button>
             </div>
         </div>
 
-        <!-- Table -->
         <div class="rounded-md border">
             <Table>
                 <TableHeader>
@@ -138,7 +146,7 @@ const isAllSelected = computed(() => selectedIds.value.length === props.transact
                                         <Edit class="mr-2 h-4 w-4" />
                                         Edit
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem @click="emit('delete', transaction.id)" class="text-destructive focus:text-destructive">
+                                    <DropdownMenuItem @click="() => {}" class="text-destructive focus:text-destructive">
                                         <Trash2 class="mr-2 h-4 w-4" />
                                         Delete
                                     </DropdownMenuItem>
