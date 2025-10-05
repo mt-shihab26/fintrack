@@ -19,7 +19,6 @@ const props = defineProps<Props>();
 
 const emit = defineEmits<{
     filtersChange: [filters: TTransactionFilters];
-    clearFilters: [];
 }>();
 
 const updateFilter = (key: keyof TTransactionFilters, value: string | number) => {
@@ -38,8 +37,17 @@ const hasActiveFilters = computed(() => {
     return Object.values(props.filters).some((value) => value !== '');
 });
 
-const handleClearFilters = () => {
-    emit('clearFilters');
+const clearFilters = () => {
+    const clearedFilters: TTransactionFilters = {
+        search: '',
+        kind: '',
+        category: '',
+        dateFrom: '',
+        dateTo: '',
+        minAmount: '',
+        maxAmount: '',
+    };
+    emit('filtersChange', clearedFilters);
 };
 </script>
 
@@ -56,7 +64,7 @@ const handleClearFilters = () => {
                         <span class="font-medium">Filters</span>
                         <Badge v-if="hasActiveFilters" variant="secondary" class="text-xs"> Active </Badge>
                     </div>
-                    <Button v-if="hasActiveFilters" variant="ghost" size="sm" @click="handleClearFilters">
+                    <Button v-if="hasActiveFilters" variant="ghost" size="sm" @click="clearFilters">
                         <X class="mr-1 h-4 w-4" />
                         Clear All
                     </Button>

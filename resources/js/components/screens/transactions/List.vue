@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TTransaction } from '@/types/models';
+import type { TTransactionFilters } from '@/types/utils';
 
 import { transactions } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
@@ -13,11 +14,46 @@ import { ArrowDownRight, ArrowUpRight, Download, Edit, MoreHorizontal, Trash2 } 
 
 const props = defineProps<{
     transactions: TTransaction[];
+    filters: TTransactionFilters;
+    edit: (transaction: TTransaction) => void;
 }>();
 
-const emit = defineEmits<{
-    edit: [transaction: TTransaction];
-}>();
+const filteredTransactions = computed(() => {
+    return props.transactions.filter((t) => {
+        // Search filter
+        if (props.filters.search && !t.description.toLowerCase().includes(props.filters.search.toLowerCase())) {
+            return false;
+        }
+
+        // Type filter
+        if (props.filters.kind && t.kind !== props.filters.kind) {
+            return false;
+        }
+
+        // Category filter
+        if (props.filters.category && t.category !== props.filters.category) {
+            return false;
+        }
+
+        // Date range filter
+        if (props.filters.dateFrom && t.date < props.filters.dateFrom) {
+            return false;
+        }
+        if (props.filters.dateTo && t.date > props.filters.dateTo) {
+            return false;
+        }
+
+        // Amount range filter
+        if (props.filters.minAmount && t.amount < Number.parseFloat(props.filters.minAmount)) {
+            return false;
+        }
+        if (props.filters.maxAmount && t.amount > Number.parseFloat(props.filters.maxAmount)) {
+            return false;
+        }
+
+        return true;
+    });
+});
 
 const selectedIds = ref<number[]>([]);
 
@@ -30,7 +66,7 @@ const toggleSelection = (id: number) => {
 };
 
 const toggleSelectAll = () => {
-    selectedIds.value = selectedIds.value.length === props.transactions.length ? [] : props.transactions.map((t) => t.id);
+    selectedIds.value = selectedIds.value.length === filteredTransactions.value.length ? [] : filteredTransactions.value.map((t) => t.id);
 };
 
 const formatDate = (date: string) => {
@@ -41,7 +77,7 @@ const formatAmount = (amount: number) => {
     return amount.toLocaleString();
 };
 
-const isAllSelected = computed(() => selectedIds.value.length === props.transactions.length && props.transactions.length > 0);
+const isAllSelected = computed(() => selectedIds.value.length === filteredTransactions.value.length && filteredTransactions.value.length > 0);
 
 const handleExport = () => {
     const csvContent = [
@@ -61,7 +97,7 @@ const handleExport = () => {
 
 <template>
     <div class="flex items-center justify-between">
-        <p class="text-sm text-muted-foreground">Showing {{ transactions.length }} of {{ transactions.length }} transactions</p>
+        <p class="text-sm text-muted-foreground">Showing {{ filteredTransactions.length }} of {{ transactions.length }} transactions</p>
     </div>
 
     <div class="space-y-4">
@@ -96,7 +132,7 @@ const handleExport = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow v-for="transaction in transactions" :key="transaction.id">
+                    <TableRow v-for="transaction in filteredTransactions" :key="transaction.id">
                         <TableCell>
                             <Checkbox :checked="selectedIds.includes(transaction.id)" @update:checked="toggleSelection(transaction.id)" />
                         </TableCell>
@@ -142,7 +178,7 @@ const handleExport = () => {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem @click="emit('edit', transaction)">
+                                    <DropdownMenuItem @click="edit(transaction)">
                                         <Edit class="mr-2 h-4 w-4" />
                                         Edit
                                     </DropdownMenuItem>
@@ -158,7 +194,7 @@ const handleExport = () => {
             </Table>
         </div>
 
-        <div v-if="transactions.length === 0" class="py-8 text-center text-muted-foreground">
+        <div v-if="filteredTransactions.length === 0" class="py-8 text-center text-muted-foreground">
             <p>No transactions found matching your criteria.</p>
         </div>
     </div>
