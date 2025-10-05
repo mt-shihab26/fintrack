@@ -47,7 +47,7 @@ const edit = (t: TTransaction) => {
                     Add Transaction
                 </Button>
             </div>
-            <Filters :filters="filters" @filters-change="filters = $event" />
+            <Filters :filters="filters" :categories="categories" @filters-change="filters = $event" />
             <List :transactions="transactions" :filters="filters" :edit="edit" />
         </div>
         <Form v-model:open="open" v-model:transaction="transaction" :categories="categories" />

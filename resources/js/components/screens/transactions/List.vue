@@ -2,7 +2,6 @@
 import type { TTransaction } from '@/types/models';
 import type { TTransactionFilters } from '@/types/utils';
 
-import { transactions } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
@@ -86,7 +85,7 @@ const isAllSelected = computed(() => selectedIds.value.length === filteredTransa
 const handleExport = () => {
     const csvContent = [
         ['Date', 'Kind', 'Category', 'Description', 'Amount', 'Tags'].join(','),
-        ...transactions.map((t) => [t.date, t.kind, t.category, `"${t.description}"`, t.amount, `"${t.tags?.join('; ') || ''}"`].join(',')),
+        ...props.transactions.map((t) => [t.date, t.kind, t.category, `"${t.description}"`, t.amount, `"${t.tags?.join('; ') || ''}"`].join(',')),
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });

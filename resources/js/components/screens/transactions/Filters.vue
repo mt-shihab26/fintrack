@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { TCategory } from '@/types/models';
 import type { TDateRangeFilter, TTransactionFilters } from '@/types/utils';
 
-import { categories } from '@/lib/mock-data';
 import { computed, ref } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +14,7 @@ import { CalendarDays, Filter, SlidersHorizontal, X } from 'lucide-vue-next';
 
 interface Props {
     filters: TTransactionFilters;
+    categories: TCategory[];
 }
 
 const props = defineProps<Props>();
