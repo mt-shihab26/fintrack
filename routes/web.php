@@ -3,6 +3,7 @@
 use App\Http\Controllers\App\BudgetController;
 use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\SettingController;
+use App\Http\Controllers\App\TransactionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -44,7 +45,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => inertia('app/Dashboard'))->name('dashboard');
-    Route::get('/transactions', fn () => inertia('app/Transactions'))->name('app.transactions.index');
+
+    Route::prefix('/transactions')->group(function () {
+        Route::get('/', [TransactionController::class, 'index'])->name('app.transactions.index');
+        Route::post('/', [TransactionController::class, 'store'])->name('app.transactions.store');
+        Route::patch('/{transaction}', [TransactionController::class, 'update'])->name('app.transactions.update');
+        Route::delete('/{transaction}', [TransactionController::class, 'destroy'])->name('app.transactions.destroy');
+    });
 
     Route::prefix('/budgets')->group(function () {
         Route::get('/', [BudgetController::class, 'index'])->name('app.budgets.index');
